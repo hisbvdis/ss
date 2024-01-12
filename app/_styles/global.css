@@ -1,0 +1,87 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 6.25%;
+  --fontSize-default: 16rem;
+
+  --color-brand: #507299;
+  --color-brand-light: #FAFBFC;
+  --color-white: #fff;
+  --color-red: #f00;
+
+  --fontColor: #000000;
+  --fontColor-light: #464646;
+  --fontColor-lighter: #808080;
+
+  --disabled-bgColor: #F8F8F8;
+  --disabled-fontColor: #6d6d6d;
+
+  --section-borderColor: #E4E4E4;
+
+  --input-borderColor: #B8C1C9;
+  --input-fontSize: calc(var(--fontSize-default) * 0.8125);
+  --input-maxWidth: 280px;
+  --input-placeholdreColor: #BBBBBB;
+
+  --sections-gap: 10px;
+  --controls-gap: 20px;
+
+  --hover: #F5F6F8;
+}
+
+body {
+  min-inline-size: 320px;
+  margin: 0;
+
+  font-family: sans-serif;
+  font-size: var(--fontSize-default);
+  line-height: 1.15;
+  font-weight: 400;
+  color: var(--fontColor);
+
+  overflow-y: scroll;
+  background-color: #EEEEEE;
+}
+
+img {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+figure,
+blockquote,
+dl,
+dd,
+input {
+  margin: unset;
+}
+
+.container {
+  max-inline-size: 905px;
+  margin-inline: auto;
+}
+
+.srOnly:not(:focus):not(:active):not(:focus-within) {
+  position: absolute;
+
+  width: 0;
+  height: 0;
+
+  white-space: nowrap;
+
+  clip-path: inset(50%);
+  overflow: hidden;
+}

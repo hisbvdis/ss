@@ -1,0 +1,27 @@
+.breadcrumbs {
+  --gap: 20px;
+}
+
+.breadcrumbs--small {
+  font-size: 13rem;
+}
+
+.breadcrumbs__list {
+  display: flex;
+  padding-inline-start: 0;
+  gap: var(--gap);
+
+  list-style: none;
+}
+
+.breadcrumbs__item + .breadcrumbs__item::before {
+  content: ">";
+  display: inline-block;
+  translate: calc(var(--gap) / 2 * -1);
+}
+
+.breadcrumbs__link {
+  /* color: var(--fontColor-light); */
+  /* text-decoration-color: #aaa; */
+  color: var(--fontSize-default);
+}
