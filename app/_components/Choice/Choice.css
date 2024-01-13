@@ -1,0 +1,11 @@
+.choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.choice,
+.choice__input,
+.choice__label {
+  cursor: pointer;
+}

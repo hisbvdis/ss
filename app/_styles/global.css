@@ -22,7 +22,6 @@
 
   --input-borderColor: #B8C1C9;
   --input-fontSize: calc(var(--fontSize-default) * 0.8125);
-  --input-maxWidth: 280px;
   --input-placeholdreColor: #BBBBBB;
 
   --sections-gap: 10px;
@@ -84,4 +83,12 @@ input {
 
   clip-path: inset(50%);
   overflow: hidden;
+}
+
+.mt10 {
+  margin-block-start: 10px;
+}
+
+.mt20 {
+  margin-block-start: 20px;
 }

@@ -1,0 +1,12 @@
+.inputAddon {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 5px;
+
+  font-size: var(--input-fontSize);
+  color: var(--disabled-fontColor);
+
+  background: var(--disabled-bgColor);
+  border: 1px solid var(--input-borderColor);
+  cursor: default;
+}

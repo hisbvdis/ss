@@ -1,17 +1,19 @@
 .card {
   --cardPadding: 15px;
+  --cardPaddingNegative: calc(var(--cardPadding) * -1);
+
   padding: var(--cardPadding);
 
   background-color: var(--color-white);
   border: 1px solid var(--section-borderColor);
 }
 
-.card:has(.card__heading, .card__section) {
+.card:has(.card__section) {
   padding: 0;
 }
-
-.card--mt {
-  margin-block-start: 10px;
+.card:not(:has(.card__section)) .card__heading {
+  margin-inline: var(--cardPaddingNegative);
+  margin-block: var(--cardPaddingNegative) var(--cardPadding);
 }
 
 .card__heading {
@@ -27,6 +29,8 @@
 
 .card__section {
   padding: var(--cardPadding);
+
+  border: none;
 }
 
 .card__section + .card__section {

@@ -1,9 +1,22 @@
-import { ButtonIcon } from "./ButtonIcon";
+import clsx from "clsx";
+import "./Button.css";
 
-export default async function Button(props) {
+
+export default function Button(props) {
+  const { className, id, style, children } = props;
+  const { type="button", onClick, tabIndex, disabled } = props;
+
   return (
-    <button>Кнопка</button>
+    <button
+      {...props}
+      className={clsx("button", className)}
+      style={style}
+      type={type}
+      onClick={onClick}
+      tabIndex={tabIndex}
+      disabled={disabled}
+    >
+      {children}
+    </button>
   )
 }
-
-Button.Icon = ButtonIcon;

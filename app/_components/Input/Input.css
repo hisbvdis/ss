@@ -1,0 +1,34 @@
+.input {
+  inline-size: 100%;
+
+  padding: 5.5px;
+
+  font-family: inherit;
+  font-size: var(--input-fontSize);
+
+  border: 1px solid var(--input-borderColor);
+  resize: none;
+}
+
+.input:invalid {
+  border: 1px solid red;
+  outline-color: red;
+}
+
+.input:disabled {
+  background-color: var(--disabled-bgColor);
+}
+
+.input::placeholder {
+  color: var(--input-placeholdreColor);
+}
+
+.input--textarea {
+  max-inline-size: none;
+  min-block-size: 43px;
+}
+
+/* Remove "cross" button for "search" input type */
+.input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance:none;
+}

@@ -1,6 +1,5 @@
 import Link from "next/link";
-
-// import { Card } from "@/app/_components/Card";
+import { Card } from "@/app/_components/Card";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 
 
@@ -8,7 +7,7 @@ export default async function AdminPage(props) {
   return (
     <div className="container">
       <Breadcrumbs items={[{label: "Админка"}]}/>
-      {/* <Card className="card--mt">
+      <Card className="mt10">
         <Card.Section>
           <ul style={{listStyle: "none", paddingInlineStart: 0}}>
             <li>
@@ -19,7 +18,7 @@ export default async function AdminPage(props) {
             </li>
           </ul>
         </Card.Section>
-      </Card> */}
+      </Card>
     </div>
   )
 }

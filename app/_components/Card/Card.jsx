@@ -1,12 +1,15 @@
 import clsx from "clsx";
 import CardHeading from "./CardHeading";
 import CardSection from "./CardSection";
+import "./Card.css";
 
-export default async function Card(props) {
-  const { children, className, style } = props;
+
+export default function Card(props) {
+  const { label, children, className, style } = props;
 
   return (
     <section className={clsx("card", className)} style={style}>
+      {label ? <Card.Heading>{label}</Card.Heading> : null}
       {children}
     </section>
   )

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export default function CardSection(props) {
+export default function _(props) {
   const { children, className, style } = props;
 
   return (

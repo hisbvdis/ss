@@ -6,3 +6,8 @@ export async function GET() {
   });
   return Response.json(dbData);
 }
+
+export async function POST(req) {
+  console.log( await req.json() )
+  return Response.json("ok");
+}
