@@ -7,7 +7,7 @@ import "./BottomPanel.css";
 
 
 export default function BottomPanel(props) {
-  const { id, delFunc, exitRedirectPath, delRedirectPath, handleFormSubmit } = props;
+  const { id, delFunc, exitRedirectPath, delRedirectPath } = props;
 
   return (
     <section className="bottomPanel">

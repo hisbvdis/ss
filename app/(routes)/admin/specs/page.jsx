@@ -1,15 +1,17 @@
 import Link from "next/link";
+
+import { deleteSpecById, getAllSpecs } from "@/app/(routes)/api/specs/requests";
+
 import { Card } from "@/app/_components/Card";
-import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
-import { deleteSpecById, getAllSpecs } from "@/app/(routes)/api/specs/funcs";
 import { DelBtn } from "@/app/_components/DelBtn";
+import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 
 
-export default async function SpecsPage(props) {
+export default async function SpecListPage(props) {
   const specs = await getAllSpecs();
 
   return (
-    <div className="container">
+    <div className="container  page">
       <Breadcrumbs items={[{label: "Админка", href: "/admin"}, {label: "Характеристики"}]}/>
       <Card className="mt10">
         <Link href="/admin/specs/add">Создать</Link>

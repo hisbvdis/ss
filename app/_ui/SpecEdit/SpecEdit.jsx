@@ -12,7 +12,7 @@ import { TextField } from "@/app/_components/TextField";
 import { InputAddon } from "@/app/_components/InputAddon";
 import { ChoiceGroup, Radio } from "@/app/_components/Choice";
 
-import { upsertSpec, deleteSpecById } from "@/app/(routes)/api/specs/funcs";
+import { upsertSpec, deleteSpecById } from "@/app/(routes)/api/specs/requests";
 
 
 export default function SpecEdit(props) {
@@ -56,7 +56,7 @@ export default function SpecEdit(props) {
 
   return (
     <Form onSubmit={handleFormSubmit}>
-      <Card label="Название и Тип">
+      <Card label="Название и Тип" className="mt10">
         <TextField
           label="ID"
           value={state.id}
@@ -123,7 +123,6 @@ export default function SpecEdit(props) {
         delFunc={deleteSpecById}
         delRedirectPath="/admin/specs"
         exitRedirectPath="./"
-        handleFormSubmit={handleFormSubmit}
       />
     </Form>
   )

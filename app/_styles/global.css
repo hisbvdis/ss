@@ -73,6 +73,10 @@ input {
   margin-inline: auto;
 }
 
+.page {
+  padding-block-start: 10px;
+}
+
 .srOnly:not(:focus):not(:active):not(:focus-within) {
   position: absolute;
 

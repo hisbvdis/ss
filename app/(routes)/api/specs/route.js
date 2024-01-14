@@ -1,8 +1,13 @@
 import { prisma } from "@/app/(routes)/api/dbClient";
 import { specWriteProcessing } from "./processing";
 
-export async function GET() {
+export async function GET(req) {
+  const searchParams = req.nextUrl.searchParams;
+  const objectType = searchParams.get("objectType");
   const dbData = await prisma.spec.findMany({
+    where: {
+      object_type: objectType
+    },
     include: {options: {orderBy: {id: "asc"}}},
   });
   return Response.json(dbData);
