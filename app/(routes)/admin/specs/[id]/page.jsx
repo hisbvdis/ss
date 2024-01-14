@@ -1,5 +1,6 @@
+import { emptySpec } from "@/app/(routes)/api/specs/processing";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
-import { emptySpec, getSpecById } from "@/app/_db/specs.db";
+import { getSpecById } from "@/app/(routes)/api/specs/funcs";
 import { SpecEdit } from "@/app/_ui/SpecEdit";
 
 export default async function EditSpecPage({params}) {

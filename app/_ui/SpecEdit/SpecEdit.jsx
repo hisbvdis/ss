@@ -12,7 +12,7 @@ import { TextField } from "@/app/_components/TextField";
 import { InputAddon } from "@/app/_components/InputAddon";
 import { ChoiceGroup, Radio } from "@/app/_components/Choice";
 
-import { upsertSpec, deleteSpecById } from "@/app/_db/specs.db";
+import { upsertSpec, deleteSpecById } from "@/app/(routes)/api/specs/funcs";
 
 
 export default function SpecEdit(props) {
@@ -47,12 +47,12 @@ export default function SpecEdit(props) {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const { id } = await upsertSpec(state, props.init);
-    // if (e.nativeEvent.submitter?.dataset?.leavePage) {
-    //   startTransition(() => {router.push("/admin/specs"); router.refresh()});
-    // } else {
-    //   startTransition(() => {router.replace(`/admin/specs/${id}`, {scroll: false}); router.refresh()});
-    // }
+    await upsertSpec(state, props.init);
+    if (e.nativeEvent.submitter?.dataset?.leavePage) {
+      startTransition(() => {router.push("/admin/specs"); router.refresh()});
+    } else {
+      startTransition(() => {router.replace(`/admin/specs/${id}`, {scroll: false}); router.refresh()});
+    }
   }
 
   return (
@@ -95,7 +95,7 @@ export default function SpecEdit(props) {
         <ChoiceGroup
           label="Элемент выбора опции"
           name="control_type"
-          valueToCompare={state.control_type ?? "checkbox"}
+          valueToCompare={state.control_type}
           onChange={handleStateChange}
         >
           <Radio value="checkbox">Checkbox</Radio>

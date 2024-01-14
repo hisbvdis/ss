@@ -1,20 +1,25 @@
-import { prisma } from "@/app/_db/dbClient";
+import { prisma } from "@/app/(routes)/api/dbClient";
+import { specReadProcessing } from "../processing";
 
-export async function GET(request, {params}) {
-  const id = Number(params.id);
+export async function GET(_, {params}) {
   const dbData = await prisma.spec.findUnique({
     where: {
-      id: id
+      id: Number(params.id)
     },
     include: {
       options: {orderBy: {id: "asc"}}
     },
   });
-  // const processed = specReadProcessing(dbData);
-  return Response.json(dbData);
+  const processed = specReadProcessing(dbData);
+  return Response.json(processed);
 }
 
-export async function DELETE() {
-  await prisma.spec.delete({where: {id: id}});
-  return Response.json("ok");
+export async function DELETE(_, {params}) {
+  console.log( params.id )
+  const result = await prisma.spec.delete({
+    where: {
+      id: Number(params.id)
+    }
+  });
+  return Response.json(result);
 }
