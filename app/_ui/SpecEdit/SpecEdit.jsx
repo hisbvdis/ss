@@ -55,7 +55,7 @@ export default function SpecEdit(props) {
   }
 
   return (
-    <Form onSubmit={handleFormSubmit}>
+    <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit>
       <Card label="Название и Тип" className="mt10">
         <TextField
           label="ID"

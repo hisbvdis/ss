@@ -3,7 +3,7 @@ import { specWriteProcessing } from "./processing";
 
 export async function GET(req) {
   const searchParams = req.nextUrl.searchParams;
-  const objectType = searchParams.get("objectType");
+  const objectType = searchParams.get("objectType") ?? undefined;
   const dbData = await prisma.spec.findMany({
     where: {
       object_type: objectType

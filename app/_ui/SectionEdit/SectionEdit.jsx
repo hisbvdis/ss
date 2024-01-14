@@ -3,17 +3,17 @@ import Link from "next/link";
 import { useImmer } from "use-immer";
 import { useRouter } from "next/navigation";
 
+import { Card } from "@/app/_components/Card";
 import { Form } from "@/app/_components/Form";
+import { Select } from "@/app/_components/Select";
 import { Button } from "@/app/_components/Button";
 import { BottomPanel } from "@/app/_ui/BottomPanel";
-import { ChoiceGroup, Radio } from "@/app/_components/Choice";
-import { Card } from "@/app/_components/Card";
-
+import { TextField } from "@/app/_components/TextField";
 import { InputAddon } from "@/app/_components/InputAddon";
-import { Select } from "@/app/_components/Select";
+import { ChoiceGroup, Radio } from "@/app/_components/Choice";
+
 import { getSpecsByFilters } from "@/app/(routes)/api/specs/requests";
 import { deleteSectionById, upsertSection } from "@/app/(routes)/api/sections/requests";
-import { TextField } from "@/app/_components/TextField";
 
 
 export default function SectionEdit(props) {
@@ -27,9 +27,9 @@ export default function SectionEdit(props) {
   }
 
   const handleSpecs = {
-    add: ({id, data}) => {
-      if (!id || state.specs.some((stateSpec) => stateSpec.id === id)) return;
-      setState((state) => {state.specs.push(data)});
+    add: (e) => {
+      if (!e.target.value || state.specs.some((stateSpec) => stateSpec.id === id)) return;
+      setState((state) => {state.specs.push(e.target.data)});
     },
     delete: (id) => {
       setState((state) => {state.specs = state.specs.filter((spec) => spec.id !== id);})
@@ -47,7 +47,7 @@ export default function SectionEdit(props) {
   }
 
   return (
-    <Form onSubmit={handleFormSubmit}>
+    <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit>
       <Card label="Название и Тип" className="mt10">
         <TextField
           label="id"
@@ -88,10 +88,8 @@ export default function SectionEdit(props) {
           {state?.specs?.map(({id, name_service}) => (
             <li key={id} style={{display: "flex"}}>
               <Button onClick={() => handleSpecs.delete(id)}>X</Button>
-              <InputGroup>
-                <InputAddon>{id}</InputAddon>
-                <Link href={`/admin/specs/${id}`}>{name_service}</Link>
-              </InputGroup>
+              <InputAddon>{id}</InputAddon>
+              <Link href={`/admin/specs/${id}`}>{name_service}</Link>
             </li>
           ))}
         </ul>
