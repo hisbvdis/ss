@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+// -----------------------------------------------------------------------------
 import { deleteSpecById, getAllSpecs } from "@/app/(routes)/api/specs/requests";
 
 import { Card } from "@/app/_components/Card";

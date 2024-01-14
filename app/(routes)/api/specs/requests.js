@@ -1,6 +1,13 @@
 "use server";
 import { revalidateTag } from "next/cache";
 
+export async function getEmptySpec() {
+  return {
+    object_type: "org",
+    control_type: "checkbox",
+  }
+}
+
 export async function getAllSpecs() {
   const res = await fetch("http://localhost:3000/api/specs", {
     method: "GET",

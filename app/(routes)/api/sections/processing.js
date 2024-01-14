@@ -1,8 +1,3 @@
-export const emptySection = {
-  object_type: "org",
-  specs: [],
-}
-
 export const sectionReadProcessing = (state) => {
   const processed = {
     ...state,

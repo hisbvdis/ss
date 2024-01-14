@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
+import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { useRouter } from "next/navigation";
-
+// -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card";
 import { Form } from "@/app/_components/Form";
 import { Select } from "@/app/_components/Select";
@@ -11,13 +12,14 @@ import { BottomPanel } from "@/app/_ui/BottomPanel";
 import { TextField } from "@/app/_components/TextField";
 import { InputAddon } from "@/app/_components/InputAddon";
 import { ChoiceGroup, Radio } from "@/app/_components/Choice";
-
+// -----------------------------------------------------------------------------
 import { getSpecsByFilters } from "@/app/(routes)/api/specs/requests";
 import { deleteSectionById, upsertSection } from "@/app/(routes)/api/sections/requests";
 
 
 export default function SectionEdit(props) {
   const [ state, setState ] = useImmer(props.init);
+  useEffect(() => setState(props.init), [props.init]);
   const router = useRouter();
 
   const handleState = {

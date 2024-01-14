@@ -1,6 +1,7 @@
 import Link from "next/link";
+// -----------------------------------------------------------------------------
 import { deleteSectionById, getAllSections } from "@/app/(routes)/api/sections/requests";
-
+// -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card";
 import { DelBtn } from "@/app/_components/DelBtn";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
