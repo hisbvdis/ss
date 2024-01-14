@@ -1,28 +1,46 @@
 "use server";
+import { revalidateTag } from "next/cache";
+
 export async function getAllSpecs() {
-  const res = await fetch("http://localhost:3000/api/specs", {method: "GET"});
+  const res = await fetch("http://localhost:3000/api/specs", {
+    method: "GET",
+    next: { tags: ["specs"] },
+  });
   if (!res.ok) throw new Error("Failed to fetch data 'getAllSpecs'");
-  return res.json();
+  const data = await res.json();
+  return data;
 }
 
 export async function getSpecById(id) {
-  const res = await fetch(`http://localhost:3000/api/specs/${id}`, {method: "GET"});
-  if (!res.ok) throw new Error("Failed to fetch data 'getSpecById'");
-  return res.json();
+  const res = await fetch(`http://localhost:3000/api/specs/${id}`, {
+    method: "GET",
+    next: { tags: ["specs"] },
+  });
+  if (!res.ok) throw new Error("Failed to fetch data 'getAllSpecs'");
+  const data = await res.json();
+  return data;
 }
 
 export async function upsertSpec(state, init) {
   const res = await fetch("http://localhost:3000/api/specs", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({state, init})
-  });
+    body: JSON.stringify({state, init}),
+    next: {tags: ["specs"]}
+  })
   if (!res.ok) throw new Error("Failed to fetch data 'upsertSpec'");
-  return res.json();
+  const data = await res.json();
+  revalidateTag("specs");
+  return data;
 }
 
 export async function deleteSpecById(id) {
-  const res = await fetch(`http://localhost:3000/api/specs/${id}`, {method: "DELETE"});
+  const res = await fetch(`http://localhost:3000/api/specs/${id}`, {
+    method: "DELETE",
+    next: {tags: ["specs"]}
+  });
   if (!res.ok) throw new Error("Failed to fetch data 'deleteSpecById'");
-  return res.json();
+  const data = await res.json();
+  revalidateTag("specs");
+  return data;
 }

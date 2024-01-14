@@ -3,8 +3,8 @@ import { useImmer } from "use-immer";
 import { useRouter } from "next/navigation";
 import { useEffect, useTransition } from "react";
 
-import { Form } from "@/app/_components/Form";
 import { Card } from "@/app/_components/Card";
+import { Form } from "@/app/_components/Form";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
 import { BottomPanel } from "@/app/_ui/BottomPanel";
@@ -19,7 +19,6 @@ export default function SpecEdit(props) {
   const [ state, setState ] = useImmer(props.init);
   useEffect(() => setState(props.init), [props.init]);
   const router = useRouter();
-  const [_, startTransition] = useTransition();
 
   const handleStateChange = (e) => {
     setState((state) => {state[e.target.name] = e.target.value});
@@ -47,11 +46,11 @@ export default function SpecEdit(props) {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    await upsertSpec(state, props.init);
+    const { id } = await upsertSpec(state, props.init);
     if (e.nativeEvent.submitter?.dataset?.leavePage) {
-      startTransition(() => {router.push("/admin/specs"); router.refresh()});
+      router.push("/admin/specs"); router.refresh();
     } else {
-      startTransition(() => {router.replace(`/admin/specs/${id}`, {scroll: false}); router.refresh()});
+      router.replace(`/admin/specs/${id}`, {scroll: false}); router.refresh();
     }
   }
 

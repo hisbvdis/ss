@@ -15,7 +15,6 @@ export async function GET(_, {params}) {
 }
 
 export async function DELETE(_, {params}) {
-  console.log( params.id )
   const result = await prisma.spec.delete({
     where: {
       id: Number(params.id)
