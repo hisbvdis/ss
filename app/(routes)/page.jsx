@@ -1,5 +1,8 @@
-export default function Home(props) {
+import { redirect } from "next/navigation";
+
+export default async function RootPage({searchParams}) {
+  redirect("/catalog");
   return (
-    null
+    <h1>Main page</h1>
   )
 }

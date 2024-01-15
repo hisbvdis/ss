@@ -5,11 +5,11 @@ import "./Card.css";
 
 
 export default function Card(props) {
-  const { label, children, className, style } = props;
+  const { heading, children, className, style } = props;
 
   return (
     <section className={clsx("card", className)} style={style}>
-      {label ? <Card.Heading>{label}</Card.Heading> : null}
+      {heading ? <Card.Heading>{heading}</Card.Heading> : null}
       {children}
     </section>
   )

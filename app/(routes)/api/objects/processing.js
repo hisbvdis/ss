@@ -20,7 +20,7 @@ export const objectWriteProcessing = (incoming) => {
   const state = structuredClone(incoming);
   let processed = {
     ...state,
-    name_full: state.object_type === "place" ? [`${state.name_type}`, `${state.name_where}`].filter((v) => v).join(" ") : state.name_full,
+    name_full: state.type === "place" ? [`${state.name_type}`, `${state.name_where}`].filter((v) => v).join(" ") : state.name_full,
     city_id: state.city_id ? Number(state.city_id) : null,
     parent_org_id: state.parent_org_id ? Number(state.parent_org_id) : null,
     coord_lat: state.coord_lat !== 0 ? Number.parseFloat(state.coord_lat) : null,

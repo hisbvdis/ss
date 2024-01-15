@@ -3,7 +3,7 @@ import { revalidateTag } from "next/cache";
 
 export async function getEmptySpec() {
   return {
-    object_type: "org",
+    type: "org",
     control_type: "checkbox",
   }
 }

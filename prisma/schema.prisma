@@ -66,7 +66,7 @@ model spec {
   id           Int               @id @default(autoincrement())
   name_service String
   name_filter  String
-  object_type  String
+  type  String
   control_type String
   options      option[]          @relation("option_spec")
   sections     section_on_spec[] @relation("section_spec")
@@ -75,7 +75,7 @@ model spec {
 model section {
   id          Int                 @id @default(autoincrement())
   name        String              @unique
-  object_type String
+  type String
   specs       section_on_spec[]   @relation("section_spec")
   objects     object_on_section[] @relation("object_section")
 }

@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 // -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card";
 import { Form } from "@/app/_components/Form";
+import { Input } from "@/app/_components/Input";
 import { Select } from "@/app/_components/Select";
 import { Button } from "@/app/_components/Button";
+import { Control } from "@/app/_components/Control";
 import { BottomPanel } from "@/app/_ui/BottomPanel";
-import { TextField } from "@/app/_components/TextField";
 import { InputAddon } from "@/app/_components/InputAddon";
-import { ChoiceGroup, Radio } from "@/app/_components/Choice";
+import { Radio, RadioGroup } from "@/app/_components/Choice";
 // -----------------------------------------------------------------------------
 import { getSpecsByFilters } from "@/app/(routes)/api/specs/requests";
 import { deleteSectionById, upsertSection } from "@/app/(routes)/api/sections/requests";
@@ -50,40 +51,43 @@ export default function SectionEdit(props) {
 
   return (
     <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit>
-      <Card label="Название и Тип" className="mt10">
-        <TextField
-          label="id"
-          value={state.id}
-          disabled
-        />
-        <TextField
-          label="Название (множ. число)"
-          className="mt20"
-          name="name"
-          value={state.name}
-          onChange={handleState.change}
-          required
-        />
-        <ChoiceGroup
-          label="Тип объектов"
-          className="mt20"
-          name="object_type"
-          valueToCompare={state.object_type}
-          onChange={handleState.change}
-        >
-          <Radio value="org">Организация</Radio>
-          <Radio value="place">Место</Radio>
-        </ChoiceGroup>
+      <Card className="mt10">
+        <Card.Heading>Название и Тип</Card.Heading>
+        <Control>
+          <Control.Label>id</Control.Label>
+          <Input value={state.id} disabled/>
+        </Control>
+        <Control className="mt20">
+          <Control.Label>Название (множ. число)</Control.Label>
+          <Input
+            name="name"
+            value={state.name}
+            onChange={handleState.change}
+            required
+          />
+        </Control>
+        <Control className="mt20">
+          <Control.Label>Тип объектов</Control.Label>
+          <RadioGroup
+            name="type"
+            valueToCompare={state.type}
+            onChange={handleState.change}
+          >
+            <Radio value="org">Организация</Radio>
+            <Radio value="place">Место</Radio>
+          </RadioGroup>
+        </Control>
       </Card>
 
-      <Card label="Характеристики раздела" className="mt10">
+      <Card className="mt10">
+        <Card.Heading>Характеристики раздела</Card.Heading>
         <Select
           isAutocomplete={true}
           onChange={handleSpecs.add}
           placeholder="Добавить характеристику"
           requestItemsOnFirstTouch={async () =>
-            (await getSpecsByFilters({objectType: state.object_type}))
-              ?.map((spec) => ({id: spec.id, label: spec.name_service, data: spec}))
+            (await getSpecsByFilters({objectType: state.type}))
+              ?.map((spec) => ({id: spec.id, text: spec.name_service, data: spec}))
           }
         />
         <ul className="mt20" style={{paddingInlineStart: 0}}>

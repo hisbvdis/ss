@@ -1,4 +1,4 @@
-import ChoiceGroup from "./ChoiceGroup";
+import { ChoiceGroup, RadioGroup, CheckboxGroup } from "./ChoiceGroup";
 import { Checkbox, Radio } from "./Choice";
 
-export { ChoiceGroup, Radio, Checkbox };
+export { ChoiceGroup, RadioGroup, CheckboxGroup, Radio, Checkbox };

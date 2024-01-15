@@ -1,30 +1,32 @@
 import clsx from "clsx";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+// -----------------------------------------------------------------------------
 import { useDebounce } from "@/app/_utils/useDebounce";
-
-import { ArrowDownIcon, CloseIcon } from "@/app/_icons";
+// -----------------------------------------------------------------------------
+import { Label } from "@/app/_components/Label";
 import { Menu } from "@/app/_components/Menu";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
+import { ArrowDownIcon, CloseIcon } from "@/app/_icons";
 import "./Select.css";
 
 
 export default function Select(props) {
-  const { name, value, label } = props;
+  const { name, value, text, label } = props;
   const { items, requestItemsOnInputChange, requestItemsOnFirstTouch, requestMinInputLenght=3 } = props;
   const { onChange=(e=>e), onChangeData=(e=>e) } = props;
-  const { placeholder, disabled, isAutocomplete } = props;
-  const isSelect = !isAutocomplete;
+  const { placeholder, disabled, isAutocomplete, isSelect=!isAutocomplete } = props;
   const [ localItems, setLocalItems ] = useState(items?.map((item, index) => ({...item, index})) ?? []);
   const [ suggestions, setSuggestions ] = useState(localItems);
   const [ selectedItem, setSelectedItem ] = useState(isSelect ? localItems.find((item) => item.id === value) : null);
-  const [ inputValue, setInputValue ] = useState(isSelect ? selectedItem?.label : label);
+  const [ inputValue, setInputValue ] = useState(isSelect ? selectedItem?.text : text);
   const [ isMenu, setIsMenu ] = useState(false);
   const debounce = useDebounce();
   const inputRef = useRef();
+  const inputId = useId();
   useEffect(() => {isSelect ? setSelectedItem(localItems.find((item) => item.id === value)) : null}, [value]);
-  useEffect(() => {isAutocomplete ? setInputValue(label) : null}, [label]);
-  useEffect(() => {isSelect ? setInputValue(selectedItem?.label) : null}, [selectedItem]);
+  useEffect(() => {isAutocomplete ? setInputValue(text) : null}, [text]);
+  useEffect(() => {isSelect ? setInputValue(selectedItem?.text) : null}, [selectedItem]);
 
   const handleInputClick = async (e) => {
     isSelect ? setIsMenu(!isMenu) : setIsMenu(true);
@@ -52,7 +54,7 @@ export default function Select(props) {
       }, 300);
       setIsMenu(true);
     } else {
-      setSuggestions(localItems.filter(({label}) => label.toLowerCase().includes(e.target.value?.toLowerCase())));
+      setSuggestions(localItems.filter(({text}) => text.toLowerCase().includes(e.target.value?.toLowerCase())));
       setIsMenu(true);
     }
   }
@@ -61,7 +63,7 @@ export default function Select(props) {
     if (e.target?.closest(".select")) return;
     setIsMenu(false);
     setSuggestions(localItems ?? []);
-    isSelect ? setInputValue(selectedItem?.label) : setInputValue(label);
+    isSelect ? setInputValue(selectedItem?.text) : setInputValue(text);
   }
 
   const handleClearBtnClick = () => {
@@ -73,7 +75,7 @@ export default function Select(props) {
 
   const handleMenuSelect = (index) => {
     const item = suggestions[index];
-    isSelect ? setSelectedItem(item) : setInputValue(item?.label);
+    isSelect ? setSelectedItem(item) : setInputValue(item?.text);
     onChange({target: {name, value: item?.id, data: item?.data}});
     onChangeData(item?.data);
     setSuggestions(localItems ?? []);
@@ -85,7 +87,7 @@ export default function Select(props) {
     switch (e.code) {
       case "Escape":
       case "Tab": {
-        isSelect ? setInputValue(selectedItem?.label) : setInputValue(label);
+        isSelect ? setInputValue(selectedItem?.text) : setInputValue(text);
         setSuggestions(localItems ?? []);
         setIsMenu(false);
         break;
@@ -132,9 +134,11 @@ export default function Select(props) {
 
   return (
     <div className={clsx("select", disabled && "select--disabled")}>
+      {label ? <Label htmlFor={inputId}>{label}</Label> : null}
       <p className="select__inputWrapper">
         <Input
           className={clsx("select__input", isAutocomplete && "select__input--isAutocomplete")}
+          id={inputId}
           ref={inputRef}
           value={inputValue}
           onChange={handleInputChange}

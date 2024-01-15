@@ -1,9 +1,14 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useTransition } from "react";
+import { createContext, useEffect, useTransition } from "react";
 import { useImmer } from "use-immer";
+// -----------------------------------------------------------------------------
 import { syncPhotos } from "./utils/syncPhotos";
+// -----------------------------------------------------------------------------
+import { Form } from "@/app/_components/Form";
+import { Address, Contacts, Description, NameOrg, NamePlace, Schedule, SectionsOptions } from ".";
 // import { setInheritedData } from "./index.js";
+import "./ObjectEdit.css";
 
 export default function ObjectEdit(props) {
   const [ state, setState ] = useImmer(props.init);
@@ -16,11 +21,7 @@ export default function ObjectEdit(props) {
   // }, [])
 
   const handleStateChange = (e) => {
-    if (e.nativeEvent.type === "click") {
-      setState((state) => {state[e.target.name] = e.target.checked});
-    } else {
-      setState((state) => {state[e.target.name] = e.target.value});
-    }
+    setState((state) => {state[e.target.name] = e.target.value});
   }
 
   const handleFormSubmit = async (e) => {
@@ -29,13 +30,24 @@ export default function ObjectEdit(props) {
     await syncPhotos(id, state, props.init);
 
     if (e.nativeEvent.submitter?.dataset?.leavePage) {
-      startTransition(() => {router.push(`/${state.object_type}/${id}`); router.refresh()});
+      startTransition(() => {router.push(`/${state.type}/${id}`); router.refresh()});
     } else {
-      startTransition(() => {router.replace(`/${state.object_type}/${id}/edit`, {scroll: false}); router.refresh()});
+      startTransition(() => {router.replace(`/${state.type}/${id}/edit`, {scroll: false}); router.refresh()});
     }
   }
 
   return (
-    null
+    <ObjectContext.Provider value={{state, setState, handleStateChange}}>
+      <Form>
+        {state.type === "org" ? <NameOrg/> : <NamePlace/>}
+        <Address/>
+        {/* <Contacts/> */}
+        {/* <SectionsOptions/> */}
+        {/* <Description/> */}
+        <Schedule/>
+      </Form>
+    </ObjectContext.Provider>
   )
 }
+
+export const ObjectContext = createContext();

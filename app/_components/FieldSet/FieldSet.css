@@ -1,0 +1,12 @@
+.fieldSet {
+  margin-inline: 0;
+  padding: 0;
+
+  border: none;
+}
+
+.fieldSet--row {
+  display: flex;
+  align-items: center;
+  gap: var(--controls-gap);
+}

@@ -49,9 +49,9 @@ export default function Menu(props) {
 
   useEffect(() => {
     if (!isMenu) return;
-    if (!value?.id && !value?.label) return;
+    if (!value?.id && !value?.text) return;
     if (!items.length) return;
-    const itemIndex = items.findIndex((item) => item.id === value.id || item.label === value.label);
+    const itemIndex = items.findIndex((item) => item.id === value.id || item.text === value.text);
     setFocusIndex(itemIndex);
     focusItemByIndex(itemIndex);
   }, [isMenu])
@@ -69,12 +69,12 @@ export default function Menu(props) {
   if (!isMenu) return null;
   return (
     <ul className={clsx("menu", className)} style={style} ref={listRef}>
-      {items?.map(({label, label2, label3, label4}, i) => (
+      {items?.map(({text, text2, text3, text4}, i) => (
         <li key={i} className={clsx("menu__item", i === focusIndex && "menu__item--focus")} onPointerDown={handlePointerDown} onPointerEnter={() => setFocusIndex(i)}>
-          <p>{label}</p>
-          <p style={{color: "#999", fontSize: "0.95em"}}>{label2}</p>
-          <p style={{color: "#999", fontSize: "0.95em"}}>{label3}</p>
-          <p style={{color: "#999", fontSize: "0.95em"}}>{label4}</p>
+          <p>{text}</p>
+          <p style={{color: "#999", fontSize: "0.95em"}}>{text2}</p>
+          <p style={{color: "#999", fontSize: "0.95em"}}>{text3}</p>
+          <p style={{color: "#999", fontSize: "0.95em"}}>{text4}</p>
         </li>
       ))}
     </ul>

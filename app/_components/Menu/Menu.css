@@ -7,6 +7,8 @@
   max-block-size: 500px;
   padding-inline-start: 0;
 
+  font-size: 13rem;
+
   background-color: var(--color-white);
   border: 1px solid var(--input-borderColor);
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.08);

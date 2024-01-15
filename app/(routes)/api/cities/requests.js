@@ -12,6 +12,7 @@ export async function getCitiesByFilters(filters) {
 }
 
 export async function getCityById(id) {
+  if (!id) return;
   const res = await fetch(`http://localhost:3000/api/cities/${id}`, {
     method: "GET",
     next: { tags: ["cities"] },

@@ -3,13 +3,13 @@ import { revalidateTag } from "next/cache";
 
 export async function getEmptySection() {
   return {
-    object_type: "org",
+    type: "org",
     specs: [],
   }
 }
 
 export async function getSectionsByFilters(filters) {
-  const filterString =  Object.entries(filters).map(([name, value]) => `${name}=${value}`).join("&");
+  const filterString =  filters && Object.entries(filters).map(([name, value]) => `${name}=${value}`).join("&");
   const res = await fetch(`http://localhost:3000/api/sections?${filterString}`, {
     method: "GET",
     next: { tags: ["sections"] },

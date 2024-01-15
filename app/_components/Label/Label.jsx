@@ -10,7 +10,7 @@ export default function Label(props) {
 
   return (
     <label id={id} htmlFor={htmlFor} className={clsx("label", className)} style={style}>
-      {children}
+      <span>{children}</span>
       {required ? <span className="label__asteriks">*</span> : null}
     </label>
   )

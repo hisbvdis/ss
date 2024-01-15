@@ -3,16 +3,16 @@ import { useImmer } from "use-immer";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 // -----------------------------------------------------------------------------
+import { upsertSpec, deleteSpecById } from "@/app/(routes)/api/specs/requests";
+// -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card";
 import { Form } from "@/app/_components/Form";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
 import { BottomPanel } from "@/app/_ui/BottomPanel";
-import { TextField } from "@/app/_components/TextField";
+import { Control } from "@/app/_components/Control";
 import { InputAddon } from "@/app/_components/InputAddon";
-import { ChoiceGroup, Radio } from "@/app/_components/Choice";
-// -----------------------------------------------------------------------------
-import { upsertSpec, deleteSpecById } from "@/app/(routes)/api/specs/requests";
+import { Radio, RadioGroup } from "@/app/_components/Choice";
 
 
 export default function SpecEdit(props) {
@@ -56,50 +56,59 @@ export default function SpecEdit(props) {
 
   return (
     <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit>
-      <Card label="Название и Тип" className="mt10">
-        <TextField
-          label="ID"
-          value={state.id}
-          disabled
-        />
-        <TextField
-          className="mt20"
-          label="Название (служебное)"
-          name="name_service"
-          value={state.name_service}
-          onChange={handleStateChange}
-          required
-        />
-        <TextField
-          className="mt20"
-          label="Название (в поиске и редактировании)"
-          name="name_filter"
-          value={state.name_filter}
-          onChange={handleStateChange}
-          required
-        />
-        <ChoiceGroup
-          className="mt20"
-          label="Тип объектов"
-          name="object_type"
-          valueToCompare={state.object_type}
-          onChange={handleStateChange}
-        >
-          <Radio value="org">Организации</Radio>
-          <Radio value="place">Места</Radio>
-        </ChoiceGroup>
+      <Card className="mt10">
+        <Card.Heading>Название и Тип</Card.Heading>
+        <Control>
+          <Control.Label>ID</Control.Label>
+          <Input
+            value={state.id}
+            disabled
+          />
+        </Control>
+        <Control className="mt20">
+          <Control.Label>Название (служебное)</Control.Label>
+          <Input
+            name="name_service"
+            value={state.name_service}
+            onChange={handleStateChange}
+            required
+          />
+        </Control>
+        <Control className="mt20">
+          <Control.Label>Название (в поиске и редактировании)</Control.Label>
+          <Input
+            name="name_filter"
+            value={state.name_filter}
+            onChange={handleStateChange}
+            required
+          />
+        </Control>
+        <Control className="mt20">
+          <Control.Label>Тип объектов</Control.Label>
+          <RadioGroup
+            name="type"
+            valueToCompare={state.type}
+            onChange={handleStateChange}
+          >
+            <Radio value="org">Организации</Radio>
+            <Radio value="place">Места</Radio>
+          </RadioGroup>
+        </Control>
       </Card>
 
-      <Card label='Страница "Редактировать"' className="mt10">
-        <ChoiceGroup
-          label="Элемент выбора опции"
-          name="control_type"
-          valueToCompare={state.control_type}
-          onChange={handleStateChange}
-        >
-          <Radio value="checkbox">Checkbox</Radio>
-          <Radio value="radio">Radio</Radio>
-        </ChoiceGroup>
+      <Card className="mt10">
+        <Card.Heading>Страница "Редактировать"</Card.Heading>
+        <Control>
+          <Control.Label>Элемент выбора опции</Control.Label>
+          <RadioGroup
+            name="control_type"
+            valueToCompare={state.control_type}
+            onChange={handleStateChange}
+          >
+            <Radio value="checkbox">Checkbox</Radio>
+            <Radio value="radio">Radio</Radio>
+          </RadioGroup>
+        </Control>
       </Card>
 
       <Card className="mt10">

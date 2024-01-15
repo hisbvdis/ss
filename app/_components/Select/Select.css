@@ -1,7 +1,5 @@
 .select {
   position: relative;
-
-  font-size: 13rem;
 }
 
 .select__inputWrapper {
@@ -13,6 +11,8 @@
 .select__input {
   font-size: inherit;
   cursor: default;
+
+  font-size: 13rem;
 }
 
 .select__input--isAutocomplete {

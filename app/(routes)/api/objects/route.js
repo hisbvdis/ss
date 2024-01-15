@@ -13,7 +13,7 @@ export async function GET(req) {
       city_id: cityId || undefined,
       sections: sectionId ? {some: {section_id: {equals: sectionId}}} : undefined,
       name_full: query ? {contains: query, mode: 'insensitive'} : undefined,
-      object_type: type,
+      type: type,
       AND: specs?.length ? specs?.map(({options}) => options.map(({id}) => id)).map((ids) => ({options: {some: {option_id: {in: ids}}}})) : undefined,
     },
     orderBy: {

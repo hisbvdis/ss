@@ -7,7 +7,7 @@ import "./ChoiceGroup.css";
 import Label from "../Label/Label";
 
 
-export default function ChoiceGroup(props) {
+export function ChoiceGroup(props) {
   const fieldsetRef = useRef();
   const controlContext = useContext(ControlContext);
   const { label, name=useId(), valueToCompare="", arrayToCompare=[] } = props;
@@ -34,3 +34,5 @@ export default function ChoiceGroup(props) {
 }
 
 export const ChoiceGroupContext = createContext();
+export const CheckboxGroup = (props) => <ChoiceGroup {...props}/>
+export const RadioGroup = (props) => <ChoiceGroup {...props}/>
