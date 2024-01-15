@@ -8,12 +8,13 @@ export async function getEmptySection() {
   }
 }
 
-export async function getAllSections() {
-  const res = await fetch("http://localhost:3000/api/sections", {
+export async function getSectionsByFilters(filters) {
+  const filterString =  Object.entries(filters).map(([name, value]) => `${name}=${value}`).join("&");
+  const res = await fetch(`http://localhost:3000/api/sections?${filterString}`, {
     method: "GET",
     next: { tags: ["sections"] },
   });
-  if (!res.ok) throw new Error("Failed to fetch data 'getAllSections'");
+  if (!res.ok) throw new Error("Failed to fetch data 'getSectionsByFilters'");
   const data = await res.json();
   return data;
 }

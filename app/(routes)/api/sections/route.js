@@ -1,8 +1,13 @@
 import { prisma } from "@/app/(routes)/api/dbClient";
 import { sectionWriteProcessing } from "./processing";
 
-export async function GET() {
+export async function GET(req) {
+  const searchParams = req.nextUrl.searchParams;
+  const objectType = searchParams.get("objectType") ?? undefined;
   const dbData = await prisma.section.findMany({
+    where: {
+      object_type: objectType
+    },
     include: {specs: {include: {spec: {include: {options: true}}}}},
   });
   return Response.json(dbData);
