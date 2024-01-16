@@ -1,4 +1,4 @@
-// <ControlLabel></ControlLabel>
+// <Control.Label></Control.Label>
 "use client";
 import clsx from "clsx";
 import { useContext } from "react";

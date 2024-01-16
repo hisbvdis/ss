@@ -55,7 +55,6 @@ export default function Address(props) {
   }
 
   const handleParentOrgChange = (e) => {
-    if (!e.target.value) return;
     setState((state) => {
       state.parentOrg = e.target.data;
       state.parent_org_id = e.target.value;
@@ -75,8 +74,10 @@ export default function Address(props) {
     <Card heading="Адрес и местоположение" className="mt10">
       <Flex gap="15px">
         <div className="objectEdit__address">
+          <Control>
+            <Control.Label>Город</Control.Label>
+          </Control>
           <Select
-            label="Город"
             name="city_id"
             value={state.city_id}
             text={state?.city?.name}
@@ -96,13 +97,14 @@ export default function Address(props) {
             <Select
               name="parent_org_id"
               value={state?.parent_org_id}
-              label={state?.parentOrg?.name_full}
+              text={state?.parentOrg?.name_full}
               onChange={handleParentOrgChange}
-              isAutocomplete={true} placeholder="Введите название"
+              isAutocomplete={true}
+              placeholder="Введите название"
               disabled={!state.city_id}
               requestItemsOnInputChange={async (name) => (await getObjectsByFilters({city: state.city_id ?? -1, type: "org", query: name}))
                 .filter((org) => org.id !== state.id)
-                .map((org) => ({id: org.id, label: org.name_full, data: org})
+                .map((org) => ({id: org.id, text: org.name_full, data: org})
               )}
             />
           </Control>

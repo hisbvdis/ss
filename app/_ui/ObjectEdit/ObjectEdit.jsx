@@ -1,13 +1,14 @@
 "use client";
+import { useImmer } from "use-immer";
 import { useRouter } from "next/navigation";
 import { createContext, useEffect, useTransition } from "react";
-import { useImmer } from "use-immer";
 // -----------------------------------------------------------------------------
-import { syncPhotos } from "./utils/syncPhotos";
+import { syncPhotos, setInheritedData } from "./index.js";
+import { upsertObject, deleteObject } from "@/app/(routes)/api/objects/requests";
 // -----------------------------------------------------------------------------
 import { Form } from "@/app/_components/Form";
-import { Address, Contacts, Description, NameOrg, NamePlace, Schedule, SectionsOptions } from ".";
-// import { setInheritedData } from "./index.js";
+import { BottomPanel } from "@/app/_ui/BottomPanel";
+import { Address, Contacts, Description, NameOrg, NamePlace, Photos, Schedule, SectionsOptions } from ".";
 import "./ObjectEdit.css";
 
 export default function ObjectEdit(props) {
@@ -41,10 +42,18 @@ export default function ObjectEdit(props) {
       <Form>
         {state.type === "org" ? <NameOrg/> : <NamePlace/>}
         <Address/>
-        {/* <Contacts/> */}
-        {/* <SectionsOptions/> */}
-        {/* <Description/> */}
+        <Contacts/>
+        <SectionsOptions/>
+        <Description/>
         <Schedule/>
+        <Photos/>
+        <BottomPanel
+          id={state.id}
+          delFunc={deleteObject}
+          exitRedirectPath="./"
+          delRedirectPath="/catalog"
+          handleFormSubmit={handleFormSubmit}
+        />
       </Form>
     </ObjectContext.Provider>
   )

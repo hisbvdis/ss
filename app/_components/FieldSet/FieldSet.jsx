@@ -2,6 +2,7 @@
 import clsx from "clsx";
 import { createContext, useId } from 'react';
 import "./FieldSet.css";
+import FieldSetLegend from "./FieldSetLegend";
 
 
 export default function FieldSet(props) {
@@ -18,3 +19,4 @@ export default function FieldSet(props) {
 }
 
 export const FieldSetContext = createContext();
+FieldSet.Legend = FieldSetLegend;

@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Input } from "@/app/_components/Input";
 import { ObjectContext } from "./ObjectEdit";
 import { Button } from "@/app/_components/Button";
-import { FieldSet, FieldSetLegend } from "@/app/_components/FieldSet";
+import { FieldSet } from "@/app/_components/FieldSet";
 import { Card } from "@/app/_components/Card";
 import { Flex } from "@/app/_components/Flex";
 
@@ -37,10 +37,10 @@ export default function Contacts(props) {
       <Card.Heading>Контакты</Card.Heading>
       <Card.Section style={{display: "flex", gap: "20px"}}>
         <FieldSet style={{flexBasis: "50%"}}>
-          <FieldSetLegend>
+          <FieldSet.Legend>
             <span>Телефоны</span>
             <Button onClick={() => handleContacts.add("phones")} disabled={state.parent_org_id}>+</Button>
-          </FieldSetLegend>
+          </FieldSet.Legend>
           <Flex direction="column">
             {state.phones?.map(({localId, value, comment}) => (
               <div key={localId} style={{display: "grid", gridTemplateColumns: "auto 1fr", inlineSize: "100%"}}>
@@ -52,10 +52,10 @@ export default function Contacts(props) {
           </Flex>
         </FieldSet>
         <FieldSet style={{flexBasis: "50%"}}>
-          <FieldSetLegend>
+          <FieldSet.Legend>
             <span>Ссылки</span>
             <Button onClick={() => handleContacts.add("links")} disabled={state.parent_org_id}>+</Button>
-          </FieldSetLegend>
+          </FieldSet.Legend>
           <Flex direction="column">
           {state.links?.map(({localId, value, comment}) => (
               <div key={localId} style={{display: "grid", gridTemplateColumns: "auto 1fr", inlineSize: "100%"}}>

@@ -1,13 +1,13 @@
 "use client";
 import { useContext } from "react";
-
-import { Input } from "@/app/_components/Input";
-import { Button } from "@/app/_components/Button";
+// -----------------------------------------------------------------------------
 import { ObjectContext } from "./ObjectEdit";
-import { Checkbox } from "@/app/_components/Choice";
-import { Control } from "@/app/_components/Control";
 import { Card } from "@/app/_components/Card";
 import { Flex } from "@/app/_components/Flex";
+import { Input } from "@/app/_components/Input";
+import { Button } from "@/app/_components/Button";
+import { Checkbox } from "@/app/_components/Choice";
+import { Control } from "@/app/_components/Control";
 
 
 export default function Schedule(props) {

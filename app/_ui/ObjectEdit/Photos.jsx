@@ -1,9 +1,9 @@
 "use client";
 import { useContext, useState } from "react";
-import { Button } from "@/app/_components/Button";
-import { FormSection, FormSectionContent, FormSectionHeading } from "@/app/_components/Form";
+// -----------------------------------------------------------------------------
 import { ObjectContext } from "./ObjectEdit";
-import { Card, CardHeading, CardSection } from "@/app/_components/Card";
+import { Card } from "@/app/_components/Card";
+import { Button } from "@/app/_components/Button";
 
 
 export default function Photos(props) {

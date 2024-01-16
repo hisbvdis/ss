@@ -12,7 +12,7 @@ export default async function CatalogPage({searchParams}) {
 
   return (
     <div className="container  page">
-      <Catalog/>
+      <Catalog searchParams={searchParams} city={city} sections={sections} searchResults={searchResults}/>
     </div>
   )
 }

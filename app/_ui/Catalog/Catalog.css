@@ -1,0 +1,18 @@
+.catalog {
+  display: flex;
+  min-block-size: calc(100vh - 105px);
+  gap: 10px;
+}
+
+.catalog__aside {
+  flex: 0 0 220px;
+}
+
+.catalog__results {
+  flex: 1 1 0;
+  /* max-inline-size: 645px; */
+}
+
+.catalog__map {
+  flex: 1 1 0;
+}

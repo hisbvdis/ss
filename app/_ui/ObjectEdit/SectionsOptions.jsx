@@ -60,26 +60,26 @@ export default function Sections(props) {
       <Card.Section style={{display: "flex", gap: "15px"}}>
         {state.sections?.map((section) => (
           <FieldSet key={section.id}>
-            <FieldSetLegend>
+            <FieldSet.Legend>
               <Button onClick={() => handleSections.delete(section)}>X</Button>
               <span>{section.name}</span>
-            </FieldSetLegend>
+            </FieldSet.Legend>
             {section?.specs?.map(({spec}) => (
               <Control key={spec.id}>
                 <Control.Label>{spec.name_filter}</Control.Label>
                 {spec.control_type === "checkbox"
-                  ? <ChoiceGroup arrayToCompare={state.options?.map(({id}) => id)} required>
+                  ? <CheckboxGroup arrayToCompare={state.options?.map(({id}) => id)} required>
                       {spec.options.map((opt) => (
                         <Checkbox key={opt.id} value={opt.id} onChange={(e) => handleOptions.changeCheckbox(e, opt)}>{opt.name}</Checkbox>
                       ))}
-                    </ChoiceGroup>
+                    </CheckboxGroup>
                   :
                 spec.control_type === "radio"
-                  ? <ChoiceGroup arrayToCompare={state.options.map(({id}) => id)} required>
+                  ? <RadioGroup arrayToCompare={state.options.map(({id}) => id)} required>
                       {spec.options.map((opt) => (
                         <Radio key={opt.id} value={opt.id} onChange={() => handleOptions.changeRadio(spec, opt)}>{opt.name}</Radio>
                       ))}
-                    </ChoiceGroup>
+                    </RadioGroup>
                   : ""}
               </Control>
             ))}
@@ -88,7 +88,6 @@ export default function Sections(props) {
         </Card.Section>
       <Card.Section>
         <Select
-          test
           isAutocomplete={true}
           value={""}
           label={""}

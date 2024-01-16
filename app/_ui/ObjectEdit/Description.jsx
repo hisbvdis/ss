@@ -1,8 +1,9 @@
 "use client";
 import { useContext } from "react";
-import { Input } from "@/app/_components/Input";
-import { Card } from "@/app/_components/Card";
+// -----------------------------------------------------------------------------
 import { ObjectContext } from "./ObjectEdit";
+import { Card } from "@/app/_components/Card";
+import { Textarea } from "@/app/_components/Input";
 
 
 export default function Description(props) {
@@ -10,7 +11,7 @@ export default function Description(props) {
 
   return (
     <Card heading="Описание" className="mt10">
-      <Input type="textarea" name="description" value={state.description} onChange={handleStateChange} />
+      <Textarea name="description" value={state.description} onChange={handleStateChange}/>
     </Card>
   )
 }

@@ -1,3 +1,4 @@
-import Input from "./Input";
+import { Input } from "./Input";
+import { Textarea } from "./Input";
 
-export { Input };
+export { Input, Textarea };
