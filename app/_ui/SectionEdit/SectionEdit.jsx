@@ -23,29 +23,33 @@ export default function SectionEdit(props) {
   useEffect(() => setState(props.init), [props.init]);
   const router = useRouter();
 
-  const handleState = {
-    change: (e) => {
-      setState((state) => {state[e.target.name] = e.target.value});
-    }
+  const handleStateChange = (e) => {
+    setState((state) => {
+      state[e.target.name] = e.target.value;
+    });
   }
 
   const handleSpecs = {
     add: (e) => {
       if (!e.target.value || state.specs.some((stateSpec) => stateSpec.id === id)) return;
-      setState((state) => {state.specs.push(e.target.data)});
+      setState((state) => {
+        state.specs.push(e.target.data);
+      });
     },
     delete: (id) => {
-      setState((state) => {state.specs = state.specs.filter((spec) => spec.id !== id);})
+      setState((state) => {
+        state.specs = state.specs.filter((spec) => spec.id !== id);
+      })
     },
   }
 
-  const handleFormSubmit = async (e, params) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const { id } = await upsertSection(state, props.init);
     if (e.nativeEvent.submitter?.dataset?.leavePage) {
-      router.push("/admin/sections"); router.refresh();
+      router.push("/admin/sections");
     } else {
-      router.replace(`/admin/sections/${id}`, {scroll: false}); router.refresh();
+      router.replace(`/admin/sections/${id}`, {scroll: false});
     }
   }
 
@@ -62,16 +66,16 @@ export default function SectionEdit(props) {
           <Input
             name="name"
             value={state.name}
-            onChange={handleState.change}
+            onChange={handleStateChange}
             required
           />
         </Control>
         <Control className="mt20">
           <Control.Label>Тип объектов</Control.Label>
           <RadioGroup
-            name="type"
-            valueToCompare={state.type}
-            onChange={handleState.change}
+            name="object_type"
+            valueToCompare={state.object_type}
+            onChange={handleStateChange}
           >
             <Radio value="org">Организация</Radio>
             <Radio value="place">Место</Radio>

@@ -1,8 +1,0 @@
-.label {
-  display: inline-block;
-  padding: 0;
-}
-
-.label__asteriks {
-  color: var(--color-red, #ff0000);
-}

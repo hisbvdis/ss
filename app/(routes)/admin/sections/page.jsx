@@ -1,17 +1,17 @@
 import Link from "next/link";
 // -----------------------------------------------------------------------------
-import { deleteSectionById, getSectionsByFilters } from "@/app/(routes)/api/sections/requests";
-// -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card";
 import { DelBtn } from "@/app/_components/DelBtn";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
+// -----------------------------------------------------------------------------
+import { deleteSectionById, getSectionsByFilters } from "@/app/(routes)/api/sections/requests";
 
 
 export default async function SectionListPage(props) {
   const sections = await getSectionsByFilters();
 
   return (
-    <div className="container  page">
+    <div className="container page">
       <Breadcrumbs items={[{label: "Админка", href: "/admin"}, {label: "Разделы"}]}/>
       <Card className="mt10">
         <Link href="/admin/sections/add">Создать</Link>

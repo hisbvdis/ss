@@ -1,9 +1,7 @@
 "use client";
+import { useEffect } from "react";
 import { useImmer } from "use-immer";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-// -----------------------------------------------------------------------------
-import { upsertSpec, deleteSpecById } from "@/app/(routes)/api/specs/requests";
 // -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card";
 import { Form } from "@/app/_components/Form";
@@ -13,6 +11,8 @@ import { BottomPanel } from "@/app/_ui/BottomPanel";
 import { Control } from "@/app/_components/Control";
 import { InputAddon } from "@/app/_components/InputAddon";
 import { Radio, RadioGroup } from "@/app/_components/Choice";
+// -----------------------------------------------------------------------------
+import { upsertSpec, deleteSpecById } from "@/app/(routes)/api/specs/requests";
 
 
 export default function SpecEdit(props) {
@@ -21,7 +21,9 @@ export default function SpecEdit(props) {
   const router = useRouter();
 
   const handleStateChange = (e) => {
-    setState((state) => {state[e.target.name] = e.target.value});
+    setState((state) => {
+      state[e.target.name] = e.target.value;
+    });
   }
 
   const handleOptions = {
@@ -33,8 +35,8 @@ export default function SpecEdit(props) {
     },
     change: (e, localId) => {
       setState((state) => {
-        const entry = state.options.find((option) => option.localId === localId);
-        entry.name = e.target.value;
+        const option = state.options.find((option) => option.localId === localId);
+        option.name = e.target.value;
       });
     },
     delete: (localId) => {
@@ -48,9 +50,9 @@ export default function SpecEdit(props) {
     e.preventDefault();
     const { id } = await upsertSpec(state, props.init);
     if (e.nativeEvent.submitter?.dataset?.leavePage) {
-      router.push("/admin/specs"); router.refresh();
+      router.push("/admin/specs");
     } else {
-      router.replace(`/admin/specs/${id}`, {scroll: false}); router.refresh();
+      router.replace(`/admin/specs/${id}`, {scroll: false});
     }
   }
 
@@ -60,10 +62,7 @@ export default function SpecEdit(props) {
         <Card.Heading>Название и Тип</Card.Heading>
         <Control>
           <Control.Label>ID</Control.Label>
-          <Input
-            value={state.id}
-            disabled
-          />
+          <Input value={state.id} disabled />
         </Control>
         <Control className="mt20">
           <Control.Label>Название (служебное)</Control.Label>
@@ -86,8 +85,8 @@ export default function SpecEdit(props) {
         <Control className="mt20">
           <Control.Label>Тип объектов</Control.Label>
           <RadioGroup
-            name="type"
-            valueToCompare={state.type}
+            name="object_type"
+            valueToCompare={state.object_type}
             onChange={handleStateChange}
           >
             <Radio value="org">Организации</Radio>

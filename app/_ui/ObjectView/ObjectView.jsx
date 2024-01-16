@@ -12,7 +12,7 @@ import "./ObjectView.css";
 
 
 export default function ObjectView(props) {
-  const { id, object_type, name_full, photos, city, address, address_2, phones, links, coord_lat, coord_lon, description, sections, options, modified, parent_org_id, parentOrg, childObjects } = props;
+  const { id, type, name_full, photos, city, address, address_2, phones, links, coord_lat, coord_lon, description, sections, options, modified, parent_org_id, parentOrg, childObjects } = props;
 
   return (
     <div className="objectView  container">
@@ -24,7 +24,7 @@ export default function ObjectView(props) {
               {label: `${city?.name ?? ""}`, href: `/catalog?city=${city?.id}`},
               {label: `${sections?.[0]?.name ?? ""}`, href: `/catalog?city=${city?.id}&section=${sections?.[0]?.id}`}
             ]}/>
-            <a href={`/${object_type}/${id}/edit`} style={{marginInlineStart: "auto"}}>Ред</a>
+            <a href={`/${type}/${id}/edit`} style={{marginInlineStart: "auto"}}>Ред</a>
             <DelBtn id={id} delFunc={deleteObject} redirectPath="/">X</DelBtn>
           </Stack>
           <h1 style={{fontSize: "23rem", fontWeight: "400"}}>{name_full}</h1>
@@ -88,7 +88,7 @@ export default function ObjectView(props) {
           <Card.Section>{description}</Card.Section>
         </Card>
 
-        {object_type === "org" ?
+        {type === "org" ?
           <Card className="mt10">
             <Card.Heading style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
               <span>На базе организации</span>
@@ -98,7 +98,7 @@ export default function ObjectView(props) {
               <ul style={{display: "flex", listStyle: "none", paddingInlineStart: 0, gap: "15px"}}>
                 {childObjects?.map((child) => (
                   <li key={child.id}>
-                    <Link className="objectView__childLink" href={`${child.object_type === "org" ? "/org" : "/place"}/${child.id}`}>
+                    <Link className="objectView__childLink" href={`${child.type === "org" ? "/org" : "/place"}/${child.id}`}>
                       <Image className="objectView__childPhoto" src={child.photos?.length > 0 ? `/photos/${child.photos[0].name}`: "/icons/no-photo.svg"} width="178" height="120" alt="Image" loading="lazy"/>
                       <span>{child.name_type}</span>
                     </Link>

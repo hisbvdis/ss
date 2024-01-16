@@ -1,6 +1,7 @@
-import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 import { ObjectEdit } from "@/app/_ui/ObjectEdit";
-import { getEmptyObject } from "../../api/objects/requests";
+import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
+// -----------------------------------------------------------------------------
+import { getEmptyObject } from "@/app/(routes)/api/objects/requests";
 
 
 export default async function AddObjectPage({params, searchParams}) {

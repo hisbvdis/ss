@@ -1,14 +1,14 @@
 import Link from "next/link";
 // -----------------------------------------------------------------------------
-import { deleteSpecById, getAllSpecs } from "@/app/(routes)/api/specs/requests";
-
 import { Card } from "@/app/_components/Card";
 import { DelBtn } from "@/app/_components/DelBtn";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
+// -----------------------------------------------------------------------------
+import { deleteSpecById, getSpecsByFilters } from "@/app/(routes)/api/specs/requests";
 
 
 export default async function SpecListPage(props) {
-  const specs = await getAllSpecs();
+  const specs = await getSpecsByFilters();
 
   return (
     <div className="container  page">

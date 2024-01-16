@@ -34,7 +34,7 @@ function Choice(props) {
         name={name}
         value={value}
         checked={checked}
-        onChange={(e) => {e.target.value = e.target.checked;onChange(e)}}
+        onChange={onChange}
         required={required}
         tabIndex={tabIndex}
         disabled={disabled}

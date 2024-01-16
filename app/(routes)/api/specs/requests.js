@@ -3,23 +3,13 @@ import { revalidateTag } from "next/cache";
 
 export async function getEmptySpec() {
   return {
-    type: "org",
+    object_type: "org",
     control_type: "checkbox",
   }
 }
 
-export async function getAllSpecs() {
-  const res = await fetch("http://localhost:3000/api/specs", {
-    method: "GET",
-    next: { tags: ["specs"] },
-  });
-  if (!res.ok) throw new Error("Failed to fetch data 'getAllSpecs'");
-  const data = await res.json();
-  return data;
-}
-
 export async function getSpecsByFilters(filters) {
-  const filterString =  Object.entries(filters).map(([name, value]) => `${name}=${value}`).join("&");
+  const filterString = filters && Object.entries(filters).map(([name, value]) => `${name}=${value}`).join("&");
   const res = await fetch(`http://localhost:3000/api/specs?${filterString}`, {
     method: "GET",
     next: { tags: ["specs"] },

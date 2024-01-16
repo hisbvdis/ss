@@ -6,7 +6,7 @@ export async function GET(req) {
   const objectType = searchParams.get("objectType") ?? undefined;
   const dbData = await prisma.spec.findMany({
     where: {
-      type: objectType
+      object_type: objectType
     },
     include: {options: {orderBy: {id: "asc"}}},
   });

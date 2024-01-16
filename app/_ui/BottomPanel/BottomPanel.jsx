@@ -1,6 +1,7 @@
 // <BottomPanel id={state.id} delFunc={deleteObject} exitRedirectPath="./" delRedirectPath="/"/>
 "use client";
 import Link from "next/link";
+// -----------------------------------------------------------------------------
 import { Button } from "@/app/_components/Button";
 import { DelBtn } from "@/app/_components/DelBtn";
 import "./BottomPanel.css";

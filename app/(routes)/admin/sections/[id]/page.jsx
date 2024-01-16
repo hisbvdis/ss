@@ -1,7 +1,7 @@
-import { getSectionById, getEmptySection } from "@/app/(routes)/api/sections/requests"
-// -----------------------------------------------------------------------------
 import { SectionEdit } from "@/app/_ui/SectionEdit";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
+// -----------------------------------------------------------------------------
+import { getSectionById, getEmptySection } from "@/app/(routes)/api/sections/requests"
 
 
 export default async function SectionEditPage({params}) {

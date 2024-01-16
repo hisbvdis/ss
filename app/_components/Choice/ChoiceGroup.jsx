@@ -1,16 +1,16 @@
 // <ChoiceGroup name="name" valueToCompare={""} arrayToCompare={[]} onChange={(e)=>e}>
 "use client";
 import clsx from "clsx";
-import { createContext, useContext, useEffect, useId, useRef } from 'react';
+import { createContext, useContext, useId, useRef } from 'react';
+// -----------------------------------------------------------------------------
 import { ControlContext } from "@/app/_components/Control";
 import "./ChoiceGroup.css";
-import Label from "../Label/Label";
 
 
 export function ChoiceGroup(props) {
   const fieldsetRef = useRef();
   const controlContext = useContext(ControlContext);
-  const { label, name=useId(), valueToCompare="", arrayToCompare=[] } = props;
+  const { name=useId(), valueToCompare="", arrayToCompare=[] } = props;
   const { onChange=(e)=>e } = props;
   const { className, style, children } = props;
   const labelId = controlContext?.labelId ?? useId();
@@ -26,7 +26,6 @@ export function ChoiceGroup(props) {
         aria-labelledby={labelId}
         role="group"
       >
-        {label ? <Label id={labelId} required={requiredGroup}>{label}</Label> : null}
         {children}
       </fieldset>
     </ChoiceGroupContext.Provider>

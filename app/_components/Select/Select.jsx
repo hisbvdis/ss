@@ -3,7 +3,6 @@ import { useEffect, useId, useRef, useState } from "react";
 // -----------------------------------------------------------------------------
 import { useDebounce } from "@/app/_utils/useDebounce";
 // -----------------------------------------------------------------------------
-import { Label } from "@/app/_components/Label";
 import { Menu } from "@/app/_components/Menu";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
@@ -12,7 +11,7 @@ import "./Select.css";
 
 
 export default function Select(props) {
-  const { name, value, text, label } = props;
+  const { name, value, text } = props;
   const { items, requestItemsOnInputChange, requestItemsOnFirstTouch, requestMinInputLenght=3 } = props;
   const { onChange=(e=>e), onChangeData=(e=>e) } = props;
   const { placeholder, disabled, isAutocomplete, isSelect=!isAutocomplete } = props;
@@ -134,7 +133,6 @@ export default function Select(props) {
 
   return (
     <div className={clsx("select", disabled && "select--disabled")}>
-      {label ? <Label htmlFor={inputId}>{label}</Label> : null}
       <p className="select__inputWrapper">
         <Input
           className={clsx("select__input", isAutocomplete && "select__input--isAutocomplete")}
