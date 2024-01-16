@@ -1,3 +1,5 @@
+import { objectReadProcessing } from "@/app/(routes)/api/objects/processing";
+
 export const setInheritedData = (parent, setState) => {
   const processed = objectReadProcessing({...parent, modified: undefined, schedule_date: undefined});
 
@@ -21,7 +23,7 @@ export const setInheritedData = (parent, setState) => {
     state.schedule_inherit = true;
     state.schedule_247 = processed.schedule_247;
     state.schedule = processed.schedule.map((day) => ({...day, object_id: undefined, id: undefined}));
-    state.schedule_date = parent.schedule_date;
+    state.schedule_date = parent?.schedule_date;
     state.schedule_comment = processed.schedule_comment;
     state.schedule_source = processed.schedule_source;
   })

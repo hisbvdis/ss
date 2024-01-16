@@ -1,4 +1,5 @@
 import { prisma } from "@/app/(routes)/api/dbClient";
+import { objectWriteProcessing } from "./processing";
 
 export async function GET(req) {
   const searchParams = req.nextUrl.searchParams;
@@ -120,31 +121,5 @@ export async function POST(req) {
     });
     return updatedOrg;
   };
-
   return Response.json(addedObject);
-}
-
-async function getSpecsByOptionIds(ids) {
-  if (!ids) return [];
-  const dbData = await prisma.spec.findMany({
-    where: {
-      options: {
-        some: {
-          id: {
-            in: ids
-          }
-        }
-      }
-    },
-    include: {
-      options: {
-        where: {
-          id: {
-            in: ids
-          }
-        },
-      },
-    },
-  });
-  return dbData;
 }

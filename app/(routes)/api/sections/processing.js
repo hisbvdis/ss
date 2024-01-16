@@ -1,3 +1,8 @@
+export const emptySection = {
+  type: "org",
+  specs: [],
+}
+
 export const sectionReadProcessing = (state) => {
   const processed = {
     ...state,

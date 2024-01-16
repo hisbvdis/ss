@@ -12,7 +12,7 @@ generator client {
 // ===========================================================================
 model object {
   id                   Int                 @id @default(autoincrement())
-  type                 String
+  type                 String?
   name_type            String?
   name_where           String?
   name_full            String?
@@ -34,8 +34,8 @@ model object {
   schedule_date        DateTime?           @db.Date
   schedule_source      String?
   schedule_comment     String?
-  created              DateTime
-  modified             DateTime
+  created              DateTime?
+  modified             DateTime?
   // --------------------------
   photos               object_photo[]      @relation("object_photo")
   links                object_link[]       @relation("object_link")

@@ -1,13 +1,26 @@
+export const emptyObject = {
+  status: "works",
+  schedule: [
+    {day_num: 1, name_ru_short: "Пн", time: ""},
+    {day_num: 2, name_ru_short: "Вт", time: ""},
+    {day_num: 3, name_ru_short: "Ср", time: ""},
+    {day_num: 4, name_ru_short: "Чт", time: ""},
+    {day_num: 5, name_ru_short: "Пт", time: ""},
+    {day_num: 6, name_ru_short: "Сб", time: ""},
+    {day_num: 7, name_ru_short: "Вс", time: ""},
+  ],
+}
+
 export const objectReadProcessing = (dbData) => {
   const processed = {
     ...dbData,
     phones: dbData?.phones?.map((phone) => ({...phone, localId: crypto.randomUUID()})),
     links: dbData?.links?.map((link) => ({...link, localId: crypto.randomUUID()})),
-    sections : dbData?.sections.map(({section}) => section),
-    options : dbData?.options.map(({option}) => option),
+    sections : dbData?.sections?.map(({section}) => section),
+    options : dbData?.options?.map(({option}) => option),
     schedule_date: dbData?.schedule_date === null ? "" : new Intl.DateTimeFormat('en-CA', {year: 'numeric', month: '2-digit', day: '2-digit'}).format(dbData?.schedule_date),
     schedule: emptyObject?.schedule?.map((emptyDay) => {
-      const dbDay = dbData?.schedule.find((dbDay) => dbDay.day_num === emptyDay.day_num);
+      const dbDay = dbData?.schedule?.find((dbDay) => dbDay.day_num === emptyDay.day_num);
       return {...emptyDay, ...dbDay, isWork: dbDay ? true : false}
     }),
     photos: dbData?.photos?.map((photo) => ({...photo, localId: crypto.randomUUID()})),

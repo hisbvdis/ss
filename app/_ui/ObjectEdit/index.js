@@ -10,10 +10,6 @@ import NamePlace from "./NamePlace";
 import { ObjectContext } from "./ObjectEdit";
 import SectionsOptions from "./SectionsOptions";
 
-import { syncPhotos } from "./utils/syncPhotos";
-import { setInheritedData } from "./utils/setInheritedData";
-import { handleChangeWithQuotes } from "./utils/handleChangeWithQuotes";
-
 export {
   ObjectEdit,
   Status,
@@ -26,5 +22,4 @@ export {
   NameOrg,
   ObjectContext,
   NamePlace,
-  handleChangeWithQuotes, setInheritedData, syncPhotos
 };

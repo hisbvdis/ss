@@ -2,10 +2,6 @@
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 // -----------------------------------------------------------------------------
-import { getCitiesByFilters } from "@/app/(routes)/api/cities/requests";
-import { getObjectsByFilters } from "@/app/(routes)/api/objects/requests";
-import { queryAddressForCoord, queryCoodFromAddress } from "@/app/_utils/nominatim";
-// -----------------------------------------------------------------------------
 import { ObjectContext } from ".";
 import { Flex } from "@/app/_components/Flex";
 import { Card } from "@/app/_components/Card";
@@ -15,6 +11,10 @@ import { Select } from "@/app/_components/Select";
 import { Control } from "@/app/_components/Control";
 import { Checkbox } from "@/app/_components/Choice";
 import { Map, Marker } from "@/app/_components/Map";
+// -----------------------------------------------------------------------------
+import { getCitiesByFilters } from "@/app/(routes)/api/cities/requests";
+import { getObjectsByFilters } from "@/app/(routes)/api/objects/requests";
+import { queryAddressForCoord, queryCoodFromAddress } from "@/app/_utils/nominatim";
 
 
 export default function Address(props) {
@@ -24,39 +24,55 @@ export default function Address(props) {
   const handleMap = {
     getCoordFromAddress: async () => {
       if (!state.city_id) return;
-      const result = await queryCoodFromAddress({country: state.city.country_name, city: state.city.name, street: state.address});
+      const result = await queryCoodFromAddress({
+        country: state.city.country_name,
+        city: state.city.name,
+        street: state.address
+      });
       if (!result) return;
-      setState((state) => {state.coord_lat = result.lat; state.coord_lon = result.lon});
+      setState((state) => {
+        state.coord_lat = result.lat;
+        state.coord_lon = result.lon;
+      });
       mapInstance.setView([result.lat, result.lon]);
       mapInstance.setZoom(17);
     },
 
     getAddressFromCoord: async () => {
       if (!state.coord_lat || !state.coord_lon) return;
-      const result = await queryAddressForCoord({lat: state.coord_lat, lon: state.coord_lon});
+      const result = await queryAddressForCoord({
+        lat: state.coord_lat,
+        lon: state.coord_lon
+      });
       if (!result) return;
       const road = result.address.road;
       const house = result.address.house_number;
-      setState((state) => {state.address = `${road}${house ? `, ${house}` : ""}`});
+      setState((state) => {
+        state.address = `${road}${house ? `, ${house}` : ""}`;
+      });
     },
 
     markerDragEnd: (e) => {
       const { lat, lng } = e.target._latlng;
-      setState((state) => {state.coord_lat = lat; state.coord_lon = lng});
+      setState((state) => {
+        state.coord_lat = lat;
+        state.coord_lon = lng;
+      });
     },
 
     rightClick: (e) => {
       const { lat, lng } = e.latlng;
       setState((state) => {
         if (state.coord_inherit) return;
-        state.coord_lat = lat; state.coord_lon = lng
+        state.coord_lat = lat;
+        state.coord_lon = lng;
       });
     }
   }
 
   const handleParentOrgChange = (e) => {
     setState((state) => {
-      state.parentOrg = e.target.data;
+      state.parent = e.target.data;
       state.parent_org_id = e.target.value;
     });
     setInheritedData(e.target.data);
@@ -65,8 +81,8 @@ export default function Address(props) {
   useEffect(() => {
     if (!state.coord_inherit) return;
     setState((state) => {
-      state.coord_lat = state.parentOrg.coord_lat;
-      state.coord_lon = state.parentOrg.coord_lon;
+      state.coord_lat = state.parent?.coord_lat;
+      state.coord_lon = state.parent?.coord_lon;
     })
   }, [state.coord_inherit])
 
@@ -97,7 +113,7 @@ export default function Address(props) {
             <Select
               name="parent_org_id"
               value={state?.parent_org_id}
-              text={state?.parentOrg?.name_full}
+              text={state?.parent?.name_full}
               onChange={handleParentOrgChange}
               isAutocomplete={true}
               placeholder="Введите название"

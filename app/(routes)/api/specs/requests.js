@@ -1,13 +1,6 @@
 "use server";
 import { revalidateTag } from "next/cache";
 
-export async function getEmptySpec() {
-  return {
-    object_type: "org",
-    control_type: "checkbox",
-  }
-}
-
 export async function getSpecsByFilters(filters) {
   const filterString = filters && Object.entries(filters).map(([name, value]) => `${name}=${value}`).join("&");
   const res = await fetch(`http://localhost:3000/api/specs?${filterString}`, {
@@ -51,4 +44,29 @@ export async function deleteSpecById(id) {
   const data = await res.json();
   revalidateTag("specs");
   return data;
+}
+
+async function getSpecsByOptionIds(ids) {
+  if (!ids) return [];
+  const dbData = await prisma.spec.findMany({
+    where: {
+      options: {
+        some: {
+          id: {
+            in: ids
+          }
+        }
+      }
+    },
+    include: {
+      options: {
+        where: {
+          id: {
+            in: ids
+          }
+        },
+      },
+    },
+  });
+  return dbData;
 }

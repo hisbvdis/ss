@@ -1,21 +1,6 @@
 "use server";
 import { revalidateTag } from "next/cache";
 
-export async function getEmptyObject() {
-  return {
-    status: "works",
-    schedule: [
-      {day_num: 1, name_ru_short: "Пн", time: ""},
-      {day_num: 2, name_ru_short: "Вт", time: ""},
-      {day_num: 3, name_ru_short: "Ср", time: ""},
-      {day_num: 4, name_ru_short: "Чт", time: ""},
-      {day_num: 5, name_ru_short: "Пт", time: ""},
-      {day_num: 6, name_ru_short: "Сб", time: ""},
-      {day_num: 7, name_ru_short: "Вс", time: ""},
-    ],
-  }
-}
-
 export async function getObjectsByFilters(filters) {
   const filterString =  Object.entries(filters).map(([name, value]) => `${name}=${value}`).join("&");
   const res = await fetch(`http://localhost:3000/api/objects?${filterString}`, {

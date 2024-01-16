@@ -1,3 +1,8 @@
+export const emptySpec = {
+  object_type: "org",
+  control_type: "checkbox",
+}
+
 export const specReadProcessing = (dbData) => {
   const processed = {
     ...dbData,
