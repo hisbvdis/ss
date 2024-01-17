@@ -31,8 +31,9 @@ export default function SectionEdit(props) {
 
   const handleSpecs = {
     add: (e) => {
-      if (!e.target.value || state.specs.some((stateSpec) => stateSpec.id === id)) return;
+      if (!e.target.value || state.specs?.some((stateSpec) => stateSpec.id === id)) return;
       setState((state) => {
+        if (!state.specs) state.specs = [];
         state.specs.push(e.target.data);
       });
     },

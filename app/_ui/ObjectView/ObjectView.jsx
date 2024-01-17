@@ -1,14 +1,14 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { deleteObject } from "@/app/_db/object.db";
 
-import { Stack } from "@/app/_components/Stack";
 import { DelBtn } from "@/app/_components/DelBtn";
 import { Map, Marker } from "@/app/_components/Map";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 import { Card } from "@/app/_components/Card";
 import "./ObjectView.css";
+import { deleteObject } from "@/app/(routes)/api/objects/requests";
+import { Flex } from "@/app/_components/Flex";
 
 
 export default function ObjectView(props) {
@@ -18,7 +18,7 @@ export default function ObjectView(props) {
     <div className="objectView  container">
       <header className="objectView__header">
         <Card>
-          <Stack>
+          <Flex>
             <Breadcrumbs size="small" items={[
               {label: "Каталог", href: "/catalog"},
               {label: `${city?.name ?? ""}`, href: `/catalog?city=${city?.id}`},
@@ -26,7 +26,7 @@ export default function ObjectView(props) {
             ]}/>
             <a href={`/${type}/${id}/edit`} style={{marginInlineStart: "auto"}}>Ред</a>
             <DelBtn id={id} delFunc={deleteObject} redirectPath="/">X</DelBtn>
-          </Stack>
+          </Flex>
           <h1 style={{fontSize: "23rem", fontWeight: "400"}}>{name_full}</h1>
           {parent_org_id ? <Link href={`/org/${parent_org_id}`}>&lt; {parentOrg?.name_full}</Link> : null}
         </Card>

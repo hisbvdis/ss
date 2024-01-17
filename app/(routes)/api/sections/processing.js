@@ -1,6 +1,5 @@
 export const emptySection = {
-  type: "org",
-  specs: [],
+  object_type: "org",
 }
 
 export const sectionReadProcessing = (state) => {

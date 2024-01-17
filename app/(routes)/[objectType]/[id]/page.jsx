@@ -1,6 +1,6 @@
 import { ObjectView } from "@/app/_ui/ObjectView";
 // -----------------------------------------------------------------------------
-import { getObjectById } from "@/app/api/objects/requests";
+import { getObjectById } from "@/app/(routes)/api/objects/requests";
 
 
 export default async function ObjectViewPage({params, searchParams}) {

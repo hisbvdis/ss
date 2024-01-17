@@ -21,7 +21,7 @@ export async function POST(req) {
   const optionsDeleted = init.options?.filter((initOption) => !processed.options?.some((processedOption) => processedOption.id === initOption.id));
   const response = await prisma.spec.upsert({
     where: {
-      id: state.id ?? -1
+      id: processed.id ?? -1
     },
     create: {
       ...processed,

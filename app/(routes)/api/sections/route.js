@@ -16,23 +16,23 @@ export async function GET(req) {
 export async function POST(req) {
   const { state, init } = await req.json();
   const processed = sectionWriteProcessing(state);
-  const specsAdded = processed.specs.filter((processedSpec) => !init.specs.some((initSpec) => processedSpec.id === initSpec.id));
-  const specsDeleted = init.specs.filter((initSpec) => !processed.specs.some((processedSpec) => initSpec.id === processedSpec.id));
+  const specsAdded = processed.specs?.filter((processedSpec) => !init.specs?.some((initSpec) => processedSpec.id === initSpec.id));
+  const specsDeleted = init.specs?.filter((initSpec) => !processed.specs?.some((processedSpec) => initSpec.id === processedSpec.id));
   const response = await prisma.section.upsert({
     where: {
-      id: state.id ?? -1
+      id: processed.id ?? -1
     },
     create: {
       ...processed,
       specs: {
-        create: specsAdded.map(({id}) => ({spec_id: id})),
+        create: specsAdded?.map(({id}) => ({spec_id: id})),
       }
     },
     update: {
       ...processed,
       specs: {
-        create: specsAdded.map(({id}) => ({spec_id: id})),
-        deleteMany: specsDeleted.map(({id}) => ({spec_id: id})),
+        create: specsAdded?.map(({id}) => ({spec_id: id})),
+        deleteMany: specsDeleted?.map(({id}) => ({spec_id: id})),
       },
     }
   });
