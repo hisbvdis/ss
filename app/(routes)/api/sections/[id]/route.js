@@ -1,5 +1,4 @@
 import { prisma } from "@/app/(routes)/api/dbClient";
-import { sectionReadProcessing } from "../processing";
 
 export async function GET(_, {params}) {
   const dbData = await prisma.section.findUnique({
@@ -10,7 +9,10 @@ export async function GET(_, {params}) {
       specs: {include: {spec: true}},
     }
   });
-  const processed = sectionReadProcessing(dbData);
+  const processed = {
+    ...dbData,
+    specs: state.specs.map(({spec}) => spec),
+  }
   return Response.json(processed);
 }
 

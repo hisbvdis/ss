@@ -45,3 +45,9 @@ export async function deleteSectionById(id) {
   revalidateTag("sections");
   return data;
 }
+
+export async function getEmptySection() {
+  return {
+    object_type: "org",
+  }
+}

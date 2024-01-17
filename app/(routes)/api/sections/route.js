@@ -1,5 +1,4 @@
 import { prisma } from "@/app/(routes)/api/dbClient";
-import { sectionWriteProcessing } from "./processing";
 
 export async function GET(req) {
   const searchParams = req.nextUrl.searchParams;
@@ -15,21 +14,24 @@ export async function GET(req) {
 
 export async function POST(req) {
   const { state, init } = await req.json();
-  const processed = sectionWriteProcessing(state);
-  const specsAdded = processed.specs?.filter((processedSpec) => !init.specs?.some((initSpec) => processedSpec.id === initSpec.id));
-  const specsDeleted = init.specs?.filter((initSpec) => !processed.specs?.some((processedSpec) => initSpec.id === processedSpec.id));
+  const scalarFields = {
+    name: state.name || null,
+    object_type: state.object_type || null,
+  }
+  const specsAdded = state.specs?.filter((stateSpec) => !init.specs?.some((initSpec) => stateSpec.id === initSpec.id));
+  const specsDeleted = init.specs?.filter((initSpec) => !state.specs?.some((stateSpec) => initSpec.id === stateSpec.id));
   const response = await prisma.section.upsert({
     where: {
-      id: processed.id ?? -1
+      id: state.id ?? -1
     },
     create: {
-      ...processed,
+      ...scalarFields,
       specs: {
         create: specsAdded?.map(({id}) => ({spec_id: id})),
       }
     },
     update: {
-      ...processed,
+      ...scalarFields,
       specs: {
         create: specsAdded?.map(({id}) => ({spec_id: id})),
         deleteMany: specsDeleted?.map(({id}) => ({spec_id: id})),

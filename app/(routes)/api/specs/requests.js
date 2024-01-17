@@ -70,3 +70,10 @@ async function getSpecsByOptionIds(ids) {
   });
   return dbData;
 }
+
+export async function getEmptySpec() {
+  return {
+    object_type: "org",
+    control_type: "checkbox",
+  }
+}

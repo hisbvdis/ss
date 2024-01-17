@@ -1,12 +1,11 @@
 import { SpecEdit } from "@/app/_ui/SpecEdit";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 // -----------------------------------------------------------------------------
-import { getSpecById } from "@/app/(routes)/api/specs/requests";
-import { emptySpec } from "@/app/(routes)/api/specs/processing";
+import { getEmptySpec, getSpecById } from "@/app/(routes)/api/specs/requests";
 
 
 export default async function SpecEditPage({params}) {
-  const spec = (params.id === "add") ? emptySpec : await getSpecById(params.id);
+  const spec = (params.id === "add") ? await getEmptySpec() : await getSpecById(params.id);
 
   return (
     <div className="container  page">

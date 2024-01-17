@@ -30,6 +30,7 @@ export async function GET(_, {params}) {
       return {...emptyDay, ...dbDay, isWork: dbDay ? true : false}
     }),
     schedule_date: !dbData?.schedule_date ? null : new Intl.DateTimeFormat('en-CA', {year: 'numeric', month: '2-digit', day: '2-digit'}).format(dbData?.schedule_date),
+    photos: dbData?.photos?.map((photo) => ({...photo, localId: crypto.randomUUID()})),
     modified: !dbData?.modified ? null : new Intl.DateTimeFormat('en-CA', {year: 'numeric', month: '2-digit', day: '2-digit', hour: "2-digit", hour12: false, minute: "2-digit"}).format(dbData?.modified),
     created: !dbData?.created ? null : new Intl.DateTimeFormat('en-CA', {year: 'numeric', month: '2-digit', day: '2-digit', hour: "2-digit", hour12: false, minute: "2-digit"}).format(dbData?.created),
   };
