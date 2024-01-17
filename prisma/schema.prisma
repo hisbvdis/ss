@@ -13,9 +13,14 @@ generator client {
 model object {
   id                   Int                 @id @default(autoincrement())
   type                 String?
-  name_type            String?
-  name_where           String?
   name_full            String?
+  name_where           String?
+  name_type            String?
+  status_inherit       Boolean?
+  status               String?
+  status_comment       String?
+  status_confirm       String?
+  status_instead_id    Int?
   city_id              Int?
   parent_id            Int?
   address              String?
@@ -24,11 +29,6 @@ model object {
   coord_lat            Float?
   coord_lon            Float?
   description          String?
-  status_inherit       Boolean?
-  status               String?
-  status_comment       String?
-  status_confirm       String?
-  status_instead_id    Int?
   schedule_inherit     Boolean?
   schedule_247         Boolean?
   schedule_date        DateTime?           @db.Date

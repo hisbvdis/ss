@@ -12,7 +12,7 @@ import { Flex } from "@/app/_components/Flex";
 
 
 export default function ObjectView(props) {
-  const { id, type, name_full, photos, city, address, address_2, phones, links, coord_lat, coord_lon, description, sections, options, modified, parent_org_id, parentOrg, childObjects } = props;
+  const { id, type, name_full, photos, city, address, address_2, phones, links, coord_lat, coord_lon, description, sections, options, modified, parent_id, parent, childObjects } = props;
 
   return (
     <div className="objectView  container">
@@ -28,7 +28,7 @@ export default function ObjectView(props) {
             <DelBtn id={id} delFunc={deleteObject} redirectPath="/">X</DelBtn>
           </Flex>
           <h1 style={{fontSize: "23rem", fontWeight: "400"}}>{name_full}</h1>
-          {parent_org_id ? <Link href={`/org/${parent_org_id}`}>&lt; {parentOrg?.name_full}</Link> : null}
+          {parent_id ? <Link href={`/org/${parent_id}`}>&lt; {parent?.name_full}</Link> : null}
         </Card>
       </header>
 
@@ -92,7 +92,7 @@ export default function ObjectView(props) {
           <Card className="mt10">
             <Card.Heading style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
               <span>На базе организации</span>
-              <Link href={`/place/add?parentOrg=${id}`}>Добавить</Link>
+              <Link href={`/place/add?parent=${id}`}>Добавить</Link>
             </Card.Heading>
             <Card.Section>
               <ul style={{display: "flex", listStyle: "none", paddingInlineStart: 0, gap: "15px"}}>

@@ -25,7 +25,7 @@ function Choice(props) {
   const { tabIndex=0 } = props;
 
   return (
-    <div className="choice">
+    <label className={clsx("choice", className)} style={style}>
       <input
         id={inputId}
         className="choice__input"
@@ -40,8 +40,8 @@ function Choice(props) {
         disabled={disabled}
       />
       {requiredGroup && type === "checkbox" ? <RequiredInput name={name} checked={checked} required={required}/> : ""}
-      <label className={clsx("choice__label", className)} htmlFor={inputId} style={style}>{children}</label>
-    </div>
+      <span className="choice__label">{children}</span>
+    </label>
   );
 }
 

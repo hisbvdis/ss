@@ -23,7 +23,7 @@ export default function NameOrg(props) {
         />
       </Control>
       <Control className="mt20">
-        <Control.Label>Обстоятельство места</Control.Label>
+        <Control.Label>Локативная форма названия</Control.Label>
         <Input
           name="name_where"
           value={state.name_where}

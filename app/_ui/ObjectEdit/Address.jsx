@@ -73,7 +73,7 @@ export default function Address(props) {
   const handleParentOrgChange = (e) => {
     setState((state) => {
       state.parent = e.target.data;
-      state.parent_org_id = e.target.value;
+      state.parent_id = e.target.value;
     });
     setInheritedData(e.target.data);
   }
@@ -99,28 +99,31 @@ export default function Address(props) {
             text={state?.city?.name}
             onChange={handleStateChange}
             onChangeData={(data) => setState((state) => {state.city = data})}
-            isAutocomplete={true} disabled={state.parent_org_id}
+            isAutocomplete={true} disabled={state.parent_id}
             placeholder="Введите название"
-            requestItemsOnInputChange={async (name) => (await getCitiesByFilters(name)).map((city) => ({
+            requestItemsOnInputChange={async (name) => (
+              await getCitiesByFilters({name})).map((city) => ({
               id: city.id, text: city.name, text2: city.country_name, text3: city.admin1_name, text4: city.admin2_name, data: city
             }))}
           />
           <Control className="mt20">
             <Control.Label>
               <span>На базе организации</span>
-              <span>{state.parent_org_id ? <Link href={`/org/${state.parent_org_id}`}>(Открыть)</Link> : null}</span>
+              <span>{state.parent_id ? <Link href={`/org/${state.parent_id}`}>(Открыть)</Link> : null}</span>
             </Control.Label>
             <Select
-              name="parent_org_id"
-              value={state?.parent_org_id}
+              name="parent_id"
+              value={state?.parent_id}
               text={state?.parent?.name_full}
-              onChange={handleParentOrgChange}
+              onChange={handleStateChange}
+              onChangeData={(data) => setState((state) => {state.parent = data})}
               isAutocomplete={true}
               placeholder="Введите название"
               disabled={!state.city_id}
-              requestItemsOnInputChange={async (name) => (await getObjectsByFilters({city: state.city_id ?? -1, type: "org", query: name}))
-                .filter((org) => org.id !== state.id)
-                .map((org) => ({id: org.id, text: org.name_full, data: org})
+              requestItemsOnInputChange={async (value) => (
+                await getObjectsByFilters({cityId: state.city_id, type: "org", query: value}))
+                  .filter((org) => org.id !== state.id)
+                  .map((org) => ({id: org.id, text: org.name_full, data: org})
               )}
             />
           </Control>
@@ -131,12 +134,12 @@ export default function Address(props) {
                 name="address"
                 value={state.address}
                 onChange={handleStateChange}
-                disabled={state.parent_org_id}
+                disabled={state.parent_id}
                 placeholder="Центральный проспект, 153А"
                 required
               />
-              <Button onClick={handleMap.getCoordFromAddress} disabled={state.parent_org_id}>→</Button>
-              <Button onClick={handleMap.getAddressFromCoord} disabled={state.parent_org_id}>←</Button>
+              <Button onClick={handleMap.getCoordFromAddress} disabled={state.parent_id}>→</Button>
+              <Button onClick={handleMap.getAddressFromCoord} disabled={state.parent_id}>←</Button>
             </div>
           </Control>
           <Control>
@@ -146,7 +149,7 @@ export default function Address(props) {
               value={state.address_2}
               onChange={handleChangeWithQuotes}
               placeholder="ТРЦ Центральный"
-              disabled={state.parent_org_id}
+              disabled={state.parent_id}
             />
           </Control>
         </div>
@@ -155,7 +158,7 @@ export default function Address(props) {
             name="coord_inherit"
             checked={state.coord_inherit}
             onChange={handleStateChange}
-            disabled={!state.parent_org_id}
+            disabled={!state.parent_id}
           >
             Наследовать координату
           </Checkbox>

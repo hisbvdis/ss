@@ -4,8 +4,8 @@ import { useContext } from "react";
 import { Button } from "@/app/_components/Button";
 import { RequiredInput } from "@/app/_components/RequiredInput";
 import { Control } from "@/app/_components/Control";
-import { FieldSet, FieldSetLegend } from "@/app/_components/FieldSet";
-import { Checkbox, ChoiceGroup, Radio } from "@/app/_components/Choice";
+import { FieldSet } from "@/app/_components/FieldSet";
+import { Checkbox, CheckboxGroup, Radio, RadioGroup } from "@/app/_components/Choice";
 import { Card } from "@/app/_components/Card";
 
 import { ObjectContext } from "./ObjectEdit";
@@ -24,7 +24,6 @@ export default function Sections(props) {
         state.sections.push(e.target.data);
       });
     },
-
     delete: (section) => {
       setState((state) => {
         state.sections = state.sections.filter(({id}) => id !== section.id);
@@ -45,7 +44,6 @@ export default function Sections(props) {
         }
       })
     },
-
     changeRadio: (spec, opt) => {
       setState((state) => {
         state.options = state.options.filter((stateOpt) => !spec.options.some((specOpt) => specOpt.id === stateOpt.id));
@@ -93,8 +91,8 @@ export default function Sections(props) {
           label={""}
           onChange={handleSections.add}
           placeholder="Введите название"
-          requestItemsOnFirstTouch={async (name) =>
-            (await getSectionsByFilters({type: state.type, name}))
+          requestItemsOnFirstTouch={async () =>
+            (await getSectionsByFilters({type: state.type}))
               .map((section) => ({
                 id: section.id, text: section.name, data: section
               }))

@@ -2,7 +2,6 @@ import { objectReadProcessing } from "@/app/(routes)/api/objects/processing";
 
 export const setInheritedData = (parent, setState) => {
   const processed = objectReadProcessing({...parent, modified: undefined, schedule_date: undefined});
-
   setState((state) => {
     state.name_where = processed.name_where;
     state.status_inherit = true;

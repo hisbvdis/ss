@@ -31,7 +31,7 @@ export default function NamePlace(props) {
             name="name_where"
             value={state.name_where}
             onChange={handleChangeWithQuotes}
-            disabled={state.parent_org_id}
+            disabled={state.parent_id}
             placeholder="у Школы №38"
             required
           />

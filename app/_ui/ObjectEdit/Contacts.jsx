@@ -48,7 +48,7 @@ export default function Contacts(props) {
         <FieldSet style={{flexBasis: "50%"}}>
           <FieldSet.Legend>
             <span>Телефоны</span>
-            <Button onClick={() => handleContacts.add("phones")} disabled={state.parent_org_id}>+</Button>
+            <Button onClick={() => handleContacts.add("phones")} disabled={state.parent_id}>+</Button>
           </FieldSet.Legend>
           <Flex direction="column">
             {state.phones?.map(({localId, value, comment}) => (
@@ -56,20 +56,20 @@ export default function Contacts(props) {
                 <Button
                   onClick={() => handleContacts.delete("phones", localId)}
                   tabIndex="-1"
-                  disabled={state.parent_org_id}
+                  disabled={state.parent_id}
                   style={{gridRow: "1 / span 2"}}
                 >X</Button>
                 <Input
                   value={value}
                   onChange={(e) => handleContacts.changeValue("phones", e, localId)}
                   placeholder="+1 (111) 111-11-11"
-                  disabled={state.parent_org_id}
+                  disabled={state.parent_id}
                 />
                 <Input
                   value={comment}
                   onChange={(e) => handleContacts.changeComment("phones", e, localId)}
                   placeholder="Комментарий"
-                  disabled={state.parent_org_id}
+                  disabled={state.parent_id}
                 />
               </div>
             ))}
@@ -78,7 +78,7 @@ export default function Contacts(props) {
         <FieldSet style={{flexBasis: "50%"}}>
           <FieldSet.Legend>
             <span>Ссылки</span>
-            <Button onClick={() => handleContacts.add("links")} disabled={state.parent_org_id}>+</Button>
+            <Button onClick={() => handleContacts.add("links")} disabled={state.parent_id}>+</Button>
           </FieldSet.Legend>
           <Flex direction="column">
             {state.links?.map(({localId, value, comment}) => (
@@ -86,20 +86,20 @@ export default function Contacts(props) {
                 <Button
                   onClick={() => handleContacts.delete("links", localId)}
                   tabIndex="-1"
-                  disabled={state.parent_org_id}
+                  disabled={state.parent_id}
                   style={{gridRow: "1 / span 2"}}
                 >X</Button>
                 <Input
                   value={value}
                   onChange={(e) => handleContacts.changeValue("links", e, localId)}
                   placeholder="site.com"
-                  disabled={state.parent_org_id}
+                  disabled={state.parent_id}
                 />
                 <Input
                   value={comment}
                   onChange={(e) => handleContacts.changeComment("links", e, localId)}
                   placeholder="Комментарий"
-                  disabled={state.parent_org_id}
+                  disabled={state.parent_id}
                 />
               </div>
             ))}
