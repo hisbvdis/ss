@@ -4,9 +4,9 @@ export async function GET(req) {
   const searchParams = req.nextUrl.searchParams;
   const query = searchParams.get("query") ?? undefined;
   const type = searchParams.get("type") ?? undefined;
-  const cityId = Number(searchParams.get("cityId")) ?? undefined;
-  const sectionId = searchParams.get("sectionId") ?? undefined;
-  // const optionIds = searchParams.get("options")?.split(",").map((id) => Number(id));
+  const cityId = searchParams.get("city") ? Number(searchParams.get("city")) : undefined;
+  const sectionId = searchParams.get("section") ?? undefined;
+  const optionIds = searchParams.get("options")?.split(",").map((id) => Number(id));
   // const specs = await getSpecsByOptionIds(optionIds) ?? undefined;
   const dbData = await prisma.object.findMany({
     where: {
@@ -50,6 +50,9 @@ export async function POST(req) {
     parent_id: state.parent_id || null,
     address: state.address || null,
     address_2: state.address_2 || null,
+    coord_inherit: state.coord_inherit || null,
+    coord_lat: state.coord_lat ? Number.parseFloat(state.coord_lat) : null,
+    coord_lon: state.coord_lon ? Number.parseFloat(state.coord_lon) : null,
     description: state.description || null,
     schedule_inherit: state.schedule_inherit || null,
     schedule_247: state.schedule_247 || null,
@@ -68,9 +71,9 @@ export async function POST(req) {
   const optionsDeleted = init.options?.filter((initOption) => !state.options.some((stateOption) => initOption.id === stateOption.id));
   const sectionsAdded = state.sections?.filter((stateSection) => !init?.sections?.some((initSection) => stateSection.id === initSection.id));
   const sectionsDeleted = init.sections?.filter((initSection) => !state.sections.some((stateSection) => initSection.id === stateSection.id));
-  const scheduleAdded = state.schedule?.filter((stateDay) => init?.schedule?.some((initDay) => stateDay.day_num === initDay.day_num && !initDay.time_string && stateDay.time_string));
-  const scheduleChanged = state.schedule?.filter((stateDay) => init.schedule?.some((initDay) => (stateDay.day_num === initDay.day_num) && initDay.time_string && stateDay.time_string && initDay.time_string !== stateDay.time_string));
-  const scheduleDeleted = init.schedule?.filter((initDay) => state.schedule?.some((stateDay) => initDay.day_num === stateDay.day_num && initDay.time_string && !stateDay.time_string));
+  const scheduleAdded = (init.schedule.filter(({time}) => time).length === 0 && state.schedule.filter(({time}) => time).length !== 0) ? state.schedule : undefined;
+  const scheduleChanged = init.schedule.filter(({time}) => time).length > 0 && state.schedule?.filter((stateDay) => init.schedule?.some((initDay) => (stateDay.day_num === initDay.day_num) && stateDay.time !== initDay.time)).length ? state.schedule : undefined;
+  const scheduleDeleted = (state.schedule.filter(({time}) => time).length === 0 && init.schedule.filter(({time}) => time).length !== 0) ? {} : undefined;
   const photosAdded = state.photos?.filter((statePhoto) => !init?.photos?.some((initPhoto) => statePhoto.localId === initPhoto.localId));
   const photosDeleted = init.photos?.filter((initPhoto) => !state.photos.some((statePhoto) => initPhoto.localId === statePhoto.localId));
   const photosMoved = state.photos?.filter((statePhoto) => init.photos?.some((initPhoto) => statePhoto.localId === initPhoto.localId && statePhoto.order !== initPhoto.order));
@@ -93,7 +96,7 @@ export async function POST(req) {
         create: sectionsAdded?.map(({id}) => ({section: {connect: {id}}})),
       },
       schedule: {
-        create: scheduleAdded.map((day) => ({time_string: day.time_string, from_min: day.from_min, to_min: day.to_min, day_num: day.day_num})),
+        create: scheduleAdded?.map((day, i) => ({time: day.time, from: day.from, to: day.to, day_num: i})),
       },
       photos: {
         create: photosAdded?.map(({name, order}) => ({name, order, uploaded: new Date()})),
@@ -121,9 +124,9 @@ export async function POST(req) {
         deleteMany: {section_id: {in: sectionsDeleted?.map(({id}) => id)}},
       },
       schedule: {
-        create: scheduleAdded.map((day) => ({time_string: day.time_string, from_min: day.from_min, to_min: day.to_min, day_num: day.day_num})),
-        update: scheduleChanged?.map((day) => ({where: {id: day.id}, data: {time_string: day.time_string, from_min: day.from_min, to_min: day.to_min, day_num: day.day_num}})),
-        deleteMany: scheduleDeleted?.map((day) => ({...day, name_ru_short: undefined, day: undefined, isWork: undefined}))
+        create: scheduleAdded?.map((day, i) => ({time: day.time, from: day.from, to: day.to, day_num: i})),
+        update: scheduleChanged?.map((day, i) => ({where: {id: day.id}, data: {time: day.time, from: day.from, to: day.to, day_num: i}})),
+        deleteMany: scheduleDeleted,
       },
       photos: {
         create: photosAdded?.map(({name, order}) => ({name, order, uploaded: new Date()})),

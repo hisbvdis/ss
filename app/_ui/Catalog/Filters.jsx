@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Card } from "@/app/_components/Card";
-import { Control, ControlLabel } from "@/app/_components/Control";
-import { Checkbox, ChoiceGroup } from "@/app/_components/Choice";
 import { useContext } from "react";
-import { CatalogContext } from "./Catalog";
+// -----------------------------------------------------------------------------
 import { CloseIcon } from "@/app/_icons";
+import { CatalogContext } from "./Catalog";
+import { Card } from "@/app/_components/Card";
+import { Control } from "@/app/_components/Control";
+import { Checkbox, ChoiceGroup } from "@/app/_components/Choice";
 
 
 export default function Filters(props) {

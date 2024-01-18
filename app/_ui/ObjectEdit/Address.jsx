@@ -72,10 +72,10 @@ export default function Address(props) {
 
   const handleParentOrgChange = (e) => {
     setState((state) => {
-      state.parent = e.target.data;
       state.parent_id = e.target.value;
+      state.parent = e.target.data;
     });
-    setInheritedData(e.target.data);
+    setInheritedData(e.target.data, setState);
   }
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export default function Address(props) {
             text={state?.city?.name}
             onChange={handleStateChange}
             onChangeData={(data) => setState((state) => {state.city = data})}
-            isAutocomplete={true} disabled={state.parent_id}
+            isAutocomplete disabled={state.parent_id}
             placeholder="Введите название"
             requestItemsOnInputChange={async (name) => (
               await getCitiesByFilters({name})).map((city) => ({
@@ -115,9 +115,9 @@ export default function Address(props) {
               name="parent_id"
               value={state?.parent_id}
               text={state?.parent?.name_full}
-              onChange={handleStateChange}
-              onChangeData={(data) => setState((state) => {state.parent = data})}
-              isAutocomplete={true}
+              onChange={handleParentOrgChange}
+              // onChangeData={(data) => setState((state) => {state.parent = data})}
+              isAutocomplete
               placeholder="Введите название"
               disabled={!state.city_id}
               requestItemsOnInputChange={async (value) => (

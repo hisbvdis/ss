@@ -31,7 +31,7 @@ model object {
   description          String?
   schedule_inherit     Boolean?
   schedule_247         Boolean?
-  schedule_date        DateTime?           @db.Date
+  schedule_date        DateTime?
   schedule_source      String?
   schedule_comment     String?
   created              DateTime?
@@ -102,13 +102,13 @@ model object_phone {
 }
 
 model object_schedule {
-  id          Int    @id @default(autoincrement())
-  object_id   Int
-  day_num     Int
-  time_string String
-  from_min    Int
-  to_min      Int
-  object      object @relation("object_schedule", fields: [object_id], references: [id], onDelete: Cascade)
+  id        Int    @id @default(autoincrement())
+  object_id Int
+  day_num   Int
+  time      String?
+  from      Int?
+  to        Int?
+  object    object @relation("object_schedule", fields: [object_id], references: [id], onDelete: Cascade)
 }
 
 model object_photo {

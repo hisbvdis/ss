@@ -16,19 +16,15 @@ export default function Schedule(props) {
   const handleSchedule = {
     changeIsWork: (e) => {
       setState((state) => {
-        const day = state.schedule.find(({day_num}) => day_num === Number(e.target.name));
-        day.isWork = e.target.checked;
-        if (!e.target.checked) day.time_string = "";
+        state.schedule[e.target.name].isWork = e.target.checked;
+        if (!e.target.checked) state.schedule[e.target.name] = {};
       });
     },
-
     changeTime: (e) => {
       setState((state) => {
-        const day = state.schedule.find(({day_num}) => day_num === Number(e.target.name));
-        day.time_string = e.target.value
+        state.schedule[e.target.name].time = e.target.value;
       });
     },
-
     formatTime: (e) => {
       if (!e.target.value) return;
       const [from, to] = e.target.value.split("-").map((value) => {
@@ -42,28 +38,24 @@ export default function Schedule(props) {
       });
       if (!from || !to) return;
       setState((state) => {
-        const day = state.schedule.find(({day_num}) => day_num === Number(e.target.name));
-        day.time_string = [from.string, to.string].join(" - ");
-        day.from_min = from.min;
-        day.to_min = to.min;
+        state.schedule[e.target.name].time = [from.string, to.string].join(" - ");
+        state.schedule[e.target.name].from = from.min;
+        state.schedule[e.target.name].to = to.min;
       });
     },
-
-    copyToAll: (isWork, time_string, from_min, to_min) => {
-      setState((state) => {state.schedule = state.schedule.map((day) => ({...day, isWork, time_string, from_min, to_min}))});
+    copyToAll: (isWork, time, from, to) => {
+      setState((state) => {
+        state.schedule = state.schedule.map((day) => ({...day, isWork, time, from, to}));
+      });
     },
-
     change247: (e) => {
       setState((state) => {
         state.schedule_247 = e.target.checked;
         if (e.target.checked) {
-          state.schedule = state.schedule.map((day) => ({...day, isWork: true, time_string: "0:00 - 24:00"}));
-        } else {
-          handleSchedule.cleanAll();
+          state.schedule = state.schedule.map((day) => ({...day, isWork: true, time: "0:00 - 24:00", from: 0, to: 1440}));
         }
       });
     },
-
     setDate: (date) => {
       setState((state) => {
         if (date === "") {
@@ -73,12 +65,11 @@ export default function Schedule(props) {
         }
       });
     },
-
     cleanAll: () => {
       setState((state) => {
         state.schedule_inherit = false;
         state.schedule_247 = false;
-        state.schedule = state.schedule.map((day) => ({...day, isWork: false, time_string: null}));
+        state.schedule = Array(7).fill({});
         state.schedule_date = "";
         state.schedule_source = "";
         state.schedule_comment = "";
@@ -112,11 +103,11 @@ export default function Schedule(props) {
           </Button>
         </Flex>
         <Flex gap="0" style={{marginBlockEnd: "5px"}}>
-          {state.schedule?.map(({day_num, name_ru_short, isWork, time_string, from_min, to_min}) => (
-            <Flex key={day_num} direction="column">
-              <Checkbox name={day_num} checked={isWork} onChange={handleSchedule.changeIsWork} tabIndex="-1" disabled={state.schedule_247 || state.schedule_inherit}>{name_ru_short}</Checkbox>
-              <Input name={day_num} value={isWork ? time_string : "Не работает"} onChange={handleSchedule.changeTime} onBlurIfChanged={handleSchedule.formatTime} disabled={!isWork || state.schedule_247 || state.schedule_inherit}  pattern="\d{1,2}:\d\d\s-\s\d{1,2}:\d\d"/>
-              <Button onClick={() => handleSchedule.copyToAll(isWork, time_string, from_min, to_min)} disabled={state.schedule_247 || state.schedule_inherit}>Copy</Button>
+          {state.schedule?.map((day, i) => (
+            <Flex key={i} direction="column">
+              <Checkbox name={i} checked={day?.isWork} onChange={handleSchedule.changeIsWork} tabIndex="-1" disabled={state.schedule_247 || state.schedule_inherit}>{["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"][i]}</Checkbox>
+              <Input name={i} value={day?.isWork ? day?.time : "Не работает"} onChange={handleSchedule.changeTime} onBlurIfChanged={handleSchedule.formatTime} disabled={!day?.isWork || state.schedule_247 || state.schedule_inherit}  pattern="\d{1,2}:\d\d\s-\s\d{1,2}:\d\d"/>
+              <Button onClick={() => handleSchedule.copyToAll(day?.isWork, day?.time, day?.from, day?.to)} disabled={!day?.isWork || state.schedule_247 || state.schedule_inherit}>Copy</Button>
             </Flex>
           ))}
         </Flex>

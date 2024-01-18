@@ -58,7 +58,9 @@ export default function ObjectView(props) {
             <ul style={{listStyle: "none", paddingInlineStart: 0}}>
               {links?.map(({id, value, comment}) => (
                 <li key={id}>
-                  <a href={value} style={{color: "#0088CF", textDecoration: "none"}}>{value.match(/^(https?:\/\/)?(www.)?(.*?(?=\/))/)[3]}</a>
+                  <a href={value} style={{color: "#0088CF", textDecoration: "none"}}>
+                    {value.match(/^(https?:\/\/)?(www.)?(.*?(?=\/))/)?.[3]}
+                  </a>
                   <p>{comment}</p>
                 </li>
               ))}

@@ -1,5 +1,5 @@
 import { prisma } from "@/app/(routes)/api/dbClient";
-import { getEmptyObject } from "../requests";
+import { objectReadProcessing } from "../processing";
 
 export async function GET(_, {params}) {
   const dbData = await prisma.object.findUnique({
@@ -19,21 +19,7 @@ export async function GET(_, {params}) {
       children: {include: {photos: true}},
     },
   });
-  const processed = {
-    ...dbData,
-    phones: dbData?.phones?.map((phone) => ({...phone, localId: crypto.randomUUID()})),
-    links: dbData?.links?.map((link) => ({...link, localId: crypto.randomUUID()})),
-    sections : dbData?.sections.map(({section}) => section),
-    options : dbData?.options.map(({option}) => option),
-    schedule: (await getEmptyObject())?.schedule?.map((emptyDay) => {
-      const dbDay = dbData?.schedule.find((dbDay) => dbDay.day_num === emptyDay.day_num);
-      return {...emptyDay, ...dbDay, isWork: dbDay ? true : false}
-    }),
-    schedule_date: !dbData?.schedule_date ? null : new Intl.DateTimeFormat('en-CA', {year: 'numeric', month: '2-digit', day: '2-digit'}).format(dbData?.schedule_date),
-    photos: dbData?.photos?.map((photo) => ({...photo, localId: crypto.randomUUID()})),
-    modified: !dbData?.modified ? null : new Intl.DateTimeFormat('en-CA', {year: 'numeric', month: '2-digit', day: '2-digit', hour: "2-digit", hour12: false, minute: "2-digit"}).format(dbData?.modified),
-    created: !dbData?.created ? null : new Intl.DateTimeFormat('en-CA', {year: 'numeric', month: '2-digit', day: '2-digit', hour: "2-digit", hour12: false, minute: "2-digit"}).format(dbData?.created),
-  };
+  const processed = objectReadProcessing(dbData);
   return Response.json(processed);
 }
 

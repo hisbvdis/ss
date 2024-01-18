@@ -77,7 +77,7 @@ export default function Status(props) {
           text={state.statusInstead?.name_full}
           onChange={handleStateChange}
           onChangeData={(data) => setState((state) => {state.statusInstead = data})}
-          isAutocomplete={true}
+          isAutocomplete
           placeholder="Введите название"
           disabled={state.status !== "closed_forever"}
           requestItemsOnInputChange={

@@ -22,6 +22,7 @@ export default function ObjectEdit(props) {
   }
 
   // useEffect(() => {
+  //   if (state.id) return;
   //   setInheritedData(state.parent, setState);
   // }, [])
 
@@ -33,14 +34,14 @@ export default function ObjectEdit(props) {
       router.push(`/${state.type}/${id}`);
     } else {
       router.replace(`/${state.type}/${id}/edit`, {scroll: false});
+      router.refresh();
     }
   }
 
   return (
     <ObjectContext.Provider value={{
-      state, setState, handleStateChange,
+      state, setState, handleStateChange, setInheritedData,
       handleChangeWithQuotes: (e) => handleChangeWithQuotes(e, setState),
-      setInheritedData: () => setInheritedData(state.parent, setState),
     }}>
       <div className="container">
         <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit noValidate>

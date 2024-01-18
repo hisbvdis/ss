@@ -86,7 +86,7 @@ export default function Sections(props) {
         </Card.Section>
       <Card.Section>
         <Select
-          isAutocomplete={true}
+          isAutocomplete
           value={""}
           label={""}
           onChange={handleSections.add}

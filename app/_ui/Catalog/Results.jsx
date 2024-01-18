@@ -42,7 +42,6 @@ export default function Results(props) {
             <hr/>
             <ul style={{display: "flex", gap: "10px", flexWrap: "wrap", listStyle: "none", paddingInlineStart: 0}}>
               {options?.map(({option}) => {
-                // console.log( option )
                 return (
                   <li key={option?.id}>{option?.name}</li>
                 )

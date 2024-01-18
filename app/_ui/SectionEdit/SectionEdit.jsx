@@ -87,7 +87,7 @@ export default function SectionEdit(props) {
       <Card className="mt10">
         <Card.Heading>Характеристики раздела</Card.Heading>
         <Select
-          isAutocomplete={true}
+          isAutocomplete
           onChange={handleSpecs.add}
           placeholder="Добавить характеристику"
           requestItemsOnFirstTouch={async () =>

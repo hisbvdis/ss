@@ -2,18 +2,16 @@
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { createContext } from "react";
-
+// -----------------------------------------------------------------------------
 import { getCitiesByFilters } from "@/app/(routes)/api/cities/requests";
 import { useManageSearchParams } from "@/app/_utils/useManageSearchParams";
-
+// -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card";
-import { Map, Marker } from "@/app/_components/Map";
 import { Select } from "@/app/_components/Select";
-import { SearchPanel } from "@/app/_ui/SearchPanel";
-import { Control, ControlLabel } from "@/app/_components/Control";
+import { Control } from "@/app/_components/Control";
+import { Map, Marker } from "@/app/_components/Map";
 import { Filters, Results, Categories } from "@/app/_ui/Catalog";
 import "./Catalog.css";
-
 
 
 export default function Catalog(props) {
@@ -21,18 +19,16 @@ export default function Catalog(props) {
   const router = useRouter();
   const manageSearchParams = useManageSearchParams();
   const section = props.sections?.find((section) => section.id === Number(searchParams.section));
-  getCitiesByFilters
 
   return (
     <CatalogContext.Provider value={{searchParams, searchResults, manageSearchParams, router, sections, section, city}}>
-      <SearchPanel/>
       <div className={clsx("catalog", searchParams?.map ? "" : "container")}>
         <aside className="catalog__aside">
           <Card>
             <Control>
               <Control.Label>Город</Control.Label>
               <Select
-                isAutocomplete={true}
+                isAutocomplete
                 value={city?.id}
                 text={city?.name}
                 onChange={(e) => router.push(manageSearchParams("set", "city", e.target.value))}
