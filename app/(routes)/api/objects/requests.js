@@ -41,7 +41,7 @@ export async function upsertObject(state, init) {
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({state, init}),
     next: { tags: ["objects"] },
-  })
+  });
   if (!res.ok) throw new Error("Failed to fetch data 'upsertObject'");
   const data = await res.json();
   revalidateTag("objects");
@@ -50,9 +50,7 @@ export async function upsertObject(state, init) {
 
 export async function deleteObject(id) {
   const res = await fetch(`http://localhost:3000/api/objects/${id}`, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({state, init}),
+    method: "DELETE",
     next: { tags: ["objects"] },
   })
   if (!res.ok) throw new Error("Failed to fetch data 'deleteObject'");

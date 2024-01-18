@@ -29,11 +29,11 @@ export default function ObjectEdit(props) {
     const stateWithoutPhotoFiles = {...state, photos: state.photos?.map((photo) => ({...photo, file: undefined}))};
     const { id } = await upsertObject(stateWithoutPhotoFiles, props.init);
     await syncPhotos(id, state, props.init);
-    // if (e.nativeEvent.submitter?.dataset?.leavePage) {
-    //   router.push(`/${state.type}/${id}`);
-    // } else {
-    //   router.replace(`/${state.type}/${id}/edit`, {scroll: false});
-    // }
+    if (e.nativeEvent.submitter?.dataset?.leavePage) {
+      router.push(`/${state.type}/${id}`);
+    } else {
+      router.replace(`/${state.type}/${id}/edit`, {scroll: false});
+    }
   }
 
   return (

@@ -71,6 +71,9 @@ export async function POST(req) {
   const scheduleAdded = state.schedule?.filter((stateDay) => init?.schedule?.some((initDay) => stateDay.day_num === initDay.day_num && !initDay.time_string && stateDay.time_string));
   const scheduleChanged = state.schedule?.filter((stateDay) => init.schedule?.some((initDay) => (stateDay.day_num === initDay.day_num) && initDay.time_string && stateDay.time_string && initDay.time_string !== stateDay.time_string));
   const scheduleDeleted = init.schedule?.filter((initDay) => state.schedule?.some((stateDay) => initDay.day_num === stateDay.day_num && initDay.time_string && !stateDay.time_string));
+  const photosAdded = state.photos?.filter((statePhoto) => !init?.photos?.some((initPhoto) => statePhoto.localId === initPhoto.localId));
+  const photosDeleted = init.photos?.filter((initPhoto) => !state.photos.some((statePhoto) => initPhoto.localId === statePhoto.localId));
+  const photosMoved = state.photos?.filter((statePhoto) => init.photos?.some((initPhoto) => statePhoto.localId === initPhoto.localId && statePhoto.order !== initPhoto.order));
   const addedObject = await prisma.object.upsert({
     where: {
       id: state.id ?? -1
@@ -91,6 +94,9 @@ export async function POST(req) {
       },
       schedule: {
         create: scheduleAdded.map((day) => ({time_string: day.time_string, from_min: day.from_min, to_min: day.to_min, day_num: day.day_num})),
+      },
+      photos: {
+        create: photosAdded?.map(({name, order}) => ({name, order, uploaded: new Date()})),
       },
       created: new Date(),
     },
@@ -119,7 +125,30 @@ export async function POST(req) {
         update: scheduleChanged?.map((day) => ({where: {id: day.id}, data: {time_string: day.time_string, from_min: day.from_min, to_min: day.to_min, day_num: day.day_num}})),
         deleteMany: scheduleDeleted?.map((day) => ({...day, name_ru_short: undefined, day: undefined, isWork: undefined}))
       },
+      photos: {
+        create: photosAdded?.map(({name, order}) => ({name, order, uploaded: new Date()})),
+        update: photosMoved?.map((photo) => ({where: {id: photo.id}, data: {order: photo.order}})),
+        deleteMany: {id: {in: photosDeleted?.map(({id}) => id)}},
+      },
     }
-  })
-  return Response.json("ok");
+  });
+
+  // Rename photo names of created object
+  if (!state.id && state.photos?.length > 0) {
+    const updatedOrg = await prisma.object.update({
+      where: {id: addedObject.id},
+      data: {
+        photos: {
+          create: state.photos.map(({name, order}) => ({
+            name: name.replace("ID", addedObject.id),
+            order,
+            uploaded: new Date()
+          })),
+        }
+      },
+    });
+    return Response.json(updatedOrg);
+  };
+
+  return Response.json(addedObject);
 }

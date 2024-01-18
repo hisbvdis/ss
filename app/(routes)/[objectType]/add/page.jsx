@@ -1,10 +1,11 @@
 import { ObjectEdit } from "@/app/_ui/ObjectEdit";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 // -----------------------------------------------------------------------------
-import { emptyObject } from "@/app/(routes)/api/objects/processing";
+import { getEmptyObject } from "@/app/(routes)/api/objects/requests";
 
 
 export default async function AddObjectPage({params, searchParams}) {
+  const emptyObject = await getEmptyObject();
   const parent = searchParams.parent ? await getObjectById(searchParams.parentId) : null;
 
   return (
