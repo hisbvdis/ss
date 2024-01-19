@@ -2,16 +2,19 @@ import { prisma } from "@/app/(routes)/api/dbClient";
 
 export async function GET(req) {
   const searchParams = req.nextUrl.searchParams;
+  console.log(  )
   const query = searchParams.get("query") ?? undefined;
   const type = searchParams.get("type") ?? undefined;
   const cityId = searchParams.get("city") ? Number(searchParams.get("city")) : undefined;
   const sectionId = searchParams.get("section") ? Number(searchParams.get("section")) : undefined;
   const options = searchParams.get("options") ?? undefined;
   const groupedOptions = Object.values(
-      options.split(",")
-      .map((str) => str.split(":"))
-      .map((arr) => arr.map((str) => Number(str)))
-      .reduce((acc, [key, value]) => ({...acc,[key]: acc[key] ? [...acc[key], value] : [value]}),{})
+    options
+      ? options?.split(",")
+        .map((str) => str.split(":"))
+        .map((arr) => arr.map((str) => Number(str)))
+        .reduce((acc, [key, value]) => ({...acc,[key]: acc[key] ? [...acc[key], value] : [value]}),{})
+      : {}
     )
   const dbData = await prisma.object.findMany({
     where: {
@@ -104,7 +107,7 @@ export async function POST(req) {
         create: scheduleAdded?.map((day, i) => ({time: day.time, from: day.from, to: day.to, day_num: i})),
       },
       photos: {
-        create: photosAdded?.map(({name, order}) => ({name, order, uploaded: new Date()})),
+        // Don't: The
       },
       created: new Date(),
     },

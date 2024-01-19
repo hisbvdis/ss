@@ -11,8 +11,8 @@ export default function PageHeader() {
         <Logo/>
         <Link className="pageHeader__link" href="/catalog">Catalog</Link>
         <Link className="pageHeader__link" href="/admin">Admin</Link>
-        <Link className="pageHeader__link" href="/org/add">Add org</Link>
-        <Link className="pageHeader__link" href="/place/add">Add place</Link>
+        <Link className="pageHeader__link" href="/object/addOrg">Add org</Link>
+        <Link className="pageHeader__link" href="/object/addPlace">Add place</Link>
       </div>
     </header>
   )

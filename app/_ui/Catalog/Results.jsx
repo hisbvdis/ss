@@ -1,11 +1,12 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useContext } from "react";
-
+// -----------------------------------------------------------------------------
 import { MapPin } from "@/app/_icons";
 import { CatalogContext } from "./Catalog";
-import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 import { Card } from "@/app/_components/Card";
+import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
+// -----------------------------------------------------------------------------
 import { useManageSearchParams } from "@/app/_utils/useManageSearchParams";
 
 
@@ -33,11 +34,11 @@ export default function Results(props) {
           <span>Карта</span>
         </Link>
       </Card.Section>
-      {searchResults?.map(({id, type, city, photos, name_full, address, options}) => (
+      {searchResults?.map(({id, city, photos, name_full, address, options}) => (
         <Card.Section key={id} style={{display: "grid", gap: "15px", gridTemplateColumns: "1fr 1.5fr"}}>
           <Image src={photos?.length > 0 ? `/photos/${photos[0].name}`: "/icons/no-photo.svg"} width="250" height="210" alt="Image" loading="lazy" style={{maxInlineSize: "100%", height: "auto", aspectRatio: "250/210"}}/>
           <div>
-            <Link href={`${type}/${id}`}>{name_full}</Link>
+            <Link href={`object/${id}`}>{name_full}</Link>
             <p>{city?.name}, {address}</p>
             <hr/>
             <ul style={{display: "flex", gap: "10px", flexWrap: "wrap", listStyle: "none", paddingInlineStart: 0}}>

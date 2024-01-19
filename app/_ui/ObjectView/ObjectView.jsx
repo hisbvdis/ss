@@ -1,21 +1,22 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-
+// -----------------------------------------------------------------------------
+import { Card } from "@/app/_components/Card";
+import { Flex } from "@/app/_components/Flex";
 import { DelBtn } from "@/app/_components/DelBtn";
 import { Map, Marker } from "@/app/_components/Map";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
-import { Card } from "@/app/_components/Card";
-import "./ObjectView.css";
+// -----------------------------------------------------------------------------
 import { deleteObject } from "@/app/(routes)/api/objects/requests";
-import { Flex } from "@/app/_components/Flex";
+import "./ObjectView.css";
 
 
 export default function ObjectView(props) {
-  const { id, type, name_full, photos, city, address, address_2, phones, links, coord_lat, coord_lon, description, sections, options, modified, parent_id, parent, childObjects } = props;
+  const { id, type, name_full, photos, city, address, address_2, phones, links, coord_lat, coord_lon, description, sections, options, modified, parent_id, parent, children } = props.object;
 
   return (
-    <div className="objectView  container">
+    <div className="objectView  container  page">
       <header className="objectView__header">
         <Card>
           <Flex>
@@ -28,7 +29,7 @@ export default function ObjectView(props) {
             <DelBtn id={id} delFunc={deleteObject} redirectPath="/">X</DelBtn>
           </Flex>
           <h1 style={{fontSize: "23rem", fontWeight: "400"}}>{name_full}</h1>
-          {parent_id ? <Link href={`/org/${parent_id}`}>&lt; {parent?.name_full}</Link> : null}
+          {parent_id ? <Link href={`/object/${parent_id}`}>&lt; {parent?.name_full}</Link> : null}
         </Card>
       </header>
 
@@ -94,13 +95,13 @@ export default function ObjectView(props) {
           <Card className="mt10">
             <Card.Heading style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
               <span>На базе организации</span>
-              <Link href={`/place/add?parent=${id}`}>Добавить</Link>
+              <Link href={`/object/add?parent=${id}`}>Добавить</Link>
             </Card.Heading>
             <Card.Section>
               <ul style={{display: "flex", listStyle: "none", paddingInlineStart: 0, gap: "15px"}}>
-                {childObjects?.map((child) => (
+                {children?.map((child) => (
                   <li key={child.id}>
-                    <Link className="objectView__childLink" href={`${child.type === "org" ? "/org" : "/place"}/${child.id}`}>
+                    <Link className="objectView__childLink" href={`/object/${child.id}`}>
                       <Image className="objectView__childPhoto" src={child.photos?.length > 0 ? `/photos/${child.photos[0].name}`: "/icons/no-photo.svg"} width="178" height="120" alt="Image" loading="lazy"/>
                       <span>{child.name_type}</span>
                     </Link>
@@ -117,16 +118,16 @@ export default function ObjectView(props) {
             <Card.Section key={section.id}>
               <p>{section.name}</p>
               {section.specs.map(({spec}) => (
-                <div key={spec.id} style={{display: "flex", gap: "20px"}}>
+                <Flex key={spec.id} gap="10px">
                   <p>{spec.name_filter}</p>
                   <ul style={{listStyle: "none", paddingInlineStart: 0, display: "flex", gap: "10px"}}>
-                    {options.filter(({spec_id}) => spec_id === spec.id).map((spec) => (
-                      <li key={spec.id}>
-                        <Link href={`/catalog?city=${city?.id}&section=${section?.id}&options=${spec.id}`}>{spec.name}</Link>
+                    {options.filter((opt) => opt.spec_id === spec.id).map((opt) => (
+                      <li key={opt.id}>
+                        <Link href={`/catalog?city=${city?.id}&section=${section?.id}&options=${opt.spec_id}:${opt.id}`}>{opt.name}</Link>
                       </li>
                     ))}
                   </ul>
-                </div>
+                </Flex>
               ))}
             </Card.Section>
           ))}

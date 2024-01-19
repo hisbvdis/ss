@@ -7,6 +7,6 @@ export default async function ObjectViewPage({params, searchParams}) {
   const object = await getObjectById(params.id);
 
   return (
-    <ObjectView searchParams={searchParams} {...object}/>
+    <ObjectView object={object} searchParams={searchParams}/>
   )
 }

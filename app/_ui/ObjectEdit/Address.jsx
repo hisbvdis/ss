@@ -105,7 +105,7 @@ export default function Address(props) {
           <Control className="mt20">
             <Control.Label>
               <span>На базе организации</span>
-              <span>{state.parent_id ? <Link href={`/org/${state.parent_id}`}>(Открыть)</Link> : null}</span>
+              <span>{state.parent_id ? <Link href={`/object/${state.parent_id}`}>(Открыть)</Link> : null}</span>
             </Control.Label>
             <Select
               name="parent_id"

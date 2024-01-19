@@ -3,14 +3,14 @@ import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { createContext } from "react";
 // -----------------------------------------------------------------------------
-import { getCitiesByFilters } from "@/app/(routes)/api/cities/requests";
-import { useManageSearchParams } from "@/app/_utils/useManageSearchParams";
-// -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card";
 import { Select } from "@/app/_components/Select";
 import { Control } from "@/app/_components/Control";
 import { Map, Marker } from "@/app/_components/Map";
 import { Filters, Results, Categories } from "@/app/_ui/Catalog";
+// -----------------------------------------------------------------------------
+import { getCitiesByFilters } from "@/app/(routes)/api/cities/requests";
+import { useManageSearchParams } from "@/app/_utils/useManageSearchParams";
 import "./Catalog.css";
 
 

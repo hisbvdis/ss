@@ -5,14 +5,15 @@ import { CloseIcon } from "@/app/_icons";
 import { CatalogContext } from "./Catalog";
 import { Card } from "@/app/_components/Card";
 import { Control } from "@/app/_components/Control";
-import { Checkbox, ChoiceGroup } from "@/app/_components/Choice";
+import { Checkbox, CheckboxGroup } from "@/app/_components/Choice";
 
 
 export default function Filters(props) {
   const { searchParams, searchResults, manageSearchParams, section } = useContext(CatalogContext);
+  console.log( searchResults )
 
   return (
-    <Card className="mt10">
+    <Card className="objectView__filters  mt10">
       <Card.Heading style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
         <span>{section?.name}</span>
         <Link href={manageSearchParams("delete", ["section", "options"])} style={{display: "flex", alignItems: "center"}}>
@@ -23,13 +24,13 @@ export default function Filters(props) {
         <Card.Section key={spec.id}>
           <Control>
             <Control.Label>{spec.name_filter}</Control.Label>
-            <ChoiceGroup arrayToCompare={searchParams?.options?.split(",")}>
+            <CheckboxGroup arrayToCompare={searchParams?.options?.split(",")}>
               {spec?.options.map((opt) => (
                 <Link key={opt.id} href={manageSearchParams("append", "options", `${spec.id}:${opt.id}`)}>
                   <Checkbox value={`${spec.id}:${opt.id}`} tabIndex="-1">{opt.name}</Checkbox>
                 </Link>
               ))}
-            </ChoiceGroup>
+            </CheckboxGroup>
           </Control>
         </Card.Section>
       ))}
