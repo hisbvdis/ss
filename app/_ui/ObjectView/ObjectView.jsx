@@ -25,7 +25,7 @@ export default function ObjectView(props) {
               {label: `${city?.name ?? ""}`, href: `/catalog?city=${city?.id}`},
               {label: `${sections?.[0]?.name ?? ""}`, href: `/catalog?city=${city?.id}&section=${sections?.[0]?.id}`}
             ]}/>
-            <a href={`/${type}/${id}/edit`} style={{marginInlineStart: "auto"}}>Ред</a>
+            <a href={`/object/${id}/edit`} style={{marginInlineStart: "auto"}}>Ред</a>
             <DelBtn id={id} delFunc={deleteObject} redirectPath="/">X</DelBtn>
           </Flex>
           <h1 style={{fontSize: "23rem", fontWeight: "400"}}>{name_full}</h1>
@@ -95,7 +95,7 @@ export default function ObjectView(props) {
           <Card className="mt10">
             <Card.Heading style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
               <span>На базе организации</span>
-              <Link href={`/object/add?parent=${id}`}>Добавить</Link>
+              <Link href={`/object/add/place?parent=${id}`}>Добавить</Link>
             </Card.Heading>
             <Card.Section>
               <ul style={{display: "flex", listStyle: "none", paddingInlineStart: 0, gap: "15px"}}>

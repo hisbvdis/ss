@@ -37,7 +37,6 @@ export default function Address(props) {
       mapInstance.setView([result.lat, result.lon]);
       mapInstance.setZoom(17);
     },
-
     getAddressFromCoord: async () => {
       if (!state.coord_lat || !state.coord_lon) return;
       const result = await queryAddressForCoord({
@@ -51,7 +50,6 @@ export default function Address(props) {
         state.address = `${road}${house ? `, ${house}` : ""}`;
       });
     },
-
     markerDragEnd: (e) => {
       const { lat, lng } = e.target._latlng;
       setState((state) => {
@@ -59,7 +57,6 @@ export default function Address(props) {
         state.coord_lon = lng;
       });
     },
-
     rightClick: (e) => {
       const { lat, lng } = e.latlng;
       setState((state) => {
@@ -68,10 +65,6 @@ export default function Address(props) {
         state.coord_lon = lng;
       });
     }
-  }
-
-  const handleParentOrgChange = (e) => {
-    setInheritedData(e.target.data, setState);
   }
 
   useEffect(() => {
@@ -111,8 +104,7 @@ export default function Address(props) {
               name="parent_id"
               value={state?.parent_id}
               text={state?.parent?.name_full}
-              onChange={handleParentOrgChange}
-              // onChangeData={(data) => setState((state) => {state.parent = data})}
+              onChange={(e) => setInheritedData(e.target.data, setState)}
               isAutocomplete
               placeholder="Введите название"
               disabled={!state.city_id}

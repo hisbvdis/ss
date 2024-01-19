@@ -12,9 +12,9 @@ export default async function AddObjectPage({params, searchParams}) {
     <div className="container  page">
       <Breadcrumbs items={[
         { label: "Каталог", href: "/catalog" },
-        { label: `Добавить ${params.objectType === "org" ? "организацию" : "место"}` },
+        { label: `Добавить ${params.type === "org" ? "организацию" : "место"}` },
       ]}/>
-      <ObjectEdit init={{...emptyObject, type: params.objectType}} parent={parent}/>
+      <ObjectEdit init={{...emptyObject, type: params.type}} parent={parent}/>
     </div>
   )
 }
