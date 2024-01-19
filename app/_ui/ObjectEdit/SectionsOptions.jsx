@@ -11,6 +11,7 @@ import { Card } from "@/app/_components/Card";
 import { ObjectContext } from "./ObjectEdit";
 import { Select } from "@/app/_components/Select";
 import { getSectionsByFilters } from "@/app/(routes)/api/sections/requests";
+import { Flex } from "@/app/_components/Flex";
 
 
 export default function Sections(props) {
@@ -46,8 +47,9 @@ export default function Sections(props) {
     },
     changeRadio: (spec, opt) => {
       setState((state) => {
-        state.options = state.options.filter((stateOpt) => !spec.options.some((specOpt) => specOpt.id === stateOpt.id));
-        state.options = state.options.concat(opt);
+        if (!state.options) state.options = [];
+        state.options = state.options?.filter((stateOpt) => !spec.options.map((opt) => opt.id).includes(stateOpt.id));
+        state.options = state.options?.concat(opt);
       });
     },
   }
@@ -62,25 +64,27 @@ export default function Sections(props) {
               <Button onClick={() => handleSections.delete(section)}>X</Button>
               <span>{section.name}</span>
             </FieldSet.Legend>
-            {section?.specs?.map(({spec}) => (
-              <Control key={spec.id}>
-                <Control.Label>{spec.name_filter}</Control.Label>
-                {spec.control_type === "checkbox"
-                  ? <CheckboxGroup arrayToCompare={state.options?.map(({id}) => id)} required>
-                      {spec.options.map((opt) => (
-                        <Checkbox key={opt.id} value={opt.id} onChange={(e) => handleOptions.changeCheckbox(e, opt)}>{opt.name}</Checkbox>
-                      ))}
-                    </CheckboxGroup>
-                  :
-                spec.control_type === "radio"
-                  ? <RadioGroup arrayToCompare={state.options.map(({id}) => id)} required>
-                      {spec.options.map((opt) => (
-                        <Radio key={opt.id} value={opt.id} onChange={() => handleOptions.changeRadio(spec, opt)}>{opt.name}</Radio>
-                      ))}
-                    </RadioGroup>
-                  : ""}
-              </Control>
-            ))}
+            <Flex>
+              {section?.specs?.map(({spec}) => (
+                <Control key={spec.id}>
+                  <Control.Label>{spec.name_filter}</Control.Label>
+                  {spec.control_type === "checkbox"
+                    ? <CheckboxGroup arrayToCompare={state.options?.map(({id}) => id)} required>
+                        {spec.options.map((opt) => (
+                          <Checkbox key={opt.id} value={opt.id} onChange={(e) => handleOptions.changeCheckbox(e, opt)}>{opt.name}</Checkbox>
+                        ))}
+                      </CheckboxGroup>
+                    :
+                  spec.control_type === "radio"
+                    ? <RadioGroup arrayToCompare={state.options?.map(({id}) => id)} required>
+                        {spec.options.map((opt) => (
+                          <Radio key={opt.id} value={opt.id} onChange={() => handleOptions.changeRadio(spec, opt)}>{opt.name}</Radio>
+                        ))}
+                      </RadioGroup>
+                    : ""}
+                </Control>
+              ))}
+            </Flex>
           </FieldSet>
           ))}
         </Card.Section>
@@ -92,7 +96,7 @@ export default function Sections(props) {
           onChange={handleSections.add}
           placeholder="Введите название"
           requestItemsOnFirstTouch={async () =>
-            (await getSectionsByFilters({type: state.type}))
+            (await getSectionsByFilters({objectType: state.type}))
               .map((section) => ({
                 id: section.id, text: section.name, data: section
               }))

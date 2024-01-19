@@ -21,10 +21,10 @@ export default function ObjectEdit(props) {
     setState((state) => {state[e.target.name] = e.target.value});
   }
 
-  // useEffect(() => {
-  //   if (state.id) return;
-  //   setInheritedData(state.parent, setState);
-  // }, [])
+  useEffect(() => {
+    if (state.id || !props.parent) return;
+    setInheritedData(props.parent, setState);
+  }, [])
 
   const handleFormSubmit = async (e) => {
     const stateWithoutPhotoFiles = {...state, photos: state.photos?.map((photo) => ({...photo, file: undefined}))};

@@ -5,16 +5,21 @@ export async function GET(req) {
   const query = searchParams.get("query") ?? undefined;
   const type = searchParams.get("type") ?? undefined;
   const cityId = searchParams.get("city") ? Number(searchParams.get("city")) : undefined;
-  const sectionId = searchParams.get("section") ?? undefined;
-  const optionIds = searchParams.get("options")?.split(",").map((id) => Number(id));
-  // const specs = await getSpecsByOptionIds(optionIds) ?? undefined;
+  const sectionId = searchParams.get("section") ? Number(searchParams.get("section")) : undefined;
+  const options = searchParams.get("options") ?? undefined;
+  const groupedOptions = Object.values(
+      options.split(",")
+      .map((str) => str.split(":"))
+      .map((arr) => arr.map((str) => Number(str)))
+      .reduce((acc, [key, value]) => ({...acc,[key]: acc[key] ? [...acc[key], value] : [value]}),{})
+    )
   const dbData = await prisma.object.findMany({
     where: {
       city_id: cityId,
-      sections: sectionId ? {some: {section_id: {equals: sectionId}}} : undefined,
+      sections: {some: {section_id: {equals: sectionId}}},
       name_full: query ? {contains: query, mode: 'insensitive'} : undefined,
       type,
-      // AND: specs?.length ? specs?.map(({options}) => options.map(({id}) => id)).map((ids) => ({options: {some: {option_id: {in: ids}}}})) : undefined,
+      AND: groupedOptions?.length ? groupedOptions?.map((ids) => ({options: {some: {option_id: {in: ids}}}})) : undefined,
     },
     orderBy: {
       created: "desc",

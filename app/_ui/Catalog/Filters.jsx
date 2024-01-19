@@ -25,8 +25,8 @@ export default function Filters(props) {
             <Control.Label>{spec.name_filter}</Control.Label>
             <ChoiceGroup arrayToCompare={searchParams?.options?.split(",")}>
               {spec?.options.map((opt) => (
-                <Link key={opt.id} href={manageSearchParams("append", "options", opt.id)}>
-                  <Checkbox value={String(opt.id)} tabIndex="-1">{opt.name}</Checkbox>
+                <Link key={opt.id} href={manageSearchParams("append", "options", `${spec.id}:${opt.id}`)}>
+                  <Checkbox value={`${spec.id}:${opt.id}`} tabIndex="-1">{opt.name}</Checkbox>
                 </Link>
               ))}
             </ChoiceGroup>

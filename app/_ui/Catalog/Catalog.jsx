@@ -33,7 +33,7 @@ export default function Catalog(props) {
                 text={city?.name}
                 onChange={(e) => router.push(manageSearchParams("set", "city", e.target.value))}
                 placeholder="Введите название"
-                requestItemsOnInputChange={async (value) => (await getCitiesByFilters(value))
+                requestItemsOnInputChange={async (value) => (await getCitiesByFilters({name: value}))
                   .map(({id, name, country_name, admin1_name, admin2_name}) => ({
                     id: id, text: name, text2: country_name, text3: admin1_name, text4: admin2_name
                   }))

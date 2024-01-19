@@ -71,10 +71,6 @@ export default function Address(props) {
   }
 
   const handleParentOrgChange = (e) => {
-    setState((state) => {
-      state.parent_id = e.target.value;
-      state.parent = e.target.data;
-    });
     setInheritedData(e.target.data, setState);
   }
 

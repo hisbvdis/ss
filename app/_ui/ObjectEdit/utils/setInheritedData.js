@@ -10,6 +10,8 @@ export const setInheritedData = (parent, setState) => {
     state.status_confirm = processed?.status_confirm;
     state.city_id = processed?.city_id;
     state.city = processed?.city;
+    state.parent_id = processed?.id;
+    state.parent = processed;
     state.address = processed?.address;
     state.address_2 = processed?.address_2;
     state.coord_inherit = true;

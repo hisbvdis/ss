@@ -30,13 +30,13 @@ export async function POST(req) {
     create: {
       ...scalarFields,
       options: {
-        create: optionsAdded,
+        create: optionsAdded.map((opt) => ({...opt, localId: undefined})),
       },
     },
     update: {
       ...scalarFields,
       options: {
-        create: optionsAdded,
+        create: optionsAdded.map((opt) => ({...opt, localId: undefined})),
         update: optionsChanged?.map((option) => ({where: {id: option.id}, data: {name: option.name}})),
         deleteMany: optionsDeleted?.map(({id}) => ({id: id})),
       },

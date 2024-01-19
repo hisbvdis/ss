@@ -22,7 +22,7 @@ export default function Results(props) {
           {label: section?.name ?? ""}
         ]}/>
         <h1 style={{fontSize: "23rem", fontWeight: "400"}}>
-          <span>{section?.name ?? "Все спортивные объекты"} {searchParams?.city && city ? ` в ${city?.preposition}` : null}</span>
+          <span>{section?.name ?? "Все спортивные объекты"} {searchParams?.city && city ? ` в ${city?.name_preposition}` : null}</span>
           <sup style={{fontSize: "0.5em"}}>{searchResults?.length}</sup>
         </h1>
       </Card.Heading>
