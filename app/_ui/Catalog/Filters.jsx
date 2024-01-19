@@ -10,7 +10,6 @@ import { Checkbox, CheckboxGroup } from "@/app/_components/Choice";
 
 export default function Filters(props) {
   const { searchParams, searchResults, manageSearchParams, section } = useContext(CatalogContext);
-  console.log( searchResults )
 
   return (
     <Card className="objectView__filters  mt10">

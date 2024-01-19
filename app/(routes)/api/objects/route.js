@@ -2,7 +2,6 @@ import { prisma } from "@/app/(routes)/api/dbClient";
 
 export async function GET(req) {
   const searchParams = req.nextUrl.searchParams;
-  console.log(  )
   const query = searchParams.get("query") ?? undefined;
   const type = searchParams.get("type") ?? undefined;
   const cityId = searchParams.get("city") ? Number(searchParams.get("city")) : undefined;
