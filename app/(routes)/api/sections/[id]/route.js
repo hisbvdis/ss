@@ -7,7 +7,7 @@ export async function GET(_, {params}) {
       id: Number(params.id),
     },
     include: {
-      specs: {include: {spec: true}},
+      specs: {include: {spec: {include: {options: true}}}},
     }
   });
   const processed = sectionReadProcessing(dbData);

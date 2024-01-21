@@ -6,7 +6,7 @@ import { Card } from "@/app/_components/Card";
 
 
 export default function Categories(props) {
-  const { sections, manageSearchParams } = useContext(CatalogContext);
+  const { sectionList, manageSearchParams } = useContext(CatalogContext);
 
   return (
     <Card className="mt10">
@@ -14,7 +14,7 @@ export default function Categories(props) {
         <Card.Section>
           <ul style={{listStyle: "none", paddingInlineStart: 0}}>
             {/* <Link href={manageSearchParams("set", "section", "all")}>Все разделы</Link> */}
-            {sections?.map(({id, name}) => (
+            {sectionList?.map(({id, name}) => (
               <li key={id}>
                 <Link href={manageSearchParams("set", "section", id)}>{name}</Link>
               </li>

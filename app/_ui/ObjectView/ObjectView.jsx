@@ -14,7 +14,7 @@ import "./ObjectView.css";
 
 export default function ObjectView(props) {
   const { id, type, name_full, photos, city, address, address_2, phones, links, coord_lat, coord_lon, description, sections, options, modified, parent_id, parent, children } = props.state;
-  console.log( options )
+
   return (
     <div className="objectView  container  page">
       <header className="objectView__header">

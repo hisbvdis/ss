@@ -15,13 +15,12 @@ import "./Catalog.css";
 
 
 export default function Catalog(props) {
-  const { searchParams, searchResults, sections, city } = props;
+  const { searchParams, searchResults, sectionList, section, city } = props;
   const router = useRouter();
   const manageSearchParams = useManageSearchParams();
-  const section = props.sections?.find((section) => section.id === Number(searchParams.section));
 
   return (
-    <CatalogContext.Provider value={{searchParams, searchResults, manageSearchParams, router, sections, section, city}}>
+    <CatalogContext.Provider value={{searchParams, searchResults, manageSearchParams, sectionList, router, section, city}}>
       <div className={clsx("catalog", searchParams?.map ? "" : "container")}>
         <aside className="catalog__aside">
           <Card>

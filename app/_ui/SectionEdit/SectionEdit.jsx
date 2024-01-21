@@ -53,7 +53,6 @@ export default function SectionEdit(props) {
       router.replace(`/admin/sections/${id}`, {scroll: false});
     }
   }
-  console.log( state )
 
   return (
     <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit>
