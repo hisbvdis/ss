@@ -1,5 +1,5 @@
 import { getCityById } from "@/app/(routes)/api/cities/requests"
-import { getObjectsByFilters } from "@/app/(routes)/api/objects/requests";
+import { getObjectsCount, getObjectsByFilters } from "@/app/(routes)/api/objects/requests";
 import { getSectionById, getSectionsByFilters } from "@/app/(routes)/api/sections/requests";
 // -----------------------------------------------------------------------------
 import { Catalog } from "@/app/_ui/Catalog";
@@ -11,6 +11,7 @@ export default async function CatalogPage({searchParams}) {
   const section = searchParams.section ? await getSectionById(searchParams.section) : undefined;
   const sectionList = await getSectionsByFilters();
   const searchResults = await getObjectsByFilters(searchParams);
+  const objectCounts = searchParams.section ? await getObjectsCount(searchParams.section, searchParams.options) : undefined;
 
   return (
     <>
@@ -22,6 +23,7 @@ export default async function CatalogPage({searchParams}) {
           sectionList={sectionList}
           searchResults={searchResults}
           section={section}
+          objectCounts={objectCounts}
         />
       </div>
     </>

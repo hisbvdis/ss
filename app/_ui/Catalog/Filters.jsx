@@ -9,8 +9,8 @@ import { Checkbox, CheckboxGroup } from "@/app/_components/Choice";
 
 
 export default function Filters(props) {
-  const { searchParams, searchResults, manageSearchParams, section } = useContext(CatalogContext);
-
+  const { searchParams, searchResults, objectCounts, manageSearchParams, section } = useContext(CatalogContext);
+  console.log( objectCounts )
   return (
     <Card className="objectView__filters  mt10">
       <Card.Heading style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
@@ -27,6 +27,7 @@ export default function Filters(props) {
               {spec?.options.map((opt) => (
                 <Link key={opt.id} href={manageSearchParams("append", "options", `${spec.id}:${opt.id}`)}>
                   <Checkbox value={`${spec.id}:${opt.id}`} tabIndex="-1">{opt.name}</Checkbox>
+                  <span>{objectCounts[opt.id] ?? 0}</span>
                 </Link>
               ))}
             </CheckboxGroup>

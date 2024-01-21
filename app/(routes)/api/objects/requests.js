@@ -1,11 +1,9 @@
 "use server";
 import { revalidateTag } from "next/cache";
 
-export async function getObjectsByFilters(filters) {
-  const filterString =  Object.entries(filters)
-    .filter(([_, value]) => value)
-    .map(([name, value]) => `${name}=${value}`).join("&");
-  const res = await fetch(`http://localhost:3000/api/objects?${filterString}`, {
+export async function getObjectsByFilters(filtersObj) {
+  const filters = Object.entries(filtersObj).map(([name, value]) => `${name}=${value}`).join("&");
+  const res = await fetch(`http://localhost:3000/api/objects?${filters}`, {
     method: "GET",
     next: { tags: ["objects"] },
   });
@@ -21,6 +19,16 @@ export async function getObjectsByCityAndName({cityId, type, query}) {
     next: { tags: ["objects"] },
   });
   if (!res.ok) throw new Error("Failed to fetch data 'getObjectsByCityAndName'");
+  const data = await res.json();
+  return data;
+}
+
+export async function getObjectsCount(section, options) {
+  const res = await fetch(`http://localhost:3000/api/objects/count?section=${section}&options=${options}`, {
+    method: "GET",
+    next: { tags: ["objects"] },
+  });
+  if (!res.ok) throw new Error("Failed to fetch data 'getObjectsCount'");
   const data = await res.json();
   return data;
 }
