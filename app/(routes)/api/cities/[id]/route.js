@@ -1,4 +1,4 @@
-import { prisma } from "@/app/(routes)/api/dbClient";
+import { prisma } from "@/prisma/client.prisma";
 
 export async function GET(_, {params}) {
   const dbData = await prisma.city.findUnique({

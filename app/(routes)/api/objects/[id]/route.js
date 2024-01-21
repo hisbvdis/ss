@@ -1,4 +1,4 @@
-import { prisma } from "@/app/(routes)/api/dbClient";
+import { prisma } from "@/prisma/client.prisma";
 import { objectReadProcessing } from "../processing";
 
 export async function GET(_, {params}) {
