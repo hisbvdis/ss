@@ -10,7 +10,7 @@ import { Checkbox, CheckboxGroup } from "@/app/_components/Choice";
 
 export default function Filters(props) {
   const { searchParams, searchResults, objectCounts, manageSearchParams, section } = useContext(CatalogContext);
-  console.log( objectCounts )
+
   return (
     <Card className="objectView__filters  mt10">
       <Card.Heading style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
