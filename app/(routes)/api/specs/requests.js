@@ -46,31 +46,6 @@ export async function deleteSpecById(id) {
   return data;
 }
 
-async function getSpecsByOptionIds(ids) {
-  if (!ids) return [];
-  const dbData = await prisma.spec.findMany({
-    where: {
-      options: {
-        some: {
-          id: {
-            in: ids
-          }
-        }
-      }
-    },
-    include: {
-      options: {
-        where: {
-          id: {
-            in: ids
-          }
-        },
-      },
-    },
-  });
-  return dbData;
-}
-
 export async function getEmptySpec() {
   return {
     object_type: "org",
