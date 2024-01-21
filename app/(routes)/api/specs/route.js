@@ -2,19 +2,17 @@ import { prisma } from "@/prisma/client.prisma";
 
 export async function GET(req) {
   const searchParams = req.nextUrl.searchParams;
-  const objectType = searchParams.get("objectType") ?? undefined;
   const dbData = await prisma.spec.findMany({
     where: {
-      object_type: objectType
+      object_type: searchParams.get("objectType") ?? undefined,
     },
-    include: {options: {orderBy: {id: "asc"}}},
   });
   return Response.json(dbData);
 }
 
 export async function POST(req) {
   const { state, init } = await req.json();
-  const scalarFields = {
+  const fields = {
     name_service: state.name_service || null,
     name_filter: state.name_filter || null,
     object_type: state.object_type || null,
@@ -28,17 +26,17 @@ export async function POST(req) {
       id: state.id ?? -1
     },
     create: {
-      ...scalarFields,
+      ...fields,
       options: {
-        create: optionsAdded.map((opt) => ({...opt, localId: undefined})),
+        create: optionsAdded.length ? optionsAdded.map((opt) => ({...opt, localId: undefined})) : undefined,
       },
     },
     update: {
-      ...scalarFields,
+      ...fields,
       options: {
-        create: optionsAdded.map((opt) => ({...opt, localId: undefined})),
-        update: optionsChanged?.map((option) => ({where: {id: option.id}, data: {name: option.name}})),
-        deleteMany: optionsDeleted?.map(({id}) => ({id: id})),
+        create: optionsAdded.length ? optionsAdded.map((opt) => ({...opt, localId: undefined})) : undefined,
+        update: optionsChanged.length ? optionsChanged?.map((option) => ({where: {id: option.id}, data: {name: option.name}})) : undefined,
+        deleteMany: optionsDeleted.length ? optionsDeleted?.map(({id}) => ({id: id})) : undefined,
       },
     }
   });

@@ -7,7 +7,7 @@ import { SearchPanel } from "@/app/_ui/SearchPanel";
 
 
 export default async function CatalogPage({searchParams}) {
-  const city = await getCityById(searchParams.city);
+  const city = searchParams.city ? await getCityById(searchParams.city) : undefined;
   const sections = await getSectionsByFilters();
   const searchResults = await getObjectsByFilters(searchParams);
 

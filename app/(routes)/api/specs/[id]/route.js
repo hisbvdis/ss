@@ -1,4 +1,5 @@
 import { prisma } from "@/prisma/client.prisma";
+import { specsReadProcessing } from "../processing";
 
 export async function GET(_, {params}) {
   const dbData = await prisma.spec.findUnique({
@@ -9,10 +10,7 @@ export async function GET(_, {params}) {
       options: {orderBy: {id: "asc"}}
     },
   });
-  const processed = {
-    ...dbData,
-    options: dbData.options.map((opt) => ({...opt,localId: crypto.randomUUID()})),
-  }
+  const processed = specsReadProcessing(dbData);
   return Response.json(processed);
 }
 

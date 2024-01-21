@@ -1,9 +1,9 @@
 "use server";
 import { revalidateTag } from "next/cache";
 
-export async function getSpecsByFilters(filters) {
-  const filterString = filters && Object.entries(filters).map(([name, value]) => `${name}=${value}`).join("&");
-  const res = await fetch(`http://localhost:3000/api/specs?${filterString}`, {
+export async function getSpecsByFilters(filtersObj={}) {
+  const filters = Object.entries(filtersObj).map(([name, value]) => `${name}=${value}`).join("&");
+  const res = await fetch(`http://localhost:3000/api/specs?${filters}`, {
     method: "GET",
     next: { tags: ["specs"] },
   });

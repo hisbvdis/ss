@@ -3,8 +3,8 @@ import { prisma } from "@/prisma/client.prisma";
 export async function GET(req) {
   const searchParams = req.nextUrl.searchParams;
   const query = searchParams.get("query") ?? undefined;
-  const type = searchParams.get("type") ?? undefined;
   const cityId = searchParams.get("city") ? Number(searchParams.get("city")) : undefined;
+  const type = searchParams.get("type") ?? undefined;
   const sectionId = searchParams.get("section") ? Number(searchParams.get("section")) : undefined;
   const options = searchParams.get("options") ?? undefined;
   const groupedOptions = Object.values(
@@ -17,10 +17,10 @@ export async function GET(req) {
     )
   const dbData = await prisma.object.findMany({
     where: {
-      city_id: cityId,
-      sections: {some: {section_id: {equals: sectionId}}},
       name_full: query ? {contains: query, mode: 'insensitive'} : undefined,
-      type,
+      city_id: cityId,
+      type: type,
+      sections: sectionId ? {some: {section_id: {equals: sectionId}}} : undefined,
       AND: groupedOptions?.length ? groupedOptions?.map((ids) => ({options: {some: {option_id: {in: ids}}}})) : undefined,
     },
     orderBy: {
@@ -29,13 +29,8 @@ export async function GET(req) {
     take: 10,
     include: {
       city: true,
-      sections: {include: {section: {include: {specs: {include: {spec: {include: {options: true}}}}}}}},
       options: {include: {option: true}},
-      schedule: true,
       photos: {orderBy: {order: "asc"}},
-      statusInstead: true,
-      phones: {orderBy: {order: "asc"}},
-      links: {orderBy: {order: "asc"}},
     },
   });
   return Response.json(dbData);
@@ -43,7 +38,7 @@ export async function GET(req) {
 
 export async function POST(req) {
   const { state, init } = await req.json();
-  const scalarFields = {
+  const fields = {
     name_type: state.name_type || null,
     name_where: state.name_where || null,
     name_full: state.type === "org" ? state.name_full : [state.name_type, state.name_where].filter((v) => v).join(" "),
@@ -89,21 +84,21 @@ export async function POST(req) {
       id: state.id ?? -1
     },
     create: {
-      ...scalarFields,
+      ...fields,
       phones: {
-        create: phonesAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})),
+        create: phonesAdded.length ? phonesAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
       },
       links: {
-        create: linksAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})),
+        create: linksAdded.length ? linksAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
       },
       options: {
-        create: optionsAdded?.map(({id}) => ({option: {connect: {id}}})),
+        create: optionsAdded.length ? optionsAdded?.map(({id}) => ({option: {connect: {id}}})) : undefined,
       },
       sections: {
-        create: sectionsAdded?.map(({id}) => ({section: {connect: {id}}})),
+        create: sectionsAdded.length ? sectionsAdded?.map(({id}) => ({section: {connect: {id}}})) : undefined,
       },
       schedule: {
-        create: scheduleAdded?.map((day, i) => ({time: day.time, from: day.from, to: day.to, day_num: i})),
+        create: scheduleAdded.length ? scheduleAdded?.map((day, i) => ({time: day.time, from: day.from, to: day.to, day_num: i})) : undefined,
       },
       photos: {
         // Don't: The
@@ -111,41 +106,41 @@ export async function POST(req) {
       created: new Date(),
     },
     update: {
-      ...scalarFields,
+      ...fields,
       phones: {
-        create: phonesAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})),
-        update: phonesChanged?.map((item) => ({where: {id: item.id}, data: {...item, id: undefined, localId: undefined, object_id: undefined}})),
-        deleteMany: phonesDeleted?.map((item) => ({...item, localId: undefined}))
+        create: phonesAdded.length ? phonesAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
+        update: phonesChanged.length ? phonesChanged?.map((item) => ({where: {id: item.id}, data: {...item, id: undefined, localId: undefined, object_id: undefined}})) : undefined,
+        deleteMany: phonesDeleted.length ? phonesDeleted?.map((item) => ({...item, localId: undefined})) : undefined,
       },
       links: {
-        create: linksAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})),
-        update: linksChanged?.map((item) => ({where: {id: item.id}, data: {...item, id: undefined, localId: undefined, object_id: undefined}})),
-        deleteMany: linksDeleted?.map((item) => ({...item, localId: undefined}))
+        create: linksAdded.length ? linksAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
+        update: linksChanged.length ? linksChanged?.map((item) => ({where: {id: item.id}, data: {...item, id: undefined, localId: undefined, object_id: undefined}})) : undefined,
+        deleteMany: linksDeleted.length ? linksDeleted?.map((item) => ({...item, localId: undefined})) : undefined,
       },
       options: {
-        create: optionsAdded?.map(({id}) => ({option: {connect: {id}}})),
-        deleteMany: {option_id: {in: optionsDeleted?.map(({id}) => id)}},
+        create: optionsAdded.length ? optionsAdded?.map(({id}) => ({option: {connect: {id}}})) : undefined,
+        deleteMany: optionsDeleted.length ? {option_id: {in: optionsDeleted?.map(({id}) => id)}} : undefined,
       },
       sections: {
-        create: sectionsAdded?.map(({id}) => ({section: {connect: {id}}})),
-        deleteMany: {section_id: {in: sectionsDeleted?.map(({id}) => id)}},
+        create: sectionsAdded.length ? sectionsAdded?.map(({id}) => ({section: {connect: {id}}})) : undefined,
+        deleteMany: sectionsDeleted.length ? {section_id: {in: sectionsDeleted?.map(({id}) => id)}} : undefined,
       },
       schedule: {
-        create: scheduleAdded?.map((day, i) => ({time: day.time, from: day.from, to: day.to, day_num: i})),
-        update: scheduleChanged?.map((day, i) => ({where: {id: day.id}, data: {time: day.time, from: day.from, to: day.to, day_num: i}})),
-        deleteMany: scheduleDeleted,
+        create: scheduleAdded.length ? scheduleAdded?.map((day, i) => ({time: day.time, from: day.from, to: day.to, day_num: i})) : undefined,
+        update: scheduleChanged.length ? scheduleChanged?.map((day, i) => ({where: {id: day.id}, data: {time: day.time, from: day.from, to: day.to, day_num: i}})) : undefined,
+        deleteMany: scheduleDeleted.length ? scheduleDeleted : undefined,
       },
       photos: {
-        create: photosAdded?.map(({name, order}) => ({name, order, uploaded: new Date()})),
-        update: photosMoved?.map((photo) => ({where: {id: photo.id}, data: {order: photo.order}})),
-        deleteMany: {id: {in: photosDeleted?.map(({id}) => id)}},
+        create: photosAdded.length ? photosAdded?.map(({name, order}) => ({name, order, uploaded: new Date()})) : undefined,
+        update: photosMoved.length ? photosMoved?.map((photo) => ({where: {id: photo.id}, data: {order: photo.order}})) : undefined,
+        deleteMany: photosDeleted.length ? {id: {in: photosDeleted?.map(({id}) => id)}} : undefined,
       },
     }
   });
 
   // Rename photo names of created object
   if (!state.id && state.photos?.length > 0) {
-    const updatedOrg = await prisma.object.update({
+    const updatedObject = await prisma.object.update({
       where: {id: addedObject.id},
       data: {
         photos: {
@@ -157,7 +152,7 @@ export async function POST(req) {
         }
       },
     });
-    return Response.json(updatedOrg);
+    return Response.json(updatedObject);
   };
 
   return Response.json(addedObject);

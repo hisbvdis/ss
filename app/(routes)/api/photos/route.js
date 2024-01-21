@@ -2,7 +2,6 @@ import sharp from "sharp";
 import { NextResponse } from "next/server";
 import { existsSync, mkdirSync, unlinkSync } from "fs";
 
-
 export async function POST(req) {
   if (!existsSync("./public/photos")) mkdirSync("./public/photos");
   const formData = await req.formData();
@@ -18,7 +17,6 @@ export async function POST(req) {
   }
   return NextResponse.json("Ok");
 }
-
 
 export async function DELETE(req) {
   const formData = await req.formData();

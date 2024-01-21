@@ -5,12 +5,9 @@ export async function GET(req) {
   const name = searchParams.get("name") ?? undefined;
   const dbData = await prisma.city.findMany({
     where: {
-      name: {
-        contains: name,
-        mode: 'insensitive'
-      }
+      name: name ? {contains: name, mode: 'insensitive'} : undefined,
     },
-    take: 50
+    take: 25
   });
   return Response.json(dbData);
 }

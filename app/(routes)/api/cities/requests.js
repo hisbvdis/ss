@@ -1,8 +1,8 @@
 "use server";
 
-export async function getCitiesByFilters(filters) {
-  const filterString =  Object.entries(filters).map(([name, value]) => `${name}=${value}`).join("&");
-  const res = await fetch(`http://localhost:3000/api/cities?${filterString}`, {
+export async function getCitiesByFilters(filtersObj={}) {
+  const filters = Object.entries(filtersObj).map(([name, value]) => `${name}=${value}`).join("&");
+  const res = await fetch(`http://localhost:3000/api/cities?${filters}`, {
     method: "GET",
     next: { tags: ["cities"] },
   });
@@ -12,7 +12,6 @@ export async function getCitiesByFilters(filters) {
 }
 
 export async function getCityById(id) {
-  if (!id) return;
   const res = await fetch(`http://localhost:3000/api/cities/${id}`, {
     method: "GET",
     next: { tags: ["cities"] },
