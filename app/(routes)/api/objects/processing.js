@@ -5,8 +5,6 @@ export const objectReadProcessing = (dbData) => {
     ...dbData,
     phones: dbData?.phones?.map((phone) => ({...phone, localId: crypto.randomUUID()})),
     links: dbData?.links?.map((link) => ({...link, localId: crypto.randomUUID()})),
-    sections : dbData?.sections.map(({section}) => section),
-    options : dbData?.options.map(({option}) => option),
     schedule: dbData?.schedule.length ? dbData?.schedule?.map((day) => ({...day, isWork: day.time ? true : false})) : Array(7).fill({}),
     schedule_date: dbData?.schedule_date ? format(dbData.schedule_date, "yyyy-MM-dd") : null,
     photos: dbData?.photos?.map((photo) => ({...photo, localId: crypto.randomUUID()})),

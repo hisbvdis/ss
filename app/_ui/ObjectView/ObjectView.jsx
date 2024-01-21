@@ -13,8 +13,8 @@ import "./ObjectView.css";
 
 
 export default function ObjectView(props) {
-  const { id, type, name_full, photos, city, address, address_2, phones, links, coord_lat, coord_lon, description, sections, options, modified, parent_id, parent, children } = props.object;
-
+  const { id, type, name_full, photos, city, address, address_2, phones, links, coord_lat, coord_lon, description, sections, options, modified, parent_id, parent, children } = props.state;
+  console.log( options )
   return (
     <div className="objectView  container  page">
       <header className="objectView__header">
@@ -23,7 +23,7 @@ export default function ObjectView(props) {
             <Breadcrumbs size="small" items={[
               {label: "Каталог", href: "/catalog"},
               {label: `${city?.name ?? ""}`, href: `/catalog?city=${city?.id}`},
-              {label: `${sections?.[0]?.name ?? ""}`, href: `/catalog?city=${city?.id}&section=${sections?.[0]?.id}`}
+              {label: `${sections?.[0]?.section?.name ?? ""}`, href: `/catalog?city=${city?.id}&section=${sections?.[0]?.section?.id}`}
             ]}/>
             <a href={`/object/${id}/edit`} style={{marginInlineStart: "auto"}}>Ред</a>
             <DelBtn id={id} delFunc={deleteObject} redirectPath="/">X</DelBtn>
@@ -84,7 +84,7 @@ export default function ObjectView(props) {
 
       <main className="objectView__main">
         <Card>
-          <Image className="objectView__photo" src={photos?.length > 0 ? `/photos/${photos[0].name}`: "/icons/no-photo.svg"} width="565" height="350" alt="Image" loading="lazy"/>
+          <Image className="objectView__photo" src={photos?.length > 0 ? `/photos/${photos[0].name}`: "/icons/no-photo.svg"} width="565" height="350" alt="Image" priority={true}/>
         </Card>
 
         <Card className="mt10" style={{whiteSpace: "pre-line"}}>
@@ -114,18 +114,18 @@ export default function ObjectView(props) {
 
         <Card className="mt10">
           <Card.Heading>Характеристики</Card.Heading>
-          {sections?.map((section) => (
+          {sections?.map(({section}) => (
             <Card.Section key={section.id}>
               <p>{section.name}</p>
               {section.specs.map(({spec}) => (
                 <Flex key={spec.id} gap="10px">
                   <p>{spec.name_filter}</p>
                   <ul style={{listStyle: "none", paddingInlineStart: 0, display: "flex", gap: "10px"}}>
-                    {options.filter((opt) => opt.spec_id === spec.id).map((opt) => (
-                      <li key={opt.id}>
-                        <Link href={`/catalog?city=${city?.id}&section=${section?.id}&options=${opt.spec_id}:${opt.id}`}>{opt.name}</Link>
-                      </li>
-                    ))}
+                    {options.filter(({option}) => option.spec_id === spec.id).map(({option}) => (
+                        <li key={option.id}>
+                          <Link href={`/catalog?city=${city?.id}&section=${section?.id}&options=${option.spec_id}:${option.id}`}>{option.name}</Link>
+                        </li>
+                      ))}
                   </ul>
                 </Flex>
               ))}

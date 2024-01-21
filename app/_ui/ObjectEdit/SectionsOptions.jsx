@@ -58,7 +58,7 @@ export default function Sections(props) {
     <Card className="mt10">
       <Card.Heading>Разделы и характеристики</Card.Heading>
       <Card.Section style={{display: "flex", gap: "15px"}}>
-        {state.sections?.map((section) => (
+        {state.sections?.map(({section}) => section).map((section) => (
           <FieldSet key={section.id}>
             <FieldSet.Legend>
               <Button onClick={() => handleSections.delete(section)}>X</Button>
@@ -69,14 +69,14 @@ export default function Sections(props) {
                 <Control key={spec.id}>
                   <Control.Label>{spec.name_filter}</Control.Label>
                   {spec.control_type === "checkbox"
-                    ? <CheckboxGroup arrayToCompare={state.options?.map(({id}) => id)} required>
+                    ? <CheckboxGroup arrayToCompare={state.options?.map(({option}) => option).map(({id}) => id)} required>
                         {spec.options.map((opt) => (
                           <Checkbox key={opt.id} value={opt.id} onChange={(e) => handleOptions.changeCheckbox(e, opt)}>{opt.name}</Checkbox>
                         ))}
                       </CheckboxGroup>
                     :
                   spec.control_type === "radio"
-                    ? <RadioGroup arrayToCompare={state.options?.map(({id}) => id)} required>
+                    ? <RadioGroup arrayToCompare={state.options?.map(({option}) => option).map(({id}) => id)} required>
                         {spec.options.map((opt) => (
                           <Radio key={opt.id} value={opt.id} onChange={() => handleOptions.changeRadio(spec, opt)}>{opt.name}</Radio>
                         ))}

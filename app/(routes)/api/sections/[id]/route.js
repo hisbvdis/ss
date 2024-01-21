@@ -15,10 +15,10 @@ export async function GET(_, {params}) {
 }
 
 export async function DELETE(_, {params}) {
-  const result = await prisma.section.delete({
+  await prisma.section.delete({
     where: {
       id: Number(params.id),
     },
   });
-  return Response.json(result);
+  return Response.json("Ok");
 }
