@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
-import { CloseIcon } from "@/app/_icons";
+import { CloseIcon, BinIcon } from "@/app/_icons";
 import { CatalogContext } from "./Catalog";
 import { Card } from "@/app/_components/Card";
 import { Control } from "@/app/_components/Control";
 import { Checkbox, CheckboxGroup } from "@/app/_components/Choice";
-import BinIcon from "@/app/_icons/BinIcon";
 
 
 export default function Filters(props) {
