@@ -6,6 +6,7 @@ import { CatalogContext } from "./Catalog";
 import { Card } from "@/app/_components/Card";
 import { Control } from "@/app/_components/Control";
 import { Checkbox, CheckboxGroup } from "@/app/_components/Choice";
+import BinIcon from "@/app/_icons/BinIcon";
 
 
 export default function Filters(props) {
@@ -13,8 +14,14 @@ export default function Filters(props) {
 
   return (
     <Card className="objectView__filters  mt10">
-      <Card.Heading style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
-        <span>{section?.name}</span>
+      <Card.Heading style={{display: "flex", alignItems: "center", gap: "10px"}}>
+        <span style={{marginInlineEnd: "auto"}}>{section?.name}</span>
+        {searchParams.options
+          ? <Link href={manageSearchParams("delete", "options")} style={{display: "flex", alignItems: "center"}}>
+              <BinIcon width="18" height="18"/>
+            </Link>
+          : null
+        }
         <Link href={manageSearchParams("delete", ["section", "options"])} style={{display: "flex", alignItems: "center"}}>
           <CloseIcon width="20" height="20"/>
         </Link>
