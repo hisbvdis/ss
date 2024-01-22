@@ -12,17 +12,6 @@ export async function getObjectsByFilters(filtersObj) {
   return data;
 }
 
-export async function getObjectsByCityAndName({cityId, type, query}) {
-  if (!cityId || !type || !query) return;
-  const res = await fetch(`http://localhost:3000/api/objects?cityId=${cityId}&query=${query}&type=${type}`, {
-    method: "GET",
-    next: { tags: ["objects"] },
-  });
-  if (!res.ok) throw new Error("Failed to fetch data 'getObjectsByCityAndName'");
-  const data = await res.json();
-  return data;
-}
-
 export async function getObjectsCount(section, options) {
   const res = await fetch(`http://localhost:3000/api/objects/count?section=${section}&options=${options}`, {
     method: "GET",

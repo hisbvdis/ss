@@ -6,6 +6,7 @@ export async function GET(req) {
     where: {
       object_type: searchParams.get("objectType") ?? undefined,
     },
+    include: {specs: {include: {spec: {include: {options: true}}}}},
   });
   return Response.json(dbData);
 }

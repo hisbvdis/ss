@@ -23,7 +23,7 @@ export default function ObjectView(props) {
             <Breadcrumbs size="small" items={[
               {label: "Каталог", href: "/catalog"},
               {label: `${city?.name ?? ""}`, href: `/catalog?city=${city?.id}`},
-              {label: `${sections?.[0]?.section?.name ?? ""}`, href: `/catalog?city=${city?.id}&section=${sections?.[0]?.section?.id}`}
+              {label: `${sections?.[0]?.name ?? ""}`, href: `/catalog?city=${city?.id}&section=${sections?.[0]?.id}`}
             ]}/>
             <a href={`/object/${id}/edit`} style={{marginInlineStart: "auto"}}>Ред</a>
             <DelBtn id={id} delFunc={deleteObject} redirectPath="/">X</DelBtn>
@@ -114,14 +114,14 @@ export default function ObjectView(props) {
 
         <Card className="mt10">
           <Card.Heading>Характеристики</Card.Heading>
-          {sections?.map(({section}) => (
+          {sections?.map((section) => (
             <Card.Section key={section.id}>
               <p>{section.name}</p>
               {section.specs.map(({spec}) => (
                 <Flex key={spec.id} gap="10px">
                   <p>{spec.name_filter}</p>
                   <ul style={{listStyle: "none", paddingInlineStart: 0, display: "flex", gap: "10px"}}>
-                    {options.filter(({option}) => option.spec_id === spec.id).map(({option}) => (
+                    {options.filter((option) => option.spec_id === spec.id).map((option) => (
                         <li key={option.id}>
                           <Link href={`/catalog?city=${city?.id}&section=${section?.id}&options=${option.spec_id}:${option.id}`}>{option.name}</Link>
                         </li>

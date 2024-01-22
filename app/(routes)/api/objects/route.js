@@ -137,7 +137,6 @@ export async function POST(req) {
       },
     }
   });
-
   // Rename photo names of created object
   if (!state.id && state.photos?.length > 0) {
     const updatedObject = await prisma.object.update({

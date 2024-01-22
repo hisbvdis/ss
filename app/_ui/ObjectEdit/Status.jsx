@@ -1,14 +1,15 @@
 "use client";
 import Link from "next/link";
 import { useContext } from "react";
-
+// -----------------------------------------------------------------------------
 import { ObjectContext } from ".";
+import { Flex } from "@/app/_components/Flex";
 import { Input } from "@/app/_components/Input";
 import { Select } from "@/app/_components/Select";
 import { Checkbox } from "@/app/_components/Choice";
 import { Control } from "@/app/_components/Control";
-import { Flex } from "@/app/_components/Flex";
-import { getObjectsByCityAndName, getObjectsByFilters } from "@/app/(routes)/api/objects/requests";
+// -----------------------------------------------------------------------------
+import { getObjectsByFilters } from "@/app/(routes)/api/objects/requests";
 
 
 export default function Status(props) {
@@ -81,7 +82,7 @@ export default function Status(props) {
           placeholder="Введите название"
           disabled={state.status !== "closed_forever"}
           requestItemsOnInputChange={
-            async (value) => (await getObjectsByCityAndName({cityId: state.city_id, type: state.type, query: value}))
+            async (value) => (await getObjectsByFilters({city: state.city_id, type: state.type, query: value}))
             ?.filter((object) => object.id !== state.id)
             ?.map((object) => ({id: object.id, text: object.name_full, data: object}))
           }
