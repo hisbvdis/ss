@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
-import { CloseIcon, BinIcon } from "@/app/_icons";
 import { CatalogContext } from "./Catalog";
 import { Card } from "@/app/_components/Card";
+import { CloseIcon, BinIcon } from "@/app/_icons";
 import { Control } from "@/app/_components/Control";
 import { Checkbox, CheckboxGroup } from "@/app/_components/Choice";
 
