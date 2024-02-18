@@ -6,11 +6,11 @@ import { useId, useContext, useRef, ReactEventHandler } from "react";
 import { ChoiceGroupContext } from "./ChoiceGroup";
 import styles from "./Choice.module.css";
 
-export const Checkbox = (props:Props) => <Choice type="checkbox" {...props}/>;
-export const Radio = (props:Props) => <Choice type="radio" {...props}/>;
+export const Checkbox = (props:Props) => <Choice {...props} type="checkbox"/>;
+export const Radio = (props:Props) => <Choice {...props} type="radio"/>;
 
 function Choice(props:Props) {
-  const ref = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
   const choiceGroupContext = useContext(ChoiceGroupContext);
 
@@ -33,7 +33,7 @@ function Choice(props:Props) {
         id={inputId}
         className={styles["choice__input"]}
         type={type}
-        ref={ref}
+        ref={inputRef}
         name={name}
         value={value}
         checked={checked}

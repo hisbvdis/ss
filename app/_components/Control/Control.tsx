@@ -11,7 +11,7 @@ export default function Control(props:Props) {
   const labelId = useId();
   const inputId = useId();
   const { className, style, children } = props;
-  const [ required, setRequired ] = useState(props.required);
+  const [ required, setRequired ] = useState(props.required ?? false);
 
   useEffect(() => {
     if (!required && ref.current?.querySelector("[required]")) {
