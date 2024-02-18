@@ -28,15 +28,15 @@ export async function POST(req) {
     create: {
       ...fields,
       options: {
-        create: optionsAdded.length ? optionsAdded.map((opt) => ({...opt, localId: undefined})) : undefined,
+        create: optionsAdded?.length ? optionsAdded.map((opt) => ({...opt, localId: undefined})) : undefined,
       },
     },
     update: {
       ...fields,
       options: {
-        create: optionsAdded.length ? optionsAdded.map((opt) => ({...opt, localId: undefined})) : undefined,
-        update: optionsChanged.length ? optionsChanged?.map((option) => ({where: {id: option.id}, data: {name: option.name}})) : undefined,
-        deleteMany: optionsDeleted.length ? optionsDeleted?.map(({id}) => ({id: id})) : undefined,
+        create: optionsAdded?.length ? optionsAdded.map((opt) => ({...opt, localId: undefined})) : undefined,
+        update: optionsChanged?.length ? optionsChanged?.map((option) => ({where: {id: option.id}, data: {name: option.name}})) : undefined,
+        deleteMany: optionsDeleted?.length ? optionsDeleted?.map(({id}) => ({id: id})) : undefined,
       },
     }
   });

@@ -53,7 +53,6 @@ export default function Sections(props) {
       });
     },
   }
-  console.log( state )
 
   return (
     <Card className="mt10">

@@ -2,11 +2,14 @@
 "use client";
 import clsx from "clsx";
 import { RequiredInput } from "@/app/_components/RequiredInput";
-import { useId, useContext, useRef } from "react";
+import { useId, useContext, useRef, ReactEventHandler } from "react";
 import { ChoiceGroupContext } from "./ChoiceGroup";
-import "./Choice.css";
+import styles from "./Choice.module.css";
 
-function Choice(props) {
+export const Checkbox = (props:Props) => <Choice type="checkbox" {...props}/>;
+export const Radio = (props:Props) => <Choice type="radio" {...props}/>;
+
+function Choice(props:Props) {
   const ref = useRef();
   const inputId = useId();
   const choiceGroupContext = useContext(ChoiceGroupContext);
@@ -25,10 +28,10 @@ function Choice(props) {
   const { tabIndex=0 } = props;
 
   return (
-    <label className={clsx("choice", className)} style={style}>
+    <label className={clsx(styles["choice"], className)} style={style}>
       <input
         id={inputId}
-        className="choice__input"
+        className={styles["choice__input"]}
         type={type}
         ref={ref}
         name={name}
@@ -40,10 +43,23 @@ function Choice(props) {
         disabled={disabled}
       />
       {requiredGroup && type === "checkbox" ? <RequiredInput name={name} checked={checked} required={required}/> : ""}
-      <span className="choice__label">{children}</span>
+      <span className={styles["choice__label"]}>{children}</span>
     </label>
   );
 }
 
-export const Checkbox = (props) => <Choice type="checkbox" {...props}/>;
-export const Radio = (props) => <Choice type="radio" {...props}/>;
+interface Props {
+  type: "radio" | "checkbox";
+  name: string;
+  value: string;
+  valueToCompare: string;
+  arrayToCompare: any[];
+  checked: boolean;
+  onChange: ReactEventHandler;
+  required: boolean;
+  disabled: boolean;
+  className: string;
+  style: React.CSSProperties;
+  children: React.ReactNode;
+  tabIndex: number;
+}

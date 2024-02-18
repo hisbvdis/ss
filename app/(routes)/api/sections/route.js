@@ -26,14 +26,14 @@ export async function POST(req) {
     create: {
       ...fields,
       specs: {
-        create: specsAdded.length ? specsAdded?.map(({id}) => ({spec_id: id})) : undefined,
+        create: specsAdded?.length ? specsAdded.map(({id}) => ({spec_id: id})) : undefined,
       }
     },
     update: {
       ...fields,
       specs: {
-        create: specsAdded.length ? specsAdded?.map(({id}) => ({spec_id: id})) : undefined,
-        deleteMany: specsDeleted.length ? specsDeleted?.map(({id}) => ({spec_id: id})) : undefined,
+        create: specsAdded?.length ? specsAdded.map(({id}) => ({spec_id: id})) : undefined,
+        deleteMany: specsDeleted?.length ? specsDeleted.map(({id}) => ({spec_id: id})) : undefined,
       },
     }
   });

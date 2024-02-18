@@ -25,7 +25,7 @@ export default function Filters(props) {
           <CloseIcon width="20" height="20"/>
         </Link>
       </Card.Heading>
-      {section?.specs?.map(({spec}) => (
+      {section?.specs?.map((spec) => (
         <Card.Section key={spec.id}>
           <Control>
             <Control.Label>{spec.name_filter}</Control.Label>

@@ -96,7 +96,7 @@ export default function SectionEdit(props) {
           }
         />
         <ul className="mt20" style={{paddingInlineStart: 0}}>
-          {state?.specs?.map(({spec}) => spec).map(({id, name_service}) => (
+          {state?.specs?.map(({id, name_service}) => (
             <li key={id} style={{display: "flex"}}>
               <Button onClick={() => handleSpecs.delete(id)}>X</Button>
               <InputAddon>{id}</InputAddon>
