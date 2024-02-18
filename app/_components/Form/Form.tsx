@@ -1,14 +1,14 @@
 "use client";
-import { useId, createContext, useEffect, useRef } from "react";
+import { useId, createContext, useEffect, useRef, FormEvent } from "react";
 
 
-export default function Form(props) {
+export default function Form(props:Props) {
   const { onSubmit=(e=>e), noEnterSubmit, ctrlEnterSubmit, action, noValidate, method } = props;
   const { className, id, style, children } = props;
-  const formRef = useRef();
+  const formRef = useRef<HTMLFormElement>(null);
   const formHeadingId = useId();
-  const enterKey = useRef();
-  const ctrlKey = useRef();
+  const enterKey = useRef(false);
+  const ctrlKey = useRef(false);
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDownUp);
@@ -17,14 +17,14 @@ export default function Form(props) {
       document.removeEventListener("keydown", handleKeyDownUp);
       document.removeEventListener("keyup", handleKeyDownUp);
     };
-    function handleKeyDownUp(e) {
+    function handleKeyDownUp(e:KeyboardEvent) {
       enterKey.current = (e.code === "Enter" && e.type === "keydown") ? true : false;
       ctrlKey.current = (e.ctrlKey && e.type === "keydown") ? true : false;
-      if (ctrlEnterSubmit && enterKey.current && ctrlKey.current) formRef.current.requestSubmit();
+      if (ctrlEnterSubmit && enterKey.current && ctrlKey.current) formRef.current?.requestSubmit();
     }
-  }, [])
+  }, [ctrlEnterSubmit])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:FormEvent) => {
     e.preventDefault();
     if (noEnterSubmit && enterKey.current && !ctrlKey.current) return;
     onSubmit(e);
@@ -49,4 +49,21 @@ export default function Form(props) {
   )
 }
 
-export const FormContext = createContext();
+export const FormContext = createContext<FormContextType>({});
+
+interface Props {
+  onSubmit?: React.FormEventHandler;
+  action?: string;
+  noEnterSubmit?: boolean;
+  ctrlEnterSubmit?: boolean;
+  noValidate?: boolean;
+  method?: "GET" | "POST";
+  className?: string;
+  id?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+}
+
+interface FormContextType {
+  formHeadingId?: string;
+}
