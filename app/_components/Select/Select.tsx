@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useEffect, useId, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useId, useRef, useState } from "react";
 // -----------------------------------------------------------------------------
 import { useDebounce } from "@/app/_utils/useDebounce";
 // -----------------------------------------------------------------------------
@@ -7,27 +7,27 @@ import { Menu } from "@/app/_components/Menu";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
 import { ArrowDownIcon, CloseIcon } from "@/app/_icons";
-import "./Select.css";
+import styles from "./Select.module.css";
 
 
-export default function Select(props) {
+export default function Select(props:Props) {
   const { name, value, text } = props;
   const { items, requestItemsOnInputChange, requestItemsOnFirstTouch, requestMinInputLenght=3 } = props;
   const { onChange=(e=>e), onChangeData=(e=>e) } = props;
-  const { placeholder, disabled, isAutocomplete, isSelect=!isAutocomplete } = props;
-  const [ localItems, setLocalItems ] = useState(items?.map((item, index) => ({...item, index})) ?? []);
+  const { placeholder, disabled, isAutocomplete } = props;
+  const [ localItems, setLocalItems ] = useState<Item[]>(items?.map((item, index) => ({...item, index})) ?? []);
   const [ suggestions, setSuggestions ] = useState(localItems);
-  const [ selectedItem, setSelectedItem ] = useState(isSelect ? localItems.find((item) => item.id === value) : null);
-  const [ inputValue, setInputValue ] = useState(isSelect ? selectedItem?.text : text);
+  const [ selectedItem, setSelectedItem ] = useState(isAutocomplete ? null : localItems.find((item) => item.id === value));
+  const [ inputValue, setInputValue ] = useState(isAutocomplete ? text : selectedItem?.text);
   const [ isMenu, setIsMenu ] = useState(false);
   const debounce = useDebounce();
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
-  useEffect(() => {isSelect ? setSelectedItem(localItems.find((item) => item.id === value)) : null}, [value]);
+  useEffect(() => {isAutocomplete ? null : setSelectedItem(localItems.find((item) => item.id === value))}, [value]);
   useEffect(() => {isAutocomplete ? setInputValue(text) : null}, [text]);
-  useEffect(() => {isSelect ? setInputValue(selectedItem?.text) : null}, [selectedItem]);
+  useEffect(() => {isAutocomplete ? null : setInputValue(selectedItem?.text)}, [selectedItem]);
 
-  const handleInputClick = async (e) => {
+  const handleInputClick = async () => {
     isAutocomplete ? setIsMenu(true) : setIsMenu(!isMenu)
     if (requestItemsOnFirstTouch) {
       const newItems = await requestItemsOnFirstTouch("");
@@ -45,7 +45,7 @@ export default function Select(props) {
     }
   }
 
-  const handleInputChange = async (e) => {
+  const handleInputChange = async (e:ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     if (requestItemsOnInputChange) {
       if (e.target.value.length < requestMinInputLenght) return;
@@ -59,49 +59,49 @@ export default function Select(props) {
     }
   }
 
-  const handleDocumentClick = (e) => {
-    if (e.target?.closest(".select")) return;
+  const handleDocumentClick = (e:MouseEvent) => {
+    if ((e.target as HTMLElement).closest(".select")) return;
     setIsMenu(false);
     setSuggestions(localItems ?? []);
-    isSelect ? setInputValue(selectedItem?.text) : setInputValue(text);
+    isAutocomplete ? setInputValue(text) : setInputValue(selectedItem?.text);
   }
 
   const handleClearBtnClick = () => {
     setInputValue("");
     onChange({target: {name, value: ""}});
     onChangeData(null);
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }
 
-  const handleMenuSelect = (index) => {
+  const handleMenuSelect = (index:number) => {
     const item = suggestions[index];
-    isSelect ? setSelectedItem(item) : setInputValue(item?.text);
+    isAutocomplete ? setInputValue(item?.text) : setSelectedItem(item);
     onChange({target: {name, value: item?.id, data: item?.data}});
     onChangeData(item?.data);
     setSuggestions(localItems ?? []);
     setIsMenu(false);
   }
 
-  const handleInputKeydown = (e) => {
+  const handleInputKeydown = (e:React.KeyboardEvent<Element>) => {
     if (!["Escape", "Tab", "Enter", "ArrowUp", "ArrowDown"].includes(e.code)) return;
     switch (e.code) {
       case "Escape":
       case "Tab": {
-        isSelect ? setInputValue(selectedItem?.text) : setInputValue(text);
+        isAutocomplete ? setInputValue(text) : setInputValue(selectedItem?.text);
         setSuggestions(localItems ?? []);
         setIsMenu(false);
         break;
       }
       case "Enter": {
-        (isSelect && !isMenu) && setIsMenu(true);
+        (!isAutocomplete && !isMenu) && setIsMenu(true);
         break;
       }
       case "ArrowUp" : {
         if (isAutocomplete) return;
         if (isMenu) return;
         e.preventDefault();
-        if (localItems.length === 0 || selectedItem.index === 0) return;
-        const item = localItems[selectedItem.index - 1];
+        if (localItems.length === 0 || !selectedItem || selectedItem?.index === 0) return;
+        const item = localItems[selectedItem?.index - 1];
         setSelectedItem(item);
         onChange({target: {name, value: item?.id, data: item?.data}});
         onChangeData(item?.data);
@@ -111,8 +111,8 @@ export default function Select(props) {
         if (isAutocomplete) return;
         if (isMenu) return;
         e.preventDefault();
-        if (localItems.length === 0 || selectedItem.index === localItems.length - 1) return;
-        const item = localItems[selectedItem.index + 1];
+        if (localItems.length === 0 || !selectedItem || selectedItem?.index === localItems.length - 1) return;
+        const item = localItems[selectedItem?.index + 1];
         setSelectedItem(item);
         onChange({target: {name, value: item?.id, data: item?.data}});
         onChangeData(item?.data);
@@ -133,10 +133,10 @@ export default function Select(props) {
   }
 
   return (
-    <div className={clsx("select", disabled && "select--disabled")}>
-      <p className="select__inputWrapper">
+    <div className={clsx(styles["select"], disabled && styles["select--disabled"])}>
+      <p className={styles["select__inputWrapper"]}>
         <Input
-          className={clsx("select__input", isAutocomplete && "select__input--isAutocomplete")}
+          className={clsx(styles["select__input"], isAutocomplete && styles["select__input--isAutocomplete"])}
           id={inputId}
           ref={inputRef}
           value={inputValue}
@@ -149,9 +149,9 @@ export default function Select(props) {
           readOnly={!isAutocomplete}
         />
         {isAutocomplete ? null :
-          <Button className="select__btn  select__btn--arrow" disabled={disabled} tabIndex="-1">
+          <Button className={clsx(styles["select__btn"], styles["select__btn--arrow"])} disabled={disabled} tabIndex={-1}>
             <ArrowDownIcon
-              className="select__icon"
+              className={styles["select__icon"]}
               width="15"
               height="15"
               style={{fill: disabled && "var(--disabled-fontColor)"}}
@@ -159,9 +159,9 @@ export default function Select(props) {
           </Button>
         }
         {isAutocomplete && value ?
-          <Button className="select__btn" onClick={handleClearBtnClick} disabled={disabled}>
+          <Button className={styles["select__btn"]} onClick={handleClearBtnClick} disabled={disabled}>
             <CloseIcon
-              className="select__icon"
+              className={styles["select__icon"]}
               width="15"
               height="15"
               style={{fill: disabled && "var(--disabled-fontColor)"}}
@@ -172,4 +172,29 @@ export default function Select(props) {
       <Menu isMenu={isMenu} value={value} items={suggestions} onSelect={handleMenuSelect}/>
     </div>
   )
+}
+
+interface Props {
+  isAutocomplete?: boolean;
+  name?: string;
+  value?: string;
+  text?: string;
+  items?: Item[];
+  requestItemsOnInputChange?: (value:string) => Promise<Item[]>;
+  requestItemsOnFirstTouch?: (value:string) => Promise<Item[]>;
+  requestMinInputLenght?: number;
+  onChange?: (e:ChangeEvent) => ChangeEvent;
+  onChangeData?: (data: any) => any;
+  placeholder?: string;
+  disabled?: boolean;
+}
+
+interface Item {
+  id: string;
+  text: string;
+  text2?: string;
+  text3?: string;
+  text4?: string;
+  data?: any;
+  index: number;
 }

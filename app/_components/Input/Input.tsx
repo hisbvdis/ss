@@ -40,11 +40,11 @@ export const Input = forwardRef<HTMLInputElement, Props>(function Input(props, f
       placeholder: placeholder,
       disabled: disabled,
       required: required,
-      onChange: (e:ChangeEvent<HTMLInputElement>) => {onChange(e);onChangeValue(e.target.value);if(!changed)setChanged(true)},
-      onBlur: (e:FocusEvent) => {onBlur(e); if(changed)onBlurIfChanged(e); setChanged(false)},
-      onFocus: (e:FocusEvent) => {onFocus(e)},
-      onKeyDown: (e:KeyboardEvent) => {onKeyDown(e)},
-      onClick: (e:MouseEvent) => {onClick(e)},
+      onChange: (e:React.ChangeEvent<HTMLInputElement>) => {onChange(e);onChangeValue(e.target.value);if(!changed)setChanged(true)},
+      onBlur: (e:React.FocusEvent) => {onBlur(e); if(changed)onBlurIfChanged(e); setChanged(false)},
+      onFocus: (e:React.FocusEvent) => {onFocus(e)},
+      onKeyDown: (e:React.KeyboardEvent) => {onKeyDown(e)},
+      onClick: (e:React.MouseEvent) => {onClick(e)},
       pattern: pattern,
       style: style,
       "aria-labelledby": labelId,
@@ -68,11 +68,11 @@ interface Props {
   readOnly?: boolean;
   className?: string;
   style?: React.CSSProperties;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => ChangeEvent;
-  onChangeValue?: (value:string) => string;
-  onBlur?: (e: FocusEvent) => FocusEvent;
-  onFocus?: (e: FocusEvent) => FocusEvent;
-  onBlurIfChanged?: (e: FocusEvent) => FocusEvent;
-  onClick?: (e:MouseEvent) => MouseEvent;
-  onKeyDown?: (e:KeyboardEvent) => KeyboardEvent;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeValue?: (value:string) => void;
+  onBlur?: React.FocusEventHandler;
+  onFocus?: React.FocusEventHandler;
+  onBlurIfChanged?: React.FocusEventHandler;
+  onClick?: React.MouseEventHandler;
+  onKeyDown?: React.KeyboardEventHandler;
 }
