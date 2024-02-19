@@ -3,14 +3,14 @@ import { useEffect, useRef, useState } from "react";
 import "./Menu.css";
 
 
-export default function Menu(props) {
+export default function Menu(props:Props) {
   const { isMenu, items, value } = props;
   const { className, style } = props;
   const { onSelect } = props;
   const [ focusIndex, setFocusIndex ] = useState(0);
-  const listRef = useRef();
+  const listRef = useRef<HTMLUListElement>(null);
 
-  const handleDocumentKeydown = (e) => {
+  const handleDocumentKeydown = (e:KeyboardEvent) => {
     if (!["Escape", "ArrowUp", "ArrowDown", "Enter"].includes(e.code)) return;
     e.preventDefault();
     switch (e.code) {
@@ -33,9 +33,9 @@ export default function Menu(props) {
     }
   }
 
-  const focusItemByIndex = (index) => {
-    if (!isMenu) return;
-    const itemElem = listRef.current.children[index];
+  const focusItemByIndex = (index:number) => {
+    if (!isMenu || !listRef.current) return;
+    const itemElem = listRef.current.children[index] as HTMLLIElement;
     const itemRect = listRef.current.children[index].getBoundingClientRect();
     const listRect = listRef.current.getBoundingClientRect();
     if (itemRect.top < listRect.top) listRef.current.scrollTo({top: itemElem.offsetTop});
@@ -48,10 +48,8 @@ export default function Menu(props) {
   }
 
   useEffect(() => {
-    if (!isMenu) return;
-    if (!value?.id && !value?.text) return;
-    if (!items.length) return;
-    const itemIndex = items.findIndex((item) => item.id === value.id || item.text === value.text);
+    if (!isMenu || !value || !items.length) return;
+    const itemIndex = items.findIndex((item) => item.id === value);
     setFocusIndex(itemIndex);
     focusItemByIndex(itemIndex);
   }, [isMenu])
@@ -79,4 +77,21 @@ export default function Menu(props) {
       ))}
     </ul>
   )
+}
+
+interface Props {
+  isMenu: boolean;
+  items: Item[];
+  value: string;
+  className?: string;
+  style?: React.CSSProperties;
+  onSelect: (index:number) => void;
+}
+
+interface Item {
+  id: string;
+  text: string;
+  text2?: string;
+  text3?: string;
+  text4?: string;
 }

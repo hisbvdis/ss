@@ -177,7 +177,7 @@ export default function Select(props:Props) {
 interface Props {
   isAutocomplete?: boolean;
   name?: string;
-  value?: string;
+  value: string;
   text?: string;
   items?: Item[];
   requestItemsOnInputChange?: (value:string) => Promise<Item[]>;
