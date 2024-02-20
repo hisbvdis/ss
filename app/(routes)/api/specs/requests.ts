@@ -1,7 +1,8 @@
 "use server";
 import { revalidateTag } from "next/cache";
+import { spec } from "@prisma/client";
 
-export async function getSpecsByFilters(filtersObj={}) {
+export async function getSpecsByFilters(filtersObj={}): Promise<spec[]> {
   const filters = Object.entries(filtersObj).map(([name, value]) => `${name}=${value}`).join("&");
   const res = await fetch(`http://localhost:3000/api/specs?${filters}`, {
     method: "GET",
@@ -12,7 +13,7 @@ export async function getSpecsByFilters(filtersObj={}) {
   return data;
 }
 
-export async function getSpecById(id) {
+export async function getSpecById(id:string): Promise<spec> {
   const res = await fetch(`http://localhost:3000/api/specs/${id}`, {
     method: "GET",
     next: { tags: ["specs"] },
@@ -22,7 +23,7 @@ export async function getSpecById(id) {
   return data;
 }
 
-export async function upsertSpec(state, init) {
+export async function upsertSpec(state:spec, init:spec): Promise<spec> {
   const res = await fetch("http://localhost:3000/api/specs", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
@@ -35,7 +36,7 @@ export async function upsertSpec(state, init) {
   return data;
 }
 
-export async function deleteSpecById(id) {
+export async function deleteSpecById(id:string): Promise<string> {
   const res = await fetch(`http://localhost:3000/api/specs/${id}`, {
     method: "DELETE",
     next: { tags: ["specs"] },

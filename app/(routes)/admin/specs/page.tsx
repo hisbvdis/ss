@@ -7,7 +7,7 @@ import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 import { deleteSpecById, getSpecsByFilters } from "@/app/(routes)/api/specs/requests";
 
 
-export default async function SpecListPage(props) {
+export default async function SpecListPage() {
   const specs = await getSpecsByFilters();
 
   return (
