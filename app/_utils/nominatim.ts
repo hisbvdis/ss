@@ -1,4 +1,5 @@
-export async function queryCoodFromAddress({country, city, street, limit=1, lang="ru-RU"}) {
+export async function queryCoodFromAddress(params:queryCoodFromAddressParams) {
+  const { country, city, street, limit=1, lang="ru-RU" } = params;
   if (typeof country !== "string" || country.length === 0) return;
   if (typeof city !== "string" || city.length === 0) return;
 
@@ -14,7 +15,8 @@ export async function queryCoodFromAddress({country, city, street, limit=1, lang
   return result;
 }
 
-export async function queryAddressForCoord({lat, lon, limit=1, lang="ru-RU"}) {
+export async function queryAddressForCoord(params: queryAddressForCoordParams) {
+  const { lat, lon, limit=1, lang="ru-RU" } = params;
   let baseUrl = "https://nominatim.openstreetmap.org/reverse?"
     .concat(`&lat=${lat}&lon=${lon}`)
     .concat(`&limit=${limit}`)
@@ -23,4 +25,20 @@ export async function queryAddressForCoord({lat, lon, limit=1, lang="ru-RU"}) {
 
   const result = await fetch(baseUrl).then((r) => r.json());
   return result;
+}
+
+
+interface queryCoodFromAddressParams {
+  country: string;
+  city: string;
+  street: string;
+  limit: number;
+  lang: string;
+}
+
+interface queryAddressForCoordParams {
+  lat: number;
+  lon: number;
+  limit: number;
+  lang: string;
 }

@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation";
 
 export const useManageSearchParams = () => {
   const searchParams = useSearchParams();
-  return (action, key, value) => {
+  return (action:string, key:string, value) => {
     value = String(value);
     let urlSearchParams = new URLSearchParams(searchParams);
     switch (action) {
