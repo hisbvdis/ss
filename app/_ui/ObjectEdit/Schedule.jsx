@@ -17,7 +17,7 @@ export default function Schedule(props) {
     changeIsWork: (e) => {
       setState((state) => {
         state.schedule[e.target.name].isWork = e.target.checked;
-        if (!e.target.checked) state.schedule[e.target.name] = {};
+        if (!e.target.checked) state.schedule[e.target.name].time = "";
       });
     },
     changeTime: (e) => {
@@ -69,7 +69,7 @@ export default function Schedule(props) {
       setState((state) => {
         state.schedule_inherit = false;
         state.schedule_247 = false;
-        state.schedule = Array(7).fill({});
+        state.schedule = Array(7).fill().map((_,i) => ({day_num: i}));
         state.schedule_date = "";
         state.schedule_source = "";
         state.schedule_comment = "";

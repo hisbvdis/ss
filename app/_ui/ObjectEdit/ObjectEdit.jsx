@@ -37,6 +37,7 @@ export default function ObjectEdit(props) {
       router.refresh();
     }
   }
+  console.log( state.schedule )
 
   return (
     <ObjectContext.Provider value={{

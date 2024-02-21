@@ -21,7 +21,7 @@ export async function GET(req) {
       city_id: cityId,
       type: type,
       sections: sectionId ? {some: {section_id: {equals: sectionId}}} : undefined,
-      AND: groupedOptions?.length ? groupedOptions?.map((ids) => ({options: {some: {option_id: {in: ids}}}})) : undefined,
+      AND: groupedOptions?.length ? groupedOptions.map((ids) => ({options: {some: {option_id: {in: ids}}}})) : undefined,
     },
     orderBy: {
       created: "desc",
@@ -73,9 +73,9 @@ export async function POST(req) {
   const optionsDeleted = init.options?.filter((initOption) => !state.options.some((stateOption) => initOption.id === stateOption.id));
   const sectionsAdded = state.sections?.filter((stateSection) => !init?.sections?.some((initSection) => stateSection.id === initSection.id));
   const sectionsDeleted = init.sections?.filter((initSection) => !state.sections.some((stateSection) => initSection.id === stateSection.id));
-  const scheduleAdded = (init.schedule.filter(({time}) => time)?.length === 0 && state.schedule.filter(({time}) => time)?.length !== 0) ? state.schedule : undefined;
-  const scheduleChanged = init.schedule.filter(({time}) => time)?.length > 0 && state.schedule?.filter((stateDay) => init.schedule?.some((initDay) => (stateDay.day_num === initDay.day_num) && stateDay.time !== initDay.time))?.length ? state.schedule : undefined;
-  const scheduleDeleted = (state.schedule.filter(({time}) => time)?.length === 0 && init.schedule.filter(({time}) => time)?.length !== 0) ? {} : undefined;
+  const scheduleAdded = state.schedule.filter((stateSchedule) => init.schedule.some((initSchedule) => stateSchedule.day_num === initSchedule.day_num && !initSchedule.time && stateSchedule.time));
+  const scheduleChanged = state.schedule.filter((stateSchedule) => init.schedule.some((initSchedule) => stateSchedule.day_num === initSchedule.day_num && initSchedule.id && stateSchedule.time && stateSchedule.time !== initSchedule.time));
+  const scheduleDeleted = init.schedule.filter((initSchedule) => state.schedule.some((stateSchedule) => initSchedule.day_num === stateSchedule.day_num && initSchedule.time && !stateSchedule.time));
   const photosAdded = state.photos?.filter((statePhoto) => !init?.photos?.some((initPhoto) => statePhoto.localId === initPhoto.localId));
   const photosDeleted = init.photos?.filter((initPhoto) => !state.photos.some((statePhoto) => initPhoto.localId === statePhoto.localId));
   const photosMoved = state.photos?.filter((statePhoto) => init.photos?.some((initPhoto) => statePhoto.localId === initPhoto.localId && statePhoto.order !== initPhoto.order));
@@ -86,19 +86,19 @@ export async function POST(req) {
     create: {
       ...fields,
       phones: {
-        create: phonesAdded?.length ? phonesAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
+        create: phonesAdded?.length ? phonesAdded.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
       },
       links: {
-        create: linksAdded?.length ? linksAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
+        create: linksAdded?.length ? linksAdded.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
       },
       options: {
-        create: optionsAdded?.length ? optionsAdded?.map(({id}) => ({option: {connect: {id}}})) : undefined,
+        create: optionsAdded?.length ? optionsAdded.map(({id}) => ({option: {connect: {id}}})) : undefined,
       },
       sections: {
-        create: sectionsAdded?.length ? sectionsAdded?.map(({id}) => ({section: {connect: {id}}})) : undefined,
+        create: sectionsAdded?.length ? sectionsAdded.map(({id}) => ({section: {connect: {id}}})) : undefined,
       },
       schedule: {
-        create: scheduleAdded?.length ? scheduleAdded?.map((day, i) => ({time: day.time, from: day.from, to: day.to, day_num: i})) : undefined,
+        create: scheduleAdded?.length ? scheduleAdded.map((day) => ({time: day.time, from: day.from, to: day.to, day_num: day.day_num})) : undefined,
       },
       photos: {
         // Don't: The
@@ -108,33 +108,59 @@ export async function POST(req) {
     update: {
       ...fields,
       phones: {
-        create: phonesAdded?.length ? phonesAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
-        update: phonesChanged?.length ? phonesChanged?.map((item) => ({where: {id: item.id}, data: {...item, id: undefined, localId: undefined, object_id: undefined}})) : undefined,
-        deleteMany: phonesDeleted?.length ? phonesDeleted?.map((item) => ({...item, localId: undefined})) : undefined,
+        create: phonesAdded?.length ? phonesAdded.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
+        update: phonesChanged?.length ? phonesChanged.map((item) => ({where: {id: item.id}, data: {...item, id: undefined, localId: undefined, object_id: undefined}})) : undefined,
+        deleteMany: phonesDeleted?.length ? phonesDeleted.map((item) => ({...item, localId: undefined})) : undefined,
       },
       links: {
-        create: linksAdded?.length ? linksAdded?.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
-        update: linksChanged?.length ? linksChanged?.map((item) => ({where: {id: item.id}, data: {...item, id: undefined, localId: undefined, object_id: undefined}})) : undefined,
-        deleteMany: linksDeleted?.length ? linksDeleted?.map((item) => ({...item, localId: undefined})) : undefined,
+        create: linksAdded?.length ? linksAdded.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
+        update: linksChanged?.length ? linksChanged.map((item) => ({where: {id: item.id}, data: {...item, id: undefined, localId: undefined, object_id: undefined}})) : undefined,
+        deleteMany: linksDeleted?.length ? linksDeleted.map((item) => ({...item, localId: undefined})) : undefined,
       },
       options: {
-        create: optionsAdded?.length ? optionsAdded?.map(({id}) => ({option: {connect: {id}}})) : undefined,
-        deleteMany: optionsDeleted?.length ? {option_id: {in: optionsDeleted?.map(({id}) => id)}} : undefined,
+        create: optionsAdded?.length ? optionsAdded.map(({id}) => ({option: {connect: {id}}})) : undefined,
+        deleteMany: optionsDeleted?.length ? {option_id: {in: optionsDeleted.map(({id}) => id)}} : undefined,
       },
       sections: {
-        create: sectionsAdded?.length ? sectionsAdded?.map(({id}) => ({section: {connect: {id}}})) : undefined,
-        deleteMany: sectionsDeleted?.length ? {section_id: {in: sectionsDeleted?.map(({id}) => id)}} : undefined,
+        create: sectionsAdded?.length ? sectionsAdded.map(({id}) => ({section: {connect: {id}}})) : undefined,
+        deleteMany: sectionsDeleted?.length ? {section_id: {in: sectionsDeleted.map(({id}) => id)}} : undefined,
       },
       schedule: {
-        create: scheduleAdded?.length ? scheduleAdded?.map((day, i) => ({time: day.time, from: day.from, to: day.to, day_num: i})) : undefined,
-        update: scheduleChanged?.length ? scheduleChanged?.map((day, i) => ({where: {id: day.id}, data: {time: day.time, from: day.from, to: day.to, day_num: i}})) : undefined,
-        deleteMany: scheduleDeleted?.length ? scheduleDeleted : undefined,
+        create: scheduleAdded?.length ? scheduleAdded.map((day) => ({...day, isWork: undefined})) : undefined,
+        update: scheduleChanged?.length ? scheduleChanged.map((day) => ({where: {id: day.id}, data: {...day, id: undefined, object_id: undefined, isWork: undefined}})) : undefined,
+        deleteMany: scheduleDeleted?.length ? {id: {in: scheduleDeleted.map(({id}) => id)}} : undefined,
       },
       photos: {
-        create: photosAdded?.length ? photosAdded?.map(({name, order}) => ({name, order, uploaded: new Date()})) : undefined,
-        update: photosMoved?.length ? photosMoved?.map((photo) => ({where: {id: photo.id}, data: {order: photo.order}})) : undefined,
-        deleteMany: photosDeleted?.length ? {id: {in: photosDeleted?.map(({id}) => id)}} : undefined,
+        create: photosAdded?.length ? photosAdded.map(({name, order}) => ({name, order, uploaded: new Date()})) : undefined,
+        update: photosMoved?.length ? photosMoved.map((photo) => ({where: {id: photo.id}, data: {order: photo.order}})) : undefined,
+        deleteMany: photosDeleted?.length ? {id: {in: photosDeleted.map(({id}) => id)}} : undefined,
       },
+      children: {
+        update: state.children?.length ? state.children.map((child) => ({where: {id: child.id}, data: {
+          name_where: state.name_where,
+          city_id: state.city_Id,
+          address: state.address,
+          address_2: state.address_2,
+          status: child.status_inherit ? state.status : child.status,
+          status_comment: child.status_inherit ? state.status_comment : child.status_comment,
+          status_confirm: child.status_inherit ? state.status_confirm : child.status_confirm,
+          status_instead_id: child.status_inherit ? state.status_instead_id : child.status_instead_id,
+          coord_lat: child.coord_inherit ? state.coord_lat : child.coord_lat,
+          coord_lon: child.coord_inherit ? state.coord_lon : child.coord_lon,
+          phones: {
+            deleteMany: (phonesAdded.length || phonesChanged.length || phonesDeleted.length) ? child.phones.map((item) => ({...item})) : undefined,
+            create: (phonesAdded.length || phonesChanged.length || phonesDeleted.length) ? state.phones.map((item) => ({...item, id: undefined, object_id: undefined, localId: undefined})) : undefined
+          },
+          links: {
+            deleteMany: (linksAdded.length || linksChanged.length || linksDeleted.length) ? child.links.map((item) => ({...item})) : undefined,
+            create: (linksAdded.length || linksChanged.length || linksDeleted.length) ? state.links.map((item) => ({...item, id: undefined, object_id: undefined, localId: undefined})) : undefined
+          },
+          // schedule: {
+            // deleteMany: (scheduleAdded || scheduleChanged || scheduleDeleted) ? child.schedule.map((item) => ({...item})) : undefined,
+            // create: (scheduleAdded || scheduleChanged || scheduleDeleted) ? state.schedule.map((day, i) => ({time: day.time, from: day.from, to: day.to, day_num: i})) : undefined,
+          // },
+        }})) : undefined
+      }
     }
   });
   // Rename photo names of created object

@@ -16,7 +16,7 @@ export async function GET(_, {params}) {
       phones: {orderBy: {order: "asc"}},
       links: {orderBy: {order: "asc"}},
       parent: true,
-      children: {include: {photos: true}},
+      children: {include: {photos: true, phones: true, links: true}},
     },
   });
   const processed = objectReadProcessing(dbData);
