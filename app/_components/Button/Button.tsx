@@ -8,6 +8,7 @@ export default function Button(props: Props) {
 
   return (
     <button
+      {...props}
       className={clsx(styles.button, className)}
       style={style}
       type={type}

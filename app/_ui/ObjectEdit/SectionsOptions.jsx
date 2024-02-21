@@ -1,17 +1,17 @@
 "use client";
 import { useContext } from "react";
-
+// -----------------------------------------------------------------------------
+import { Card } from "@/app/_components/Card";
+import { Flex } from "@/app/_components/Flex";
+import { Select } from "@/app/_components/Select";
 import { Button } from "@/app/_components/Button";
-import { RequiredInput } from "@/app/_components/RequiredInput";
 import { Control } from "@/app/_components/Control";
 import { FieldSet } from "@/app/_components/FieldSet";
+import { RequiredInput } from "@/app/_components/RequiredInput";
 import { Checkbox, CheckboxGroup, Radio, RadioGroup } from "@/app/_components/Choice";
-import { Card } from "@/app/_components/Card";
-
+// -----------------------------------------------------------------------------
 import { ObjectContext } from "./ObjectEdit";
-import { Select } from "@/app/_components/Select";
 import { getSectionsByFilters } from "@/app/(routes)/api/sections/requests";
-import { Flex } from "@/app/_components/Flex";
 
 
 export default function Sections(props) {
@@ -92,7 +92,6 @@ export default function Sections(props) {
         <Select
           isAutocomplete
           value={""}
-          label={""}
           onChange={handleSections.add}
           placeholder="Введите название"
           requestItemsOnFirstTouch={async () =>

@@ -11,10 +11,10 @@ export default async function AdminPage() {
       <Card className="mt10">
         <ul style={{listStyle: "none", paddingInlineStart: 0}}>
           <li>
-            <Link href="/admin/specs">Характеристики</Link>
+            <Link href="/admin/sections">Разделы</Link>
           </li>
           <li>
-            <Link href="/admin/sections">Разделы</Link>
+            <Link href="/admin/specs">Характеристики</Link>
           </li>
         </ul>
       </Card>
