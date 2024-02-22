@@ -3,6 +3,7 @@
 import clsx from "clsx";
 import { useContext } from "react";
 import { ControlContext } from "./Control";
+import styles from "./Control.module.css";
 
 export default function _(props:Props) {
   const controlContext = useContext(ControlContext);
@@ -14,7 +15,7 @@ export default function _(props:Props) {
   return (
     <label id={labelId} htmlFor={inputId} className={clsx("control__label", className, srOnly && "srOnly")} style={style}>
       {children}
-      {required ? <span className="control__asteriks">*</span> : ""}
+      {required ? <span className={styles["control__asteriks"]}>*</span> : ""}
     </label>
   )
 }

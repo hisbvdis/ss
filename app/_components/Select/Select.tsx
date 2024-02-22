@@ -28,7 +28,7 @@ export default function Select(props:Props) {
   useEffect(() => {isAutocomplete ? null : setInputValue(selectedItem?.text)}, [selectedItem]);
 
   const handleInputClick = async () => {
-    // isAutocomplete ? setIsMenu(true) : setIsMenu(!isMenu);
+    isAutocomplete ? setIsMenu(true) : setIsMenu(!isMenu);
     if (requestItemsOnFirstTouch) {
       const newItems = await requestItemsOnFirstTouch("");
       setLocalItems(newItems);
@@ -37,7 +37,7 @@ export default function Select(props:Props) {
   }
 
   const handleInputFocus = async () => {
-    isAutocomplete ? setIsMenu(true) : setIsMenu(!isMenu);
+    isAutocomplete && setIsMenu(true);
     if (requestItemsOnFirstTouch) {
       const newItems = await requestItemsOnFirstTouch("");
       setLocalItems(newItems);

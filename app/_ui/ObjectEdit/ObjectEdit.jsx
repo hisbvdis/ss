@@ -18,7 +18,7 @@ export default function ObjectEdit(props) {
   const router = useRouter();
 
   const handleStateChange = (e) => {
-    setState((state) => {state[e.target.name] = e.target.value});
+    setState((state) => {state[e.target.name] = e.target.value || e.target.checked});
   }
 
   useEffect(() => {
@@ -37,7 +37,6 @@ export default function ObjectEdit(props) {
       router.refresh();
     }
   }
-  console.log( state.schedule )
 
   return (
     <ObjectContext.Provider value={{

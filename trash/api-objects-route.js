@@ -134,6 +134,33 @@ export async function POST(req) {
         create: photosAdded?.length ? photosAdded.map(({name, order}) => ({name, order, uploaded: new Date()})) : undefined,
         update: photosMoved?.length ? photosMoved.map((photo) => ({where: {id: photo.id}, data: {order: photo.order}})) : undefined,
         deleteMany: photosDeleted?.length ? {id: {in: photosDeleted.map(({id}) => id)}} : undefined,
+      },
+      children: {
+        update: state.children?.length ? state.children.map((child) => ({where: {id: child.id}, data: {
+          name_where: state.name_where,
+          name_full: child.name_type + " " + state.name_where,
+          city_id: state.city_Id,
+          address: state.address,
+          address_2: state.address_2,
+          status: child.status_inherit ? state.status : child.status,
+          status_comment: child.status_inherit ? state.status_comment : child.status_comment,
+          status_confirm: child.status_inherit ? state.status_confirm : child.status_confirm,
+          status_instead_id: child.status_inherit ? state.status_instead_id : child.status_instead_id,
+          coord_lat: child.coord_inherit ? state.coord_lat : child.coord_lat,
+          coord_lon: child.coord_inherit ? state.coord_lon : child.coord_lon,
+          phones: {
+            deleteMany: (phonesAdded.length || phonesChanged.length || phonesDeleted.length) ? child.phones.map((item) => ({...item})) : undefined,
+            create: (phonesAdded.length || phonesChanged.length || phonesDeleted.length) ? state.phones.map((item) => ({...item, id: undefined, object_id: undefined, localId: undefined})) : undefined
+          },
+          links: {
+            deleteMany: (linksAdded.length || linksChanged.length || linksDeleted.length) ? child.links.map((item) => ({...item})) : undefined,
+            create: (linksAdded.length || linksChanged.length || linksDeleted.length) ? state.links.map((item) => ({...item, id: undefined, object_id: undefined, localId: undefined})) : undefined
+          },
+          schedule: {
+            deleteMany: (child.schedule_inherit && scheduleAdded.length || scheduleChanged.length || scheduleDeleted.length) ? child.schedule.map((item) => ({...item})) : undefined,
+            create: (child.schedule_inherit && scheduleAdded.length || scheduleChanged.length || scheduleDeleted.length) ? state.schedule.filter(({time}) => time).map((day) => ({...day, isWork: undefined, id: undefined, object_id: undefined})) : undefined,
+          },
+        }})) : undefined
       }
     }
   });

@@ -15,7 +15,7 @@ export default function Photos(props) {
       const statePhotos = state?.photos ?? [];
       const existingIndexes = statePhotos.map(({name}) => name.match(/\d(?=\.webp)/g)?.[0]).map((index) => Number(index));
       const newIndexes = Array(10).fill().map((_, i) => i).filter((i) => !existingIndexes.includes(i)).toSorted((a,b) => a-b);
-      const addedPhotos = Array.from(e.target.files).slice(0, 10 - statePhotos.length).map((file) => ({localId: crypto.randomUUID(), name: `org_${state.id ?? "ID"}_${newIndexes.shift()}.webp`, file, blob: URL.createObjectURL(file)}));
+      const addedPhotos = Array.from(e.target.files).slice(0, 10 - statePhotos.length).map((file) => ({localId: crypto.randomUUID(), name: `object_${state.id ?? "ID"}_${newIndexes.shift()}.webp`, file, blob: URL.createObjectURL(file)}));
       const allPhotos = statePhotos.concat(addedPhotos).map((photo, i) => ({...photo, order: i}));
       setState((state) => {state.photos = allPhotos});
     },

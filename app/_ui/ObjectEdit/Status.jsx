@@ -64,13 +64,7 @@ export default function Status(props) {
       </Control>
       <Control>
         <Control.Label>
-          <span>Вместо закрытого</span>
-          <span>
-            {state.status_instead_id
-              ? <Link href={`/${state.type}/${state.status_instead_id}`}>(O)</Link>
-              : null
-            }
-          </span>
+          <a href={state.status_instead_id ? `/object/${state.status_instead_id}` : undefined}>Вместо закрытого</a>
         </Control.Label>
         <Select
           name="status_instead_id"
@@ -80,7 +74,7 @@ export default function Status(props) {
           onChangeData={(data) => setState((state) => {state.statusInstead = data})}
           isAutocomplete
           placeholder="Введите название"
-          disabled={state.status !== "closed_forever"}
+          disabled={state.status_inherit || state.status !== "closed_forever"}
           requestItemsOnInputChange={
             async (value) => (await getObjectsByFilters({city: state.city_id, type: state.type, query: value}))
             ?.filter((object) => object.id !== state.id)
