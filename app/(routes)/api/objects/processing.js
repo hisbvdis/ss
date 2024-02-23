@@ -8,7 +8,7 @@ export const objectReadProcessing = (dbData) => {
     sections : dbData?.sections.map(({section}) => section),
     options : dbData?.options.map(({option}) => option),
     schedule: Array(7).fill().map((_,i) => ({day_num: i}))
-      .map((localDay) => dbData.schedule.find((dbDay) => dbDay.day_num === localDay.day_num) ?? localDay)
+      .map((localDay) => dbData?.schedule.find((dbDay) => dbDay.day_num === localDay.day_num) ?? localDay)
       .map((day) => ({...day, isWork: day.time ? true : false})),
     schedule_date: dbData?.schedule_date ? format(dbData.schedule_date, "yyyy-MM-dd") : null,
     photos: dbData?.photos?.map((photo) => ({...photo, localId: crypto.randomUUID()})),
