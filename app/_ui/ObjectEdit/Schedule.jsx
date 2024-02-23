@@ -85,7 +85,7 @@ export default function Schedule(props) {
           <Checkbox
             name="schedule_inherit"
             checked={state.schedule_inherit}
-            onChange={handleStateChange}
+            onChange={handleStateChange.checked}
             disabled={!state.parent_id}
             style={{marginInlineEnd: "auto"}}
           >Наследовать</Checkbox>
@@ -114,17 +114,17 @@ export default function Schedule(props) {
         <Flex>
           <Control style={{marginBlockStart: "10px"}}>
             <Control.Label>Дата актуализации графика</Control.Label>
-            <input type="date" name="schedule_date" value={state.schedule_date ?? ""} onChange={handleStateChange} disabled={state.schedule_inherit}/>
+            <input type="date" name="schedule_date" value={state.schedule_date ?? ""} onChange={handleStateChange.value} disabled={state.schedule_inherit}/>
             <Button onClick={() => handleSchedule.setDate(new Date())} disabled={state.schedule_inherit}>Сегодня</Button>
             <Button onClick={() => handleSchedule.setDate("")} disabled={state.schedule_inherit}>X</Button>
           </Control>
           <Control style={{marginBlockStart: "10px"}}>
             <Control.Label>Комментарий к графику</Control.Label>
-            <Input name="schedule_comment" value={state.schedule_comment} onChange={handleStateChange} disabled={state.schedule_inherit}/>
+            <Input name="schedule_comment" value={state.schedule_comment} onChange={handleStateChange.value} disabled={state.schedule_inherit}/>
           </Control>
           <Control style={{marginBlockStart: "10px"}}>
             <Control.Label>Источник (ссылка или название)</Control.Label>
-            <Input name="schedule_source" value={state.schedule_source} onChange={handleStateChange} disabled={state.schedule_inherit}/>
+            <Input name="schedule_source" value={state.schedule_source} onChange={handleStateChange.value} disabled={state.schedule_inherit}/>
           </Control>
         </Flex>
       </Card.Section>

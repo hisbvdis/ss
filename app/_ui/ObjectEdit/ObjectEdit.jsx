@@ -17,8 +17,13 @@ export default function ObjectEdit(props) {
   useEffect(() => setState(props.init), [props.init]);
   const router = useRouter();
 
-  const handleStateChange = (e) => {
-    setState((state) => {state[e.target.name] = e.target.value});
+  const handleStateChange = {
+    value: (e) => {
+      setState((state) => {state[e.target.name] = e.target.value});
+    },
+    checked: (e) => {
+      setState((state) => {state[e.target.name] = e.target.checked});
+    }
   }
 
   useEffect(() => {

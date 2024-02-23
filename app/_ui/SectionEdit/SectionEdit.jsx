@@ -67,7 +67,7 @@ export default function SectionEdit(props) {
           <Input
             name="name"
             value={state.name}
-            onChange={handleStateChange}
+            onChange={handleStateChange.value}
             required
           />
         </Control>
@@ -76,7 +76,7 @@ export default function SectionEdit(props) {
           <RadioGroup
             name="object_type"
             valueToCompare={state.object_type}
-            onChange={handleStateChange}
+            onChange={handleStateChange.value}
           >
             <Radio value="org">Организация</Radio>
             <Radio value="place">Место</Radio>

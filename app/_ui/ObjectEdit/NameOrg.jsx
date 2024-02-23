@@ -18,7 +18,7 @@ export default function NameOrg(props) {
         <Input
           name="name_full"
           value={state.name_full}
-          onChange={(e) => handleStateChange(handleQuotes(e))}
+          onChange={(e) => handleStateChange.value(handleQuotes(e))}
           placeholder="Фитнес-клуб «FitnessOK» Центральный"
           required
         />
@@ -28,7 +28,7 @@ export default function NameOrg(props) {
         <Input
           name="name_where"
           value={state.name_where}
-          onChange={(e) => handleStateChange(handleQuotes(e))}
+          onChange={(e) => handleStateChange.value(handleQuotes(e))}
           placeholder="в клубе «FitnessOK» Центральный"
           required
         />

@@ -69,7 +69,7 @@ export default function SpecEdit(props) {
           <Input
             name="name_service"
             value={state.name_service}
-            onChange={handleStateChange}
+            onChange={handleStateChange.value}
             required
           />
         </Control>
@@ -78,7 +78,7 @@ export default function SpecEdit(props) {
           <Input
             name="name_filter"
             value={state.name_filter}
-            onChange={handleStateChange}
+            onChange={handleStateChange.value}
             required
           />
         </Control>
@@ -87,7 +87,7 @@ export default function SpecEdit(props) {
           <RadioGroup
             name="object_type"
             valueToCompare={state.object_type}
-            onChange={handleStateChange}
+            onChange={handleStateChange.value}
           >
             <Radio value="org">Организации</Radio>
             <Radio value="place">Места</Radio>
@@ -102,7 +102,7 @@ export default function SpecEdit(props) {
           <RadioGroup
             name="control_type"
             valueToCompare={state.control_type}
-            onChange={handleStateChange}
+            onChange={handleStateChange.value}
           >
             <Radio value="checkbox">Checkbox</Radio>
             <Radio value="radio">Radio</Radio>

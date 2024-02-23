@@ -11,7 +11,7 @@ export default function Description(props) {
 
   return (
     <Card heading="Описание" className="mt10">
-      <Textarea name="description" value={state.description} onChange={handleStateChange}/>
+      <Textarea name="description" value={state.description} onChange={handleStateChange.value}/>
     </Card>
   )
 }

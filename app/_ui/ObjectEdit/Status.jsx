@@ -24,15 +24,15 @@ export default function Status(props) {
             (<Checkbox
               name="status_inherit"
               checked={state.status_inherit}
-              onChange={handleStateChange}
+              onChange={handleStateChange.checked}
               disabled={!state.parent_id}
             >наследовать</Checkbox>)
           </Flex>
         </Flex>
         <Select
           name="status"
-          value={state.status}
-          onChange={handleStateChange}
+          value={state.status_inherit ? state.parent.status : state.status}
+          onChange={handleStateChange.value}
           disabled={state.status_inherit}
           items={[
             {id: "works", text: "Работает"},
@@ -48,7 +48,7 @@ export default function Status(props) {
         <Input
           name="status_comment"
           value={state.status_inherit ? state.parent.status_comment : state.status_comment}
-          onChange={handleStateChange}
+          onChange={handleStateChange.value}
           disabled={state.status_inherit || state.status === "works"}
         />
       </Control>
@@ -57,7 +57,7 @@ export default function Status(props) {
         <Input
           name="status_confirm"
           value={state.status_confirm}
-          onChange={handleStateChange}
+          onChange={handleStateChange.value}
           disabled={state.status_inherit || state.status === "works"}
         />
       </Control>
@@ -69,7 +69,7 @@ export default function Status(props) {
           name="status_instead_id"
           value={state?.status_instead_id}
           text={state.statusInstead?.name_full}
-          onChange={handleStateChange}
+          onChange={handleStateChange.value}
           onChangeData={(data) => setState((state) => {state.statusInstead = data})}
           isAutocomplete
           placeholder="Введите название"

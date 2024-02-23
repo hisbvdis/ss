@@ -87,7 +87,7 @@ export default function Address(props) {
             name="city_id"
             value={state.city_id}
             text={state?.city?.name}
-            onChange={handleStateChange}
+            onChange={handleStateChange.value}
             onChangeData={(data) => setState((state) => {state.city = data})}
             isAutocomplete disabled={state.parent_id}
             placeholder="Введите название"
@@ -121,7 +121,7 @@ export default function Address(props) {
               <Input
                 name="address"
                 value={state.address}
-                onChange={handleStateChange}
+                onChange={handleStateChange.value}
                 disabled={state.parent_id}
                 placeholder="Центральный проспект, 153А"
                 required
@@ -145,7 +145,7 @@ export default function Address(props) {
           <Checkbox
             name="coord_inherit"
             checked={state.coord_inherit}
-            onChange={handleStateChange}
+            onChange={handleStateChange.value}
             disabled={!state.parent_id}
           >
             Наследовать координату
