@@ -31,6 +31,9 @@ export async function GET(req) {
       city: true,
       options: {include: {option: true}},
       photos: {orderBy: {order: "asc"}},
+      phones: {orderBy: {order: "asc"}},
+      links: {orderBy: {order: "asc"}},
+      schedule: true,
     },
   });
   return Response.json(dbData);

@@ -15,6 +15,20 @@ export default function Status(props) {
   const { state, setState, handleStateChange } = useContext(ObjectContext);
   const { className, style } = props;
 
+  const handleStatusChange = (e) => {
+    setState((state) => {
+      state.status = e.target.value;
+      if (e.target.value === "works") {
+        state.status_comment = null;
+        state.status_confirm = null;
+      }
+      if (e.target.value !== "closed_forever") {
+        state.status_instead_id = null;
+        state.statusInstead = null;
+      }
+    })
+  }
+
   return (
     <Flex gap="15px" className={className} style={style}>
       <Control>
@@ -31,8 +45,8 @@ export default function Status(props) {
         </Flex>
         <Select
           name="status"
-          value={state.status_inherit ? state.parent.status : state.status}
-          onChange={handleStateChange.value}
+          value={state.status}
+          onChange={handleStatusChange}
           disabled={state.status_inherit}
           items={[
             {id: "works", text: "Работает"},
@@ -47,7 +61,7 @@ export default function Status(props) {
         <Control.Label>Комментарий</Control.Label>
         <Input
           name="status_comment"
-          value={state.status_inherit ? state.parent.status_comment : state.status_comment}
+          value={state.status_comment}
           onChange={handleStateChange.value}
           disabled={state.status_inherit || state.status === "works"}
         />
