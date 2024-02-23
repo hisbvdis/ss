@@ -5,10 +5,11 @@ import { Flex } from "@/app/_components/Flex";
 import { Input } from "@/app/_components/Input";
 import { Control } from "@/app/_components/Control";
 import { Status, ObjectContext } from "@/app/_ui/ObjectEdit";
+import { handleQuotes } from "@/app/_utils/handleQuotes";
 
 
 export default function NamePlace(props) {
-  const { state, handleChangeWithQuotes } = useContext(ObjectContext);
+  const { state, handleStateChange } = useContext(ObjectContext);
 
   return (
     <Card className="mt10">
@@ -19,7 +20,7 @@ export default function NamePlace(props) {
           <Input
             name="name_type"
             value={state.name_type}
-            onChange={handleChangeWithQuotes}
+            onChange={(e) => handleStateChange(handleQuotes(e))}
             placeholder="Футбольное поле"
             required
           />
@@ -29,7 +30,7 @@ export default function NamePlace(props) {
           <Input
             name="name_where"
             value={state.name_where}
-            onChange={handleChangeWithQuotes}
+            onChange={(e) => handleStateChange(handleQuotes(e))}
             disabled={state.parent_id}
             placeholder="у Школы №38"
             required

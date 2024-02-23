@@ -15,10 +15,11 @@ import { Map, Marker } from "@/app/_components/Map";
 import { getCitiesByFilters } from "@/app/(routes)/api/cities/requests";
 import { getObjectsByFilters } from "@/app/(routes)/api/objects/requests";
 import { queryAddressForCoord, queryCoodFromAddress } from "@/app/_utils/nominatim";
+import { handleQuotes } from "@/app/_utils/handleQuotes";
 
 
 export default function Address(props) {
-  const { state, setState, handleStateChange, handleChangeWithQuotes, setInheritedData } = useContext(ObjectContext);
+  const { state, setState, handleStateChange, setInheritedData } = useContext(ObjectContext);
   const [ mapInstance, setMapInstance ] = useState();
 
   const handleMap = {
@@ -134,7 +135,7 @@ export default function Address(props) {
             <Input
               name="address_2"
               value={state.address_2}
-              onChange={handleChangeWithQuotes}
+              onChange={(e) => handleStateChange(handleQuotes(e))}
               placeholder="ТРЦ Центральный"
               disabled={state.parent_id}
             />

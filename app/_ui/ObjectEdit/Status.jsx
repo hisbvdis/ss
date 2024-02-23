@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
 import { ObjectContext } from ".";
@@ -48,7 +47,7 @@ export default function Status(props) {
         <Control.Label>Комментарий</Control.Label>
         <Input
           name="status_comment"
-          value={state.status_comment}
+          value={state.status_inherit ? state.parent.status_comment : state.status_comment}
           onChange={handleStateChange}
           disabled={state.status_inherit || state.status === "works"}
         />

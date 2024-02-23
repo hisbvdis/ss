@@ -7,7 +7,7 @@ import { Form } from "@/app/_components/Form";
 import { BottomPanel } from "@/app/_ui/BottomPanel";
 import { Address, Contacts, Description, NameOrg, NamePlace, Photos, Schedule, SectionsOptions } from ".";
 // -----------------------------------------------------------------------------
-import { handleChangeWithQuotes, setInheritedData, syncPhotos } from "./utils";
+import { setInheritedData, syncPhotos } from "./utils";
 import { upsertObject, deleteObject } from "@/app/(routes)/api/objects/requests";
 import "./ObjectEdit.css";
 
@@ -18,7 +18,7 @@ export default function ObjectEdit(props) {
   const router = useRouter();
 
   const handleStateChange = (e) => {
-    setState((state) => {state[e.target.name] = e.target.value || e.target.checked});
+    setState((state) => {state[e.target.name] = e.target.value});
   }
 
   useEffect(() => {
@@ -39,10 +39,7 @@ export default function ObjectEdit(props) {
   }
 
   return (
-    <ObjectContext.Provider value={{
-      state, setState, handleStateChange, setInheritedData,
-      handleChangeWithQuotes: (e) => handleChangeWithQuotes(e, setState),
-    }}>
+    <ObjectContext.Provider value={{state, setState, handleStateChange, setInheritedData}}>
       <div className="container">
         <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit noValidate>
           {state.type === "org" ? <NameOrg/> : <NamePlace/>}

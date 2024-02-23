@@ -4,10 +4,11 @@ import { Card } from "@/app/_components/Card";
 import { Input } from "@/app/_components/Input";
 import { Control } from "@/app/_components/Control";
 import { Status, ObjectContext } from "@/app/_ui/ObjectEdit";
+import { handleQuotes } from "@/app/_utils/handleQuotes";
 
 
 export default function NameOrg(props) {
-  const { state, handleChangeWithQuotes } = useContext(ObjectContext);
+  const { state, handleStateChange } = useContext(ObjectContext);
 
   return (
     <Card className="mt10">
@@ -17,7 +18,7 @@ export default function NameOrg(props) {
         <Input
           name="name_full"
           value={state.name_full}
-          onChange={handleChangeWithQuotes}
+          onChange={(e) => handleStateChange(handleQuotes(e))}
           placeholder="Фитнес-клуб «FitnessOK» Центральный"
           required
         />
@@ -27,7 +28,7 @@ export default function NameOrg(props) {
         <Input
           name="name_where"
           value={state.name_where}
-          onChange={handleChangeWithQuotes}
+          onChange={(e) => handleStateChange(handleQuotes(e))}
           placeholder="в клубе «FitnessOK» Центральный"
           required
         />
