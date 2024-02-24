@@ -14,7 +14,7 @@ export default async function AddObjectPage({params, searchParams}) {
         { label: "Каталог", href: "/catalog" },
         { label: `Добавить ${params.type === "org" ? "организацию" : "место"}` },
       ]}/>
-      <ObjectEdit init={{...emptyObject, type: params.type}} parent={parent}/>
+      <ObjectEdit init={{...emptyObject, type: params.type }} parent={parent}/>
     </div>
   )
 }

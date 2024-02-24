@@ -16,10 +16,11 @@ import { getCitiesByFilters } from "@/app/(routes)/api/cities/requests";
 import { getObjectsByFilters } from "@/app/(routes)/api/objects/requests";
 import { queryAddressForCoord, queryCoodFromAddress } from "@/app/_utils/nominatim";
 import { handleQuotes } from "@/app/_utils/handleQuotes";
+import { setInheritedData } from "./utils";
 
 
 export default function Address(props) {
-  const { state, setState, handleStateChange, setInheritedData } = useContext(ObjectContext);
+  const { state, setState, handleStateChange } = useContext(ObjectContext);
   const [ mapInstance, setMapInstance ] = useState();
 
   const handleMap = {

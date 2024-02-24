@@ -15,7 +15,7 @@ export async function GET(_, {params}) {
       statusInstead: true,
       phones: {orderBy: {order: "asc"}},
       links: {orderBy: {order: "asc"}},
-      parent: true,
+      parent: {include: {city: true, phones: true, links: true, schedule: true, statusInstead: true}},
       children: {include: {photos: true}},
     },
   });

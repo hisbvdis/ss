@@ -33,6 +33,7 @@ export async function GET(req) {
       photos: {orderBy: {order: "asc"}},
       phones: {orderBy: {order: "asc"}},
       links: {orderBy: {order: "asc"}},
+      statusInstead: true,
       schedule: true,
     },
   });

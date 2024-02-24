@@ -45,24 +45,22 @@ export default function ObjectEdit(props) {
 
   return (
     <ObjectContext.Provider value={{state, setState, handleStateChange, setInheritedData}}>
-      <div className="container">
-        <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit noValidate>
-          {state.type === "org" ? <NameOrg/> : <NamePlace/>}
-          <Address/>
-          <Contacts/>
-          <SectionsOptions/>
-          <Description/>
-          <Schedule/>
-          <Photos/>
-          <BottomPanel
-            id={state.id}
-            delFunc={deleteObject}
-            exitRedirectPath="./"
-            delRedirectPath="/catalog"
-            handleFormSubmit={handleFormSubmit}
-          />
-        </Form>
-      </div>
+      <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit noValidate>
+        {state.type === "org" ? <NameOrg/> : <NamePlace/>}
+        <Address/>
+        <Contacts/>
+        <SectionsOptions/>
+        <Description/>
+        <Schedule/>
+        <Photos/>
+        <BottomPanel
+          id={state.id}
+          delFunc={deleteObject}
+          exitRedirectPath="./"
+          delRedirectPath="/catalog"
+          handleFormSubmit={handleFormSubmit}
+        />
+      </Form>
     </ObjectContext.Provider>
   )
 }

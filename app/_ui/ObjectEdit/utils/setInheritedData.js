@@ -26,6 +26,8 @@ export const setInheritedData = (parent, setState) => {
       state.schedule_date = processed?.schedule_date;
       state.schedule_comment = processed?.schedule_comment;
       state.schedule_source = processed?.schedule_source;
+      state.statusInstead = processed?.statusInstead;
+      state.status_instead_id = processed?.status_instead_id;
     });
   }
   else {
