@@ -138,6 +138,37 @@ export async function POST(req) {
         create: photosAdded?.length ? photosAdded.map(({name, order}) => ({name, order, uploaded: new Date()})) : undefined,
         update: photosMoved?.length ? photosMoved.map((photo) => ({where: {id: photo.id}, data: {order: photo.order}})) : undefined,
         deleteMany: photosDeleted?.length ? {id: {in: photosDeleted.map(({id}) => id)}} : undefined,
+      },
+      children: {
+        update: state.children?.length ? state.children.map((child) => ({where: {id: child.id}, data: {
+          name_where: child.name_where !== state.name_where ? state.name_where : undefined,
+          name_full: child.name_where !== state.name_where ? child.name_type + " " + state.name_where : undefined,
+          status: child.status_inherit && child.status !== state.status ? state.status : undefined,
+          status_comment: child.status_inherit && child.status_comment !== state.status_comment ? state.status_comment : undefined,
+          status_confirm: child.status_inherit && child.status_confirm !== state.status_confirm ? state.status_confirm : undefined,
+          status_instead_id: child.status_inherit && child.status_instead_id !== state.status_instead_id ? state.status_instead_id : undefined,
+          city_id: child.city_id !== state.city_Id ? state.city_Id : undefined,
+          address: child.address !== state.address ? state.address : undefined,
+          address_2: child.address_2 !== state.address_2 ? state.address_2 : undefined,
+          coord_lat: child.coord_inherit && child.coord_lat !== state.coord_lat ? state.coord_lat : undefined,
+          coord_lon: child.coord_inherit && child.coord_lat !== state.coord_lat ? state.coord_lon : undefined,
+          schedule_247: child.schedule_inherit && child.schedule_247 !== state.schedule_247 ? state.schedule_247 : undefined,
+          schedule_date: child.schedule_inherit && state.schedule_date && child.schedule_date !== state.schedule_date ? new Date(state.schedule_date) : null,
+          schedule_source: child.schedule_inherit && child.schedule_source !== state.schedule_source ? state.schedule_source : undefined,
+          schedule_comment: child.schedule_inherit && child.schedule_comment !== state.schedule_comment ? state.schedule_comment : undefined,
+          phones: {
+            deleteMany: (phonesAdded.length || phonesChanged.length || phonesDeleted.length) ? child.phones.map((item) => ({...item})) : undefined,
+            create: (phonesAdded.length || phonesChanged.length || phonesDeleted.length) ? state.phones.map((item) => ({...item, id: undefined, object_id: undefined, localId: undefined})) : undefined
+          },
+          links: {
+            deleteMany: (linksAdded.length || linksChanged.length || linksDeleted.length) ? child.links.map((item) => ({...item})) : undefined,
+            create: (linksAdded.length || linksChanged.length || linksDeleted.length) ? state.links.map((item) => ({...item, id: undefined, object_id: undefined, localId: undefined})) : undefined
+          },
+          schedule: {
+            deleteMany: (child.schedule_inherit && scheduleAdded.length || scheduleChanged.length || scheduleDeleted.length) ? child.schedule.map((item) => ({...item})) : undefined,
+            create: (child.schedule_inherit && scheduleAdded.length || scheduleChanged.length || scheduleDeleted.length) ? state.schedule.filter(({time}) => time).map((day) => ({...day, isWork: undefined, id: undefined, object_id: undefined})) : undefined,
+          },
+        }})) : undefined
       }
     }
   });

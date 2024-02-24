@@ -43,6 +43,8 @@ export default function ObjectEdit(props) {
     }
   }
 
+  console.log( state )
+
   return (
     <ObjectContext.Provider value={{state, setState, handleStateChange, setInheritedData}}>
       <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit noValidate>

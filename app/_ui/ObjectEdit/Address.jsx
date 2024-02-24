@@ -136,8 +136,8 @@ export default function Address(props) {
             <Input
               name="address_2"
               value={state.address_2}
-              onChange={(e) => handleStateChange(handleQuotes(e))}
-              placeholder="ТРЦ Центральный"
+              onChange={(e) => handleStateChange.value(handleQuotes(e))}
+              placeholder="ТРЦ «Центральный»"
               disabled={state.parent_id}
             />
           </Control>
