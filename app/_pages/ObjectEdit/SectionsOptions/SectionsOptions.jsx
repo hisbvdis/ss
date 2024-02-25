@@ -10,12 +10,12 @@ import { FieldSet } from "@/app/_components/FieldSet";
 import { RequiredInput } from "@/app/_components/RequiredInput";
 import { Checkbox, CheckboxGroup, Radio, RadioGroup } from "@/app/_components/Choice";
 // -----------------------------------------------------------------------------
-import { ObjectContext } from "./ObjectEdit";
+import { ObjectEditContext } from "../ObjectEdit";
 import { getSectionsByFilters } from "@/app/(router)/api/sections/requests";
 
 
 export default function Sections(props) {
-  const { state, setState } = useContext(ObjectContext);
+  const { state, setState } = useContext(ObjectEditContext);
 
   const handleSections = {
     add: (e) => {

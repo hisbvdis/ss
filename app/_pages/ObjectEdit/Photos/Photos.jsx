@@ -1,13 +1,13 @@
 "use client";
 import { useContext, useState } from "react";
 // -----------------------------------------------------------------------------
-import { ObjectContext } from "./ObjectEdit";
+import { ObjectEditContext } from "../ObjectEdit";
 import { Card } from "@/app/_components/Card";
 import { Button } from "@/app/_components/Button";
 
 
 export default function Photos(props) {
-  const { state, setState } = useContext(ObjectContext);
+  const { state, setState } = useContext(ObjectEditContext);
   const [ dragoNode, setDragoNode ] = useState();
 
   const handlePhotos = {

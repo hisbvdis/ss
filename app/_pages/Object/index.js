@@ -1,6 +1,6 @@
 import Object from "./Object";
-import Header from "./parts/Header";
-import Content from "./parts/Content";
-import Info from "./parts/Info";
+import Header from "./Header/Header";
+import Content from "./Content/Content";
+import Info from "./Info/Info";
 
 export { Object, Header, Content, Info }

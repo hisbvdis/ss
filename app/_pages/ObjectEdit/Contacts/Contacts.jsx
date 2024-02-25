@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
 import { Input } from "@/app/_components/Input";
-import { ObjectContext } from "./ObjectEdit";
+import { ObjectEditContext } from "../ObjectEdit";
 import { Button } from "@/app/_components/Button";
 import { FieldSet } from "@/app/_components/FieldSet";
 import { Card } from "@/app/_components/Card";
@@ -9,7 +9,7 @@ import { Flex } from "@/app/_components/Flex";
 
 
 export default function Contacts(props) {
-  const { state, setState } = useContext(ObjectContext);
+  const { state, setState } = useContext(ObjectEditContext);
 
   const handleContacts = {
     add: (type) => {

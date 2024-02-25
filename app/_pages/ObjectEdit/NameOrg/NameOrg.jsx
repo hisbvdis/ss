@@ -2,13 +2,15 @@ import { useContext } from "react";
 // -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card";
 import { Input } from "@/app/_components/Input";
+import { Status } from "@/app/_pages/ObjectEdit";
+import { ObjectEditContext } from "../ObjectEdit";
 import { Control } from "@/app/_components/Control";
-import { Status, ObjectContext } from "@/app/_pages/ObjectEdit";
+// -----------------------------------------------------------------------------
 import { handleQuotes } from "@/app/_utils/handleQuotes";
 
 
 export default function NameOrg(props) {
-  const { state, handleStateChange } = useContext(ObjectContext);
+  const { state, handleStateChange } = useContext(ObjectEditContext);
 
   return (
     <Card className="mt10">

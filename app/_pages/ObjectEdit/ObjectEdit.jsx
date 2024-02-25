@@ -5,9 +5,8 @@ import { createContext, useEffect } from "react";
 // -----------------------------------------------------------------------------
 import { Form } from "@/app/_components/Form";
 import { BottomPanel } from "@/app/_ui/BottomPanel";
-import { Address, Contacts, Description, NameOrg, NamePlace, Photos, Schedule, SectionsOptions } from ".";
+import { Address, Contacts, Description, NameOrg, NamePlace, Photos, Schedule, SectionsOptions, setInheritedData, syncPhotos } from ".";
 // -----------------------------------------------------------------------------
-import { setInheritedData, syncPhotos } from "./utils";
 import { upsertObject, deleteObject } from "@/app/(router)/api/objects/requests";
 import "./styles.css";
 
@@ -44,7 +43,7 @@ export default function ObjectEdit(props) {
   }
 
   return (
-    <ObjectContext.Provider value={{state, setState, handleStateChange, setInheritedData}}>
+    <ObjectEditContext.Provider value={{state, setState, handleStateChange, setInheritedData}}>
       <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit noValidate>
         {state.type === "org" ? <NameOrg/> : <NamePlace/>}
         <Address/>
@@ -61,8 +60,8 @@ export default function ObjectEdit(props) {
           handleFormSubmit={handleFormSubmit}
         />
       </Form>
-    </ObjectContext.Provider>
+    </ObjectEditContext.Provider>
   )
 }
 
-export const ObjectContext = createContext();
+export const ObjectEditContext = createContext();

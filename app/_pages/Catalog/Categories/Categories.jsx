@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
-import { CatalogContext } from "./Catalog";
+import { CatalogContext } from "../Catalog";
 import { Card } from "@/app/_components/Card";
 
 

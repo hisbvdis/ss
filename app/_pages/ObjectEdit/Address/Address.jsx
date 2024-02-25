@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 // -----------------------------------------------------------------------------
-import { ObjectContext } from ".";
+import { ObjectEditContext } from "../ObjectEdit";
 import { Flex } from "@/app/_components/Flex";
 import { Card } from "@/app/_components/Card";
 import { Input } from "@/app/_components/Input";
@@ -16,11 +16,11 @@ import { getCitiesByFilters } from "@/app/(router)/api/cities/requests";
 import { getObjectsByFilters } from "@/app/(router)/api/objects/requests";
 import { queryAddressForCoord, queryCoodFromAddress } from "@/app/_utils/nominatim";
 import { handleQuotes } from "@/app/_utils/handleQuotes";
-import { setInheritedData } from "./utils";
+import { setInheritedData } from "../";
 
 
 export default function Address(props) {
-  const { state, setState, handleStateChange } = useContext(ObjectContext);
+  const { state, setState, handleStateChange } = useContext(ObjectEditContext);
   const [ mapInstance, setMapInstance ] = useState();
 
   const handleMap = {

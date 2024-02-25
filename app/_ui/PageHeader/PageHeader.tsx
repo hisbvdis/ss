@@ -2,7 +2,7 @@ import clsx from "clsx";
 import Link from "next/link";
 // -----------------------------------------------------------------------------
 import Logo from "../Logo/Logo";
-import styles from "./PageHeader.module.css";
+import styles from "./styles.module.css";
 
 
 export default function PageHeader() {

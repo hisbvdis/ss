@@ -1,15 +1,18 @@
+"use client";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
+import { Status } from "../";
 import { Card } from "@/app/_components/Card";
 import { Flex } from "@/app/_components/Flex";
 import { Input } from "@/app/_components/Input";
+import { ObjectEditContext } from "../ObjectEdit";
 import { Control } from "@/app/_components/Control";
-import { Status, ObjectContext } from "@/app/_pages/ObjectEdit";
+// -----------------------------------------------------------------------------
 import { handleQuotes } from "@/app/_utils/handleQuotes";
 
 
 export default function NamePlace(props) {
-  const { state, handleStateChange } = useContext(ObjectContext);
+  const { state, handleStateChange } = useContext(ObjectEditContext);
 
   return (
     <Card className="mt10">

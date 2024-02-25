@@ -1,18 +1,18 @@
-import Photos from "./Photos";
-import Status from "./Status";
-import Address from "./Address";
-import Schedule from "./Schedule";
-import Contacts from "./Contacts";
-import NameOrg from "./NameOrg";
 import ObjectEdit from "./ObjectEdit";
-import Description from "./Description";
-import NamePlace from "./NamePlace";
-import { ObjectContext } from "./ObjectEdit";
-import SectionsOptions from "./SectionsOptions";
+import Photos from "./Photos/Photos";
+import Status from "./Status/Status";
+import Address from "./Address/Address";
+import Schedule from "./Schedule/Schedule";
+import Contacts from "./Contacts/Contacts";
+import NameOrg from "./NameOrg/NameOrg";
+import Description from "./Description/Description";
+import NamePlace from "./NamePlace/NamePlace";
+import SectionsOptions from "./SectionsOptions/SectionsOptions";
+import { syncPhotos } from "./utils/syncPhotos";
+import { setInheritedData } from "./utils/setInheritedData";
 
 export {
   ObjectEdit,
-  Status,
   Address,
   Contacts,
   Description,
@@ -20,6 +20,8 @@ export {
   Photos,
   SectionsOptions,
   NameOrg,
-  ObjectContext,
   NamePlace,
+  Status,
+  setInheritedData,
+  syncPhotos
 };

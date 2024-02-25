@@ -8,7 +8,7 @@ import { useManageSearchParams } from "@/app/_utils/useManageSearchParams";
 import { SearchIcon } from "@/app/_icons";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
-import "./SearchPanel.css";
+import "./styles.css";
 
 
 export default function SearchPanel(props) {

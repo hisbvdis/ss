@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
-import { ObjectContext } from "./ObjectEdit";
+import { ObjectEditContext } from "../ObjectEdit";
 import { Card } from "@/app/_components/Card";
 import { Flex } from "@/app/_components/Flex";
 import { Input } from "@/app/_components/Input";
@@ -11,7 +11,7 @@ import { Control } from "@/app/_components/Control";
 
 
 export default function Schedule(props) {
-  const { state, setState, handleStateChange } = useContext(ObjectContext);
+  const { state, setState, handleStateChange } = useContext(ObjectEditContext);
 
   const handleSchedule = {
     changeIsWork: (e) => {

@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
-import { ObjectContext } from ".";
+import { ObjectEditContext } from "../ObjectEdit";
 import { Flex } from "@/app/_components/Flex";
 import { Input } from "@/app/_components/Input";
 import { Select } from "@/app/_components/Select";
@@ -12,7 +12,7 @@ import { getObjectsByFilters } from "@/app/(router)/api/objects/requests";
 
 
 export default function Status(props) {
-  const { state, setState, handleStateChange } = useContext(ObjectContext);
+  const { state, setState, handleStateChange } = useContext(ObjectEditContext);
   const { className, style } = props;
 
   const handleStatusChange = (e) => {

@@ -4,7 +4,7 @@ import Link from "next/link";
 // -----------------------------------------------------------------------------
 import { Button } from "@/app/_components/Button";
 import { DelBtn } from "@/app/_components/DelBtn";
-import "./BottomPanel.css";
+import "./styles.css";
 
 
 export default function BottomPanel(props) {

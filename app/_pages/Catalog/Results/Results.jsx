@@ -3,7 +3,7 @@ import Image from "next/image"
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
 import { MapPin } from "@/app/_icons";
-import { CatalogContext } from "./Catalog";
+import { CatalogContext } from "../Catalog";
 import { Card } from "@/app/_components/Card";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 // -----------------------------------------------------------------------------
