@@ -90,6 +90,7 @@ model object_link {
   value     String
   comment   String?
   object    object  @relation("object_link", fields: [object_id], references: [id], onDelete: Cascade)
+  @@unique([object_id, order])
 }
 
 model object_phone {
@@ -99,6 +100,7 @@ model object_phone {
   value     String
   comment   String?
   object    object  @relation("object_phone", fields: [object_id], references: [id], onDelete: Cascade)
+  @@unique([object_id, order])
 }
 
 model object_schedule {

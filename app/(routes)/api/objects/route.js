@@ -1,4 +1,5 @@
 import { prisma } from "@/prisma/client.prisma";
+import { format } from "date-fns";
 
 export async function GET(req) {
   const searchParams = req.nextUrl.searchParams;
@@ -153,22 +154,25 @@ export async function POST(req) {
           coord_lat: child.coord_inherit && child.coord_lat !== state.coord_lat ? state.coord_lat : undefined,
           coord_lon: child.coord_inherit && child.coord_lat !== state.coord_lat ? state.coord_lon : undefined,
           schedule_247: child.schedule_inherit && child.schedule_247 !== state.schedule_247 ? state.schedule_247 : undefined,
-          schedule_date: child.schedule_inherit && state.schedule_date && child.schedule_date !== state.schedule_date ? new Date(state.schedule_date) : null,
+          schedule_date: (child.schedule_inherit && state.schedule_date) && !child.schedule_date || format(child.schedule_date, "yyyy-MM-dd") !== state.schedule_date ? new Date(state.schedule_date) : null,
           schedule_source: child.schedule_inherit && child.schedule_source !== state.schedule_source ? state.schedule_source : undefined,
           schedule_comment: child.schedule_inherit && child.schedule_comment !== state.schedule_comment ? state.schedule_comment : undefined,
           phones: {
-            deleteMany: (phonesAdded.length || phonesChanged.length || phonesDeleted.length) ? child.phones.map((item) => ({...item})) : undefined,
-            create: (phonesAdded.length || phonesChanged.length || phonesDeleted.length) ? state.phones.map((item) => ({...item, id: undefined, object_id: undefined, localId: undefined})) : undefined
+            create: phonesAdded?.length ? phonesAdded.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
+            update: phonesChanged?.length ? phonesChanged.map((item) => ({where: {object_id_order: {object_id: child.id, order: item.order}}, data: {...item, id: undefined, localId: undefined, object_id: undefined}})) : undefined,
+            delete: phonesDeleted?.length ? phonesDeleted.map((item) => ({object_id_order: {object_id: child.id, order: item.order}})) : undefined,
           },
           links: {
-            deleteMany: (linksAdded.length || linksChanged.length || linksDeleted.length) ? child.links.map((item) => ({...item})) : undefined,
-            create: (linksAdded.length || linksChanged.length || linksDeleted.length) ? state.links.map((item) => ({...item, id: undefined, object_id: undefined, localId: undefined})) : undefined
+            create: linksAdded?.length ? linksAdded.map((item) => ({...item, id: undefined, localId: undefined, object_id: undefined})) : undefined,
+            update: linksChanged?.length ? linksChanged.map((item) => ({where: {object_id_order: {object_id: child.id, order: item.order}}, data: {...item, id: undefined, localId: undefined, object_id: undefined}})) : undefined,
+            delete: linksDeleted?.length ? linksDeleted.map((item) => ({object_id_order: {object_id: child.id, order: item.order}})) : undefined,
           },
           schedule: {
             create: (child.schedule_inherit && scheduleAdded.length) ? scheduleAdded.map((day) => ({...day, isWork: undefined, id: undefined, object_id: undefined})) : undefined,
             update: (child.schedule_inherit && scheduleChanged.length) ? scheduleChanged.map((day) => ({where: {object_id_day_num: {object_id: child.id, day_num: day.day_num}}, data: {...day, id: undefined, object_id: undefined, isWork: undefined}})) : undefined,
             delete: (child.schedule_inherit && scheduleDeleted.length) ? scheduleDeleted.map((day) => ({object_id_day_num: {object_id: child.id, day_num: day.day_num}})) : undefined,
           },
+          modified: new Date(),
         }})) : undefined
       }
     }
