@@ -5,7 +5,7 @@ import { createContext } from "react";
 import { Header, Content, Info } from "."
 import { Flex } from "@/app/_components/Flex";
 // -----------------------------------------------------------------------------
-import styles from "./Object.module.css";
+import styles from "./styles.module.css";
 
 
 export default function Object(props) {

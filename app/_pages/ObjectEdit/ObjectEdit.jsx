@@ -9,7 +9,7 @@ import { Address, Contacts, Description, NameOrg, NamePlace, Photos, Schedule, S
 // -----------------------------------------------------------------------------
 import { setInheritedData, syncPhotos } from "./utils";
 import { upsertObject, deleteObject } from "@/app/(router)/api/objects/requests";
-import "./ObjectEdit.css";
+import "./styles.css";
 
 
 export default function ObjectEdit(props) {

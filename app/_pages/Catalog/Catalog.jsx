@@ -11,7 +11,7 @@ import { Filters, Results, Categories } from "@/app/_pages/Catalog";
 // -----------------------------------------------------------------------------
 import { getCitiesByFilters } from "@/app/(router)/api/cities/requests";
 import { useManageSearchParams } from "@/app/_utils/useManageSearchParams";
-import "./Catalog.css";
+import "./styles.css";
 
 
 export default function Catalog(props) {
