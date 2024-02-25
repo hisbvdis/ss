@@ -102,7 +102,7 @@ export async function POST(req) {
         create: sectionsAdded?.length ? sectionsAdded.map(({id}) => ({section: {connect: {id}}})) : undefined,
       },
       schedule: {
-        create: scheduleAdded?.length ? scheduleAdded.map((day) => ({time: day.time, from: day.from, to: day.to, day_num: day.day_num})) : undefined,
+        create: scheduleAdded?.length ? scheduleAdded.map((day) => ({...day, isWork: undefined})) : undefined,
       },
       photos: {
         // Don't: The
@@ -165,8 +165,9 @@ export async function POST(req) {
             create: (linksAdded.length || linksChanged.length || linksDeleted.length) ? state.links.map((item) => ({...item, id: undefined, object_id: undefined, localId: undefined})) : undefined
           },
           schedule: {
-            deleteMany: (child.schedule_inherit && scheduleAdded.length || scheduleChanged.length || scheduleDeleted.length) ? child.schedule.map((item) => ({...item})) : undefined,
-            create: (child.schedule_inherit && scheduleAdded.length || scheduleChanged.length || scheduleDeleted.length) ? state.schedule.filter(({time}) => time).map((day) => ({...day, isWork: undefined, id: undefined, object_id: undefined})) : undefined,
+            create: (child.schedule_inherit && scheduleAdded.length) ? scheduleAdded.map((day) => ({...day, isWork: undefined, id: undefined, object_id: undefined})) : undefined,
+            update: (child.schedule_inherit && scheduleChanged.length) ? scheduleChanged.map((day) => ({where: {object_id_day_num: {object_id: child.id, day_num: day.day_num}}, data: {...day, id: undefined, object_id: undefined, isWork: undefined}})) : undefined,
+            delete: (child.schedule_inherit && scheduleDeleted.length) ? scheduleDeleted.map((day) => ({object_id_day_num: {object_id: child.id, day_num: day.day_num}})) : undefined,
           },
         }})) : undefined
       }

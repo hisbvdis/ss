@@ -109,6 +109,7 @@ model object_schedule {
   from      Int?
   to        Int?
   object    object @relation("object_schedule", fields: [object_id], references: [id], onDelete: Cascade)
+  @@unique([object_id, day_num])
 }
 
 model object_photo {
