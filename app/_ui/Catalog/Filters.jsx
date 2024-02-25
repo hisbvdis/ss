@@ -12,7 +12,7 @@ export default function Filters(props) {
   const { searchParams, searchResults, objectCounts, manageSearchParams, section } = useContext(CatalogContext);
 
   return (
-    <Card className="objectView__filters  mt10">
+    <Card className="object__filters  mt10">
       <Card.Heading style={{display: "flex", alignItems: "center", gap: "10px"}}>
         <span style={{marginInlineEnd: "auto"}}>{section?.name}</span>
         {searchParams.options

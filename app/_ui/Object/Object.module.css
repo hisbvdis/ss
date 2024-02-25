@@ -1,0 +1,28 @@
+.object {
+
+}
+
+.object__header {
+  margin-block-end: 10px;
+}
+
+.object__info {
+  flex-basis: 300px;
+}
+
+/* .object__photo {
+  aspect-ratio: 565 / 350;
+  object-fit: cover;
+}
+
+.object__childLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.object__childPhoto {
+  aspect-ratio: 178/120;
+  object-fit: cover;
+} */
