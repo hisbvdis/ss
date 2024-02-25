@@ -49,13 +49,6 @@ export default function Info(props) {
           </Map>
         </Card.Section>
       </Card>
-
-      <Card className="mt10">
-        <Card.Section>
-          <p>Последняя правка:</p>
-          <p>{state.modified}</p>
-        </Card.Section>
-      </Card>
     </section>
   )
 }

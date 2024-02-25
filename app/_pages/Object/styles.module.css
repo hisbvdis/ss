@@ -1,28 +1,39 @@
-.object {
-
-}
-
-.object__header {
+.objectPage__header {
   margin-block-end: 10px;
 }
 
-.object__info {
-  flex-basis: 300px;
+.objectPage__main {
+  display: flex;
+  gap: 10px;
 }
 
-/* .object__photo {
+.objectPage__article {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.objectPage__aside {
+  flex-shrink: 0;
+  flex-basis: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* .objectPage__photo {
   aspect-ratio: 565 / 350;
   object-fit: cover;
 }
 
-.object__childLink {
+.objectPage__childLink {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
 }
 
-.object__childPhoto {
+.objectPage__childPhoto {
   aspect-ratio: 178/120;
   object-fit: cover;
 } */

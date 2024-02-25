@@ -2,23 +2,28 @@
 import clsx from "clsx";
 import { createContext } from "react";
 // -----------------------------------------------------------------------------
-import { Header, Content, Info } from "."
-import { Flex } from "@/app/_components/Flex";
+import { Header, Gallery, Description, Children, Specs, Info, Service } from "."
 // -----------------------------------------------------------------------------
 import styles from "./styles.module.css";
 
 
 export default function Object(props) {
-  const state = props.state;
-
   return (
-    <ObjectContext.Provider value={{state}}>
-      <div className={clsx(styles["object"], "container", "page")}>
-        <Header className={styles["object__header"]}/>
-        <Flex gap="10px">
-          <Content className={styles["object__content"]}/>
-          <Info className={styles["object__info"]}/>
-        </Flex>
+    <ObjectContext.Provider value={{state: props.state}}>
+      <div className={clsx(styles["objectPage"], "container", "page")}>
+        <Header className={styles["objectPage__header"]}/>
+        <main className={styles["objectPage__main"]}>
+          <article className={styles["objectPage__article"]}>
+            <Gallery/>
+            <Description/>
+            <Children/>
+            <Specs/>
+          </article>
+          <aside className={styles["objectPage__aside"]}>
+            <Info/>
+            <Service/>
+          </aside>
+        </main>
       </div>
     </ObjectContext.Provider>
   )
