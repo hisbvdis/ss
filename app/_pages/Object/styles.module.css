@@ -1,39 +1,21 @@
-.objectPage__header {
-  margin-block-end: 10px;
-}
-
-.objectPage__main {
-  display: flex;
+.object {
+  display: grid;
+  grid-template-columns: 1fr 300px;
   gap: 10px;
 }
 
-.objectPage__article {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.object__header {
+  grid-column: 1 / -1;
 }
 
-.objectPage__aside {
-  flex-shrink: 0;
-  flex-basis: 300px;
+.object__article {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* .objectPage__photo {
-  aspect-ratio: 565 / 350;
-  object-fit: cover;
-}
-
-.objectPage__childLink {
+.object__aside {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 10px;
 }
-
-.objectPage__childPhoto {
-  aspect-ratio: 178/120;
-  object-fit: cover;
-} */

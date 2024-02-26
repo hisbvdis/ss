@@ -1,8 +1,8 @@
 .card {
-  --cardPadding: 15px;
+  /* --cardPadding: 15px; */
   --cardPaddingNegative: calc(var(--cardPadding) * -1);
 
-  padding: var(--cardPadding);
+  padding: var(--cardPadding, 15px);
 
   background-color: var(--color-white);
   border: 1px solid var(--section-borderColor);
@@ -31,6 +31,10 @@
   padding: var(--cardPadding);
 
   border: none;
+}
+
+.card__section:has(.card__section) {
+  padding: 0;
 }
 
 .card__section + .card__section {

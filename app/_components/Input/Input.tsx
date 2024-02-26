@@ -1,7 +1,7 @@
 // <Input name={"name"} value={"state.name"} onChange={(e)=>e}/>
 "use client";
 import clsx from "clsx";
-import { ChangeEvent, createElement, forwardRef, useContext, useEffect, useRef, useState } from "react";
+import { createElement, forwardRef, useContext, useEffect, useRef, useState } from "react";
 // -----------------------------------------------------------------------------
 import { ControlContext } from "@/app/_components/Control";
 import styles from "./Input.module.css";
@@ -20,7 +20,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(function Input(props, f
   const { onChange=(e=>e), onChangeValue=(e=>e) } = props;
   const { onFocus=(e=>e), onBlur=(e=>e), onBlurIfChanged=(e=>e) } = props;
   const { onClick=(e=>e), onKeyDown=(e=>e) } = props;
-  const { type="text", placeholder, disabled, pattern, readOnly } = props;
+  const { type="text", placeholder, disabled, pattern, readOnly, maxLength } = props;
   const { className, style } = props;
 
   useEffect(() => {
@@ -50,6 +50,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(function Input(props, f
       "aria-labelledby": labelId,
       ref: inputRef,
       readOnly: readOnly,
+      maxLength: maxLength,
     }
   )
 })
@@ -75,4 +76,5 @@ interface Props {
   onBlurIfChanged?: React.FocusEventHandler;
   onClick?: React.MouseEventHandler;
   onKeyDown?: React.KeyboardEventHandler;
+  maxLength: string;
 }

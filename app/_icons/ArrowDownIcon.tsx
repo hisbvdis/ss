@@ -1,22 +1,26 @@
 export default function ArrowDownIcon(props:Props) {
-  const { className } = props;
+  const { className, width="24", height="24" } = props;
 
   return (
     <svg
-      className={className}
+      {...props}
+      width="14"
+      height="8"
+      viewBox="0 0 14 8"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      width="24"
-      height="24"
     >
-      <path d="M12 13.171l4.95-4.95 1.414 1.415L12 16 5.636 9.636 7.05 8.222l4.95 4.95z"></path>
+      <path
+        d="M6.9999 5.1714L11.9497 0.22168L13.3639 1.63589L6.9999 7.9999L0.635986 1.63589L2.0502 0.22168L6.9999 5.1714Z"
+        fill="black"
+      />
     </svg>
   );
 }
 
 interface Props {
-  className: string;
-  width: string;
-  height: string;
-  style: React.CSSProperties;
+  className?: string;
+  width?: string;
+  height?: string;
+  style?: React.CSSProperties;
 }

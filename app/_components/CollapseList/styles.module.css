@@ -1,0 +1,26 @@
+.summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* padding: var(--cardPadding); */
+
+  list-style: none;
+}
+
+.summary--clickable {
+  cursor: pointer;
+}
+
+.list {
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.item {
+  padding-inline: var(--cardPadding);
+  padding-block: calc(var(--cardPadding));
+}
+
+.item + .item {
+  padding-block-start: 0;
+}

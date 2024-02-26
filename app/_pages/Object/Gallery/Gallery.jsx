@@ -1,9 +1,9 @@
-import Image from "next/image";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card/";
-// -----------------------------------------------------------------------------
+import { Swiper } from "@/app/_components/Swiper/";
 import { ObjectContext } from "../Object";
+// -----------------------------------------------------------------------------
 
 
 export default function Gallery() {
@@ -11,7 +11,7 @@ export default function Gallery() {
 
   return (
     <Card>
-      <Image className="object__photo" src={state.photos?.length > 0 ? `/photos/${state.photos[0].name}`: "/icons/no-photo.svg"} width="565" height="350" alt="Image" priority={true}/>
+      <Swiper photos={state.photos} width={565} height={350} navigation="true" speed="250" loop="true"/>
     </Card>
   )
 }

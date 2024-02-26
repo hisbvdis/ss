@@ -24,6 +24,7 @@
   --input-fontSize: calc(var(--fontSize-default) * 0.8125);
   --input-placeholdreColor: #BBBBBB;
 
+  --cardPadding: 15px;
   --sections-gap: 10px;
   --controls-gap: 20px;
 
