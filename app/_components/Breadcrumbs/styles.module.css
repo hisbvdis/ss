@@ -21,7 +21,5 @@
 }
 
 .breadcrumbs__link {
-  /* color: var(--fontColor-light); */
-  /* text-decoration-color: #aaa; */
   color: var(--fontSize-default);
 }

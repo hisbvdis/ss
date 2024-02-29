@@ -1,8 +1,9 @@
 "use client";
 import clsx from "clsx";
+import { useState } from "react";
+// -----------------------------------------------------------------------------
 import { ArrowDownIcon } from "@/app/_icons";
 import styles from "./styles.module.css";
-import { useState } from "react";
 
 
 export default function CollapseList(props:Props) {
@@ -12,26 +13,30 @@ export default function CollapseList(props:Props) {
   if (!items.length) return null;
   return (
     <details open={isOpen} onToggle={() => setIsOpen(!isOpen)}>
-      <summary className={clsx(styles["summary"], items.length > 1 && styles["summary--clickable"], styles["item"])}>
-        <div>
-          <a href={items[0].href} style={{color: "#0088CF", textDecoration: "none"}}>{items[0].label}</a>
-          {isOpen && <p style={{color: "var(--fontColor-lighter)", fontSize: "0.8em"}}>{items[0].comment}</p>}
+      <summary className={clsx(styles["summary"], styles["item"])}>
+        <div className={styles["summary__inner"]}>
+          <a className={styles["link"]} href={items[0].href}>{items[0].label}</a>
+          {items.length > 1 && <ArrowDownIcon fill="#808080"/>}
         </div>
-        {items.length > 1 && <ArrowDownIcon/>}
+        {isOpen && <span className={styles["subtitle"]}>{items[0].comment}</span>}
       </summary>
-      {items.length > 1
-        ? items.slice(1).map((item) => (
-            <div key={item.id} className={styles["item"]}>
-              <a href={item.href} style={{color: "#0088CF", textDecoration: "none"}}>{item.label}</a>
-              <p style={{color: "var(--fontColor-lighter)", fontSize: "0.8em"}}>{item.comment}</p>
-            </div>
-          ))
-        : null
-      }
+      {items.length > 1 ? items.slice(1).map((item) => (
+        <div key={item.id} className={styles["item"]}>
+          <a className={styles["link"]} href={item.href}>{item.label}</a>
+          <p className={styles["subtitle"]}>{item.comment}</p>
+        </div>
+      )) : null}
     </details>
   )
 }
 
 interface Props {
-  items: { id: string; label: string; comment: string, href: string }[];
+  items: Item[];
+}
+
+interface Item {
+  id: string;
+  label: string;
+  comment: string;
+  href: string;
 }
