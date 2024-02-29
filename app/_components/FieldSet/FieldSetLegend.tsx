@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
 import { FieldSetContext } from "./FieldSet";
-import styles from "./FieldSetLegend.module.css";
+import styles from "./styles.module.css";
 
 
 export default function FieldSetLegend(props:Props) {
@@ -13,7 +13,7 @@ export default function FieldSetLegend(props:Props) {
   return (
     <legend
       id={legendId}
-      className={clsx(styles["fieldSetLegend"], className, srOnly && "srOnly")}
+      className={clsx(styles["fieldSet__Legend"], className, srOnly && "srOnly")}
       style={style}
     >
       {children}

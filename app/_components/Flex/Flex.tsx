@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import styles from "./Flex.module.css";
+import styles from "./styles.module.css";
 
 export default function Flex(props:Props) {
   const { gap, direction="row" } = props;

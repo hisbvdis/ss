@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useId, createContext, useState, useRef, useEffect } from "react"
 // -----------------------------------------------------------------------------
 import ControlLabel from "./ControlLabel";
-import "./Control.module.css";
+import "./styles.module.css";
 
 
 export default function Control(props:Props) {

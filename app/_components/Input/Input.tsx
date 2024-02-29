@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { createElement, forwardRef, useContext, useEffect, useRef, useState } from "react";
 // -----------------------------------------------------------------------------
 import { ControlContext } from "@/app/_components/Control";
-import styles from "./Input.module.css";
+import styles from "./styles.module.css";
 
 
 export const Input = forwardRef<HTMLInputElement, Props>(function Input(props, forwardedRef:any) {

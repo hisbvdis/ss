@@ -1,7 +1,7 @@
 // <RequiredInput name={name} required={requiredGroup}/>
 import { useId } from "react";
 // -----------------------------------------------------------------------------
-import styles from "./RequiredInput.module.css";
+import styles from "./styles.module.css";
 
 
 export default function RequiredInput(props:Props) {

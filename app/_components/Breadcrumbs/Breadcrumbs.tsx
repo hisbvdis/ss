@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 // -----------------------------------------------------------------------------
-import styles from "./Breadcrumbs.module.css";
+import styles from "./styles.module.css";
 
 
 export default function Breadcrumbs(props:Props) {

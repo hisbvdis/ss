@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { createContext, useId } from 'react';
 // -----------------------------------------------------------------------------
 import FieldSetLegend from "./FieldSetLegend";
-import styles from "./FieldSet.module.css";
+import styles from "./styles.module.css";
 
 
 export default function FieldSet(props:Props) {

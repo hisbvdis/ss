@@ -1,6 +1,6 @@
 import clsx from "clsx";
 // -----------------------------------------------------------------------------
-import styles from "./Button.module.css";
+import styles from "./styles.module.css";
 
 export default function Button(props: Props) {
   const { type = "button", onClick, tabIndex, disabled } = props;

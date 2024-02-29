@@ -7,7 +7,7 @@ import { Menu } from "@/app/_components/Menu";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
 import { ArrowDownIcon, CloseIcon } from "@/app/_icons";
-import styles from "./Select.module.css";
+import styles from "./styles.module.css";
 
 
 export default function Select(props) {

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
-import "./Menu.css";
+import styles from "./styles.module.css";
 
 
 export default function Menu(props:Props) {
@@ -66,9 +66,9 @@ export default function Menu(props:Props) {
 
   if (!isMenu) return null;
   return (
-    <ul className={clsx("menu", className)} style={style} ref={listRef}>
+    <ul className={clsx(styles["menu"], className)} style={style} ref={listRef}>
       {items?.map(({text, text2, text3, text4}, i) => (
-        <li key={i} className={clsx("menu__item", i === focusIndex && "menu__item--focus")} onPointerDown={handlePointerDown} onPointerEnter={() => setFocusIndex(i)}>
+        <li key={i} className={clsx(styles["menu__item"], i === focusIndex && styles["menu__item--focus"])} onPointerDown={handlePointerDown} onPointerEnter={() => setFocusIndex(i)}>
           <p>{text}</p>
           <p style={{color: "#999", fontSize: "0.95em"}}>{text2}</p>
           <p style={{color: "#999", fontSize: "0.95em"}}>{text3}</p>

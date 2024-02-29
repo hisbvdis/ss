@@ -9,3 +9,13 @@
 .choice__label {
   cursor: pointer;
 }
+
+.choiceGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  padding: 0;
+
+  border: none;
+}

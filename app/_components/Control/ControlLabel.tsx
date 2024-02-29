@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import { useContext } from "react";
 import { ControlContext } from "./Control";
-import styles from "./Control.module.css";
+import styles from "./styles.module.css";
 
 export default function _(props:Props) {
   const controlContext = useContext(ControlContext);

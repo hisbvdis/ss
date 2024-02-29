@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import styles from "./Card.module.css";
+import styles from "./styles.module.css";
 
 export default function _(props: Props) {
   const { className, children, style } = props;

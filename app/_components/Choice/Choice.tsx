@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { RequiredInput } from "@/app/_components/RequiredInput";
 import { useId, useContext, useRef, ReactEventHandler } from "react";
 import { ChoiceGroupContext } from "./ChoiceGroup";
-import styles from "./Choice.module.css";
+import styles from "./styles.module.css";
 
 export const Checkbox = (props:Props) => <Choice {...props} type="checkbox"/>;
 export const Radio = (props:Props) => <Choice {...props} type="radio"/>;

@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { ReactEventHandler, createContext, useContext, useId, useRef } from 'react';
 // -----------------------------------------------------------------------------
 import { ControlContext } from "@/app/_components/Control";
-import styles from "./ChoiceGroup.module.css";
+import styles from "./styles.module.css";
 
 export const CheckboxGroup = (props:Props) => <ChoiceGroup {...props}/>
 export const RadioGroup = (props:Props) => <ChoiceGroup {...props}/>

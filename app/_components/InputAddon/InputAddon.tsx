@@ -1,4 +1,4 @@
-import styles from "./InputAddon.module.css";
+import styles from "./styles.module.css";
 
 
 export default function InputAddon(props:Props) {

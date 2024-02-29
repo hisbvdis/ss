@@ -10,3 +10,8 @@
   align-items: center;
   gap: var(--controls-gap);
 }
+
+.fieldSet__Legend {
+  margin-block-end: 5px;
+  padding: 0;
+}
