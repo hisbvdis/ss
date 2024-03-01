@@ -1,11 +1,11 @@
 "use client";
+import clsx from "clsx";
 import { useContext, useEffect, useRef, useState } from "react";
 // -----------------------------------------------------------------------------
-import { Card } from "@/app/_components/Card/";
 import { ObjectContext } from "../Object";
+import { Card } from "@/app/_components/Card/";
 // -----------------------------------------------------------------------------
 import styles from "./styles.module.css";
-import clsx from "clsx";
 
 
 export default function Description() {
