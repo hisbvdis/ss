@@ -1,6 +1,6 @@
 import ArrowDownIcon from "./ArrowDownIcon";
 import CloseIcon from "./CloseIcon";
-import MapPin from "./MapPinIcon";
+import MapPin from "./MapPin.icon";
 import SortAsc from "./SortAsc";
 import SearchIcon from "./SearchIcon";
 import BinIcon from "./BinIcon";

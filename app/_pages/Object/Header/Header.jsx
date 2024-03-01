@@ -2,10 +2,10 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
+import { ObjectContext } from "../Object";
 import { Flex } from "@/app/_components/Flex";
 import { Card } from "@/app/_components/Card";
 import { DelBtn } from "@/app/_components/DelBtn";
-import { ObjectContext } from "../Object";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 // -----------------------------------------------------------------------------
 import { deleteObject } from "@/app/(router)/api/objects/requests";
@@ -22,7 +22,7 @@ export default function Header(props) {
           <Breadcrumbs size="small" items={[
             {label: "Каталог", href: "/catalog"},
             {label: `${state.city?.name ?? ""}`, href: `/catalog?city=${state.city?.id}`},
-            {label: `${state.sections?.[0]?.name ?? ""}`, href: `/catalog?city=${state.city?.id}&section=${state.sections?.[0]?.id}`}
+            {label: `${state.sections?.[0]?.name_plural ?? ""}`, href: `/catalog?city=${state.city?.id}&section=${state.sections?.[0]?.id}`}
           ]}/>
           <a href={`/object/${state.id}/edit`} style={{marginInlineStart: "auto"}}>Ред</a>
           <DelBtn id={state.id} delFunc={deleteObject} redirectPath="/">X</DelBtn>

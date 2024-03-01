@@ -58,6 +58,7 @@ model option {
   id      Int                @id @default(autoincrement())
   name    String
   spec_id Int?
+  order   Int
   spec    spec?              @relation("option_spec", fields: [spec_id], references: [id], onDelete: Cascade)
   objects object_on_option[] @relation("object_option")
 }

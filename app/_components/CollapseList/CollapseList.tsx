@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import { useState } from "react";
 // -----------------------------------------------------------------------------
-import { ArrowDownIcon } from "@/app/_icons";
+import { ArrowDownIcon } from "@/app/_components/Icons";
 import styles from "./styles.module.css";
 
 

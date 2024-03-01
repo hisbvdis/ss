@@ -7,7 +7,7 @@ export async function GET(_, {params}) {
       id: Number(params.id)
     },
     include: {
-      options: {orderBy: {id: "asc"}}
+      options: {orderBy: {order: "asc"}}
     },
   });
   const processed = specsReadProcessing(dbData);

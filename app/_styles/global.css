@@ -75,7 +75,7 @@ input {
 }
 
 .page {
-  padding-block-start: 10px;
+  margin-block-start: 10px;
 }
 
 .srOnly:not(:focus):not(:active):not(:focus-within) {

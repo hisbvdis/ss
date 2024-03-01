@@ -2,9 +2,9 @@ import Link from "next/link"
 import Image from "next/image"
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
-import { MapPin } from "@/app/_icons";
 import { CatalogContext } from "../Catalog";
 import { Card } from "@/app/_components/Card";
+import { MapPin } from "@/app/_components/Icons";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 // -----------------------------------------------------------------------------
 import { useManageSearchParams } from "@/app/_utils/useManageSearchParams";
@@ -20,16 +20,16 @@ export default function Results(props) {
         <Breadcrumbs size="small" style={{marginBlockEnd: "5px"}} items={[
           {label: "Каталог", href: city || section ? "/catalog" : null},
           {label: city?.name ?? "", href: section?.id ? `/catalog?city=${city?.id}` : null},
-          {label: section?.name ?? ""}
+          {label: section?.name_plural ?? ""}
         ]}/>
         <h1 style={{fontSize: "23rem", fontWeight: "400"}}>
-          <span>{section?.name ?? "Все спортивные объекты"} {searchParams?.city && city ? ` в ${city?.name_preposition}` : null}</span>
+          <span>{section?.name_plural ?? "Все спортивные объекты"} {searchParams?.city && city ? ` в ${city?.name_preposition}` : null}</span>
           <sup style={{fontSize: "0.5em"}}>{searchResults?.length}</sup>
         </h1>
       </Card.Heading>
       <Card.Section style={{display: "flex", justifyContent: "space-between"}}>
         <p>Сортировка: По дате добавления</p>
-        <Link href={manageSearchParams("set", "map", "true")} style={{display: "flex", alignItems: "center", gap: "5px"}}>
+        <Link href={manageSearchParams(searchParams.map ? "delete" : "set", "map", "true")} style={{display: "flex", alignItems: "center", gap: "5px"}}>
           <MapPin/>
           <span>Карта</span>
         </Link>

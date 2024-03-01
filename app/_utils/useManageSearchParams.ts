@@ -3,7 +3,8 @@ import { useSearchParams } from "next/navigation";
 
 export const useManageSearchParams = () => {
   const searchParams = useSearchParams();
-  return (action:string, key:string, value) => {
+
+  return (action: Actions, key:string, value:string | string[]) => {
     value = String(value);
     let urlSearchParams = new URLSearchParams(searchParams);
     switch (action) {
@@ -36,4 +37,11 @@ export const useManageSearchParams = () => {
     if (!value) urlSearchParams.delete(key);
     return decodeURIComponent(`?${urlSearchParams}`) || "?";
   }
+}
+
+enum Actions {
+  set = "set",
+  append = "append",
+  delete = "delete",
+  leaveOnly = "leaveOnly",
 }
