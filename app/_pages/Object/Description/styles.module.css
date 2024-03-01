@@ -1,0 +1,14 @@
+.desc {
+
+}
+
+.desc__content {
+  white-space: pre-wrap;
+}
+
+.desc__content--short {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
