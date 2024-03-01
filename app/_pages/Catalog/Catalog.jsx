@@ -21,7 +21,7 @@ export default function Catalog(props) {
 
   return (
     <CatalogContext.Provider value={{searchParams, objectCounts, searchResults, manageSearchParams, sectionList, router, section, city}}>
-      <div className={clsx("catalog", searchParams?.map ? "" : "container")}>
+      <div className={clsx("catalog", "page", !searchParams?.map && "container", searchParams?.map && "catalog--map")}>
         <aside className="catalog__aside">
           <Card>
             <Control>

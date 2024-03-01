@@ -16,16 +16,14 @@ export default async function CatalogPage({searchParams}) {
   return (
     <>
       <SearchPanel />
-      <div className="container  page">
-        <Catalog
-          searchParams={searchParams}
-          city={city}
-          sectionList={sectionList}
-          searchResults={searchResults}
-          section={section}
-          objectCounts={objectCounts}
-        />
-      </div>
+      <Catalog
+        searchParams={searchParams}
+        city={city}
+        sectionList={sectionList}
+        searchResults={searchResults}
+        section={section}
+        objectCounts={objectCounts}
+      />
     </>
   );
 }
