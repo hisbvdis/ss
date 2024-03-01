@@ -1,9 +1,7 @@
 "use client";
-import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 // -----------------------------------------------------------------------------
 import { ObjectEditContext } from "../ObjectEdit";
-import { Flex } from "@/app/_components/Flex";
 import { Card } from "@/app/_components/Card";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
@@ -12,11 +10,12 @@ import { Control } from "@/app/_components/Control";
 import { Checkbox } from "@/app/_components/Choice";
 import { Map, Marker } from "@/app/_components/Map";
 // -----------------------------------------------------------------------------
+import { setInheritedData } from "../";
+import { handleQuotes } from "@/app/_utils/handleQuotes";
 import { getCitiesByFilters } from "@/app/(router)/api/cities/requests";
 import { getObjectsByFilters } from "@/app/(router)/api/objects/requests";
 import { queryAddressForCoord, queryCoodFromAddress } from "@/app/_utils/nominatim";
-import { handleQuotes } from "@/app/_utils/handleQuotes";
-import { setInheritedData } from "../";
+import styles from "./styles.module.css";
 
 
 export default function Address(props) {
@@ -78,8 +77,9 @@ export default function Address(props) {
   }, [state.coord_inherit])
 
   return (
-    <Card heading="Адрес и местоположение" className="mt10">
-      <Flex gap="15px">
+    <Card className="mt10">
+      <Card.Heading>Адрес и местоположение</Card.Heading>
+      <Card.Section className={styles["objectEdit__content"]}>
         <div className="objectEdit__address">
           <Control>
             <Control.Label>Город</Control.Label>
@@ -164,7 +164,7 @@ export default function Address(props) {
             />
           </Map>
         </div>
-      </Flex>
+      </Card.Section>
     </Card>
   )
 }

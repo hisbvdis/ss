@@ -73,11 +73,12 @@ model spec {
 }
 
 model section {
-  id          Int                 @id @default(autoincrement())
-  name        String              @unique
-  object_type String
-  specs       section_on_spec[]   @relation("section_spec")
-  objects     object_on_section[] @relation("object_section")
+  id            Int                 @id @default(autoincrement())
+  name_singular String              @unique
+  name_plural   String              @unique
+  object_type   String
+  specs         section_on_spec[]   @relation("section_spec")
+  objects       object_on_section[] @relation("object_section")
 }
 
 // ===========================================================================
@@ -90,6 +91,7 @@ model object_link {
   value     String
   comment   String?
   object    object  @relation("object_link", fields: [object_id], references: [id], onDelete: Cascade)
+
   @@unique([object_id, order])
 }
 
@@ -100,17 +102,19 @@ model object_phone {
   value     String
   comment   String?
   object    object  @relation("object_phone", fields: [object_id], references: [id], onDelete: Cascade)
+
   @@unique([object_id, order])
 }
 
 model object_schedule {
-  id        Int    @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   object_id Int
   day_num   Int
   time      String?
   from      Int?
   to        Int?
-  object    object @relation("object_schedule", fields: [object_id], references: [id], onDelete: Cascade)
+  object    object  @relation("object_schedule", fields: [object_id], references: [id], onDelete: Cascade)
+
   @@unique([object_id, day_num])
 }
 

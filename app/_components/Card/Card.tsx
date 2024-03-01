@@ -5,11 +5,11 @@ import styles from "./styles.module.css";
 
 export default function Card(props:Props) {
   const { className, children, style } = props;
-  const { heading } = props;
+  // const { heading } = props;
 
   return (
     <section className={clsx(styles.card, className)} style={style}>
-      {heading ? <Card.Heading>{heading}</Card.Heading> : null}
+      {/* {heading ? <Card.Heading>{heading}</Card.Heading> : null} */}
       {children}
     </section>
   )

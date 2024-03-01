@@ -78,9 +78,9 @@ export async function POST(req) {
   const optionsDeleted = init.options?.filter((initOption) => !state.options.some((stateOption) => initOption.id === stateOption.id));
   const sectionsAdded = state.sections?.filter((stateSection) => !init?.sections?.some((initSection) => stateSection.id === initSection.id));
   const sectionsDeleted = init.sections?.filter((initSection) => !state.sections.some((stateSection) => initSection.id === stateSection.id));
-  const scheduleAdded = state.schedule.filter((stateSchedule) => init.schedule.some((initSchedule) => stateSchedule.day_num === initSchedule.day_num && !initSchedule.time && stateSchedule.time));
-  const scheduleChanged = state.schedule.filter((stateSchedule) => init.schedule.some((initSchedule) => stateSchedule.day_num === initSchedule.day_num && initSchedule.id && stateSchedule.time && stateSchedule.time !== initSchedule.time));
-  const scheduleDeleted = init.schedule.filter((initSchedule) => state.schedule.some((stateSchedule) => initSchedule.day_num === stateSchedule.day_num && initSchedule.time && !stateSchedule.time));
+  const scheduleAdded = state.schedule.filter((stateDay) => init.schedule.some((initDay) => stateDay.day_num === initDay.day_num && !initDay.time && stateDay.time));
+  const scheduleChanged = state.schedule.filter((stateDay) => init.schedule.some((initDay) => stateDay.day_num === initDay.day_num && initDay.id && stateDay.time && stateDay.time !== initDay.time));
+  const scheduleDeleted = init.schedule.filter((initDay) => state.schedule.some((stateDay) => initDay.day_num === stateDay.day_num && initDay.time && !stateDay.time));
   const photosAdded = state.photos?.filter((statePhoto) => !init?.photos?.some((initPhoto) => statePhoto.localId === initPhoto.localId));
   const photosDeleted = init.photos?.filter((initPhoto) => !state.photos.some((statePhoto) => initPhoto.localId === statePhoto.localId));
   const photosMoved = state.photos?.filter((statePhoto) => init.photos?.some((initPhoto) => statePhoto.localId === initPhoto.localId && statePhoto.order !== initPhoto.order));
@@ -131,7 +131,7 @@ export async function POST(req) {
         deleteMany: sectionsDeleted?.length ? {section_id: {in: sectionsDeleted.map(({id}) => id)}} : undefined,
       },
       schedule: {
-        create: scheduleAdded?.length ? scheduleAdded.map((day) => ({...day, isWork: undefined})) : undefined,
+        create: scheduleAdded?.length ? scheduleAdded.map((day) => ({...day, id: undefined, object_id: undefined, isWork: undefined})) : undefined,
         update: scheduleChanged?.length ? scheduleChanged.map((day) => ({where: {id: day.id}, data: {...day, id: undefined, object_id: undefined, isWork: undefined}})) : undefined,
         deleteMany: scheduleDeleted?.length ? {id: {in: scheduleDeleted.map(({id}) => id)}} : undefined,
       },

@@ -14,9 +14,9 @@ export default function Categories(props) {
         <Card.Section>
           <ul style={{listStyle: "none", paddingInlineStart: 0}}>
             {/* <Link href={manageSearchParams("set", "section", "all")}>Все разделы</Link> */}
-            {sectionList?.map(({id, name}) => (
+            {sectionList?.map(({id, name_plural}) => (
               <li key={id}>
-                <Link href={manageSearchParams("set", "section", id)}>{name}</Link>
+                <Link href={manageSearchParams("set", "section", id)}>{name_plural}</Link>
               </li>
             ))}
           </ul>

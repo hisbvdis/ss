@@ -27,13 +27,17 @@ export default function Contacts(props) {
         </div>
       </Card.Section>
 
-      <Card.Section style={{padding: 0}}>
-        <CollapseList items={state.phones.map(({id, value, comment}) => ({id, href: `tel:${Array.from(value.matchAll(/[+\d]/g)).join("")}`, label: value, comment}))}/>
-      </Card.Section>
+      {state.phones.length ?
+        <Card.Section style={{padding: 0}}>
+          <CollapseList items={state.phones.map(({id, value, comment}) => ({id, href: `tel:${Array.from(value.matchAll(/[+\d]/g)).join("")}`, label: value, comment}))}/>
+        </Card.Section>
+      : null}
 
-      <Card.Section style={{padding: 0}}>
-        <CollapseList items={state.links.map(({id, value, comment}) => ({id, href: value, label: value.match(/^(https?:\/\/)?(www.)?(.*?(?=\/))/)?.[3], comment}))}/>
-      </Card.Section>
+      {state.links.length ?
+        <Card.Section style={{padding: 0}}>
+          <CollapseList items={state.links.map(({id, value, comment}) => ({id, href: value, label: value.match(/^(https?:\/\/)?(www.)?(.*?(?=\/))/)?.[3], comment}))}/>
+        </Card.Section>
+      : null}
 
       <Card.Section style={{blockSize: "300px"}}>
         <Map center={[state.coord_lat, state.coord_lon]} zoom={16} zoomControl={false}>

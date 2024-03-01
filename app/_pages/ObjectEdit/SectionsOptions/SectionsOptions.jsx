@@ -62,7 +62,7 @@ export default function Sections(props) {
           <FieldSet key={section.id}>
             <FieldSet.Legend>
               <Button onClick={() => handleSections.delete(section)}>X</Button>
-              <span>{section.name}</span>
+              <span>{section.name_plural}</span>
             </FieldSet.Legend>
             <Flex>
               {section?.specs?.map(({spec}) => (
@@ -86,8 +86,8 @@ export default function Sections(props) {
               ))}
             </Flex>
           </FieldSet>
-          ))}
-        </Card.Section>
+        ))}
+      </Card.Section>
       <Card.Section>
         <Select
           isAutocomplete
@@ -97,7 +97,7 @@ export default function Sections(props) {
           requestItemsOnFirstTouch={async () =>
             (await getSectionsByFilters({objectType: state.type}))
               .map((section) => ({
-                id: section.id, text: section.name, data: section
+                id: section.id, text: section.name_plural, data: section
               }))
           }
         />

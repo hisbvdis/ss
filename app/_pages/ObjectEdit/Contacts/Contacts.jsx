@@ -1,11 +1,14 @@
 "use client";
 import { useContext } from "react";
+// -----------------------------------------------------------------------------
+import { Card } from "@/app/_components/Card";
+import { Flex } from "@/app/_components/Flex";
 import { Input } from "@/app/_components/Input";
 import { ObjectEditContext } from "../ObjectEdit";
 import { Button } from "@/app/_components/Button";
 import { FieldSet } from "@/app/_components/FieldSet";
-import { Card } from "@/app/_components/Card";
-import { Flex } from "@/app/_components/Flex";
+// -----------------------------------------------------------------------------
+import styles from "./styles.module.css";
 
 
 export default function Contacts(props) {
@@ -44,7 +47,7 @@ export default function Contacts(props) {
   return (
     <Card className="mt10">
       <Card.Heading>Контакты</Card.Heading>
-      <Flex gap="20px">
+      <Card.Section className={styles["contacts__content"]}>
         <FieldSet style={{flexBasis: "50%"}}>
           <FieldSet.Legend>
             <span>Телефоны</span>
@@ -105,7 +108,7 @@ export default function Contacts(props) {
             ))}
           </Flex>
         </FieldSet>
-      </Flex>
+      </Card.Section>
     </Card>
   )
 }

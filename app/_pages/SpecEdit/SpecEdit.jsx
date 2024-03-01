@@ -20,10 +20,12 @@ export default function SpecEdit(props) {
   useEffect(() => setState(props.init), [props.init]);
   const router = useRouter();
 
-  const handleStateChange = (e) => {
-    setState((state) => {
-      state[e.target.name] = e.target.value;
-    });
+  const handleStateChange = {
+    value: (e) => {
+      setState((state) => {
+        state[e.target.name] = e.target.value;
+      });
+    }
   }
 
   const handleOptions = {
@@ -60,54 +62,58 @@ export default function SpecEdit(props) {
     <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit>
       <Card className="mt10">
         <Card.Heading>Название и Тип</Card.Heading>
-        <Control>
-          <Control.Label>ID</Control.Label>
-          <Input value={state.id} disabled />
-        </Control>
-        <Control className="mt20">
-          <Control.Label>Название (служебное)</Control.Label>
-          <Input
-            name="name_service"
-            value={state.name_service}
-            onChange={handleStateChange.value}
-            required
-          />
-        </Control>
-        <Control className="mt20">
-          <Control.Label>Название (в поиске и редактировании)</Control.Label>
-          <Input
-            name="name_filter"
-            value={state.name_filter}
-            onChange={handleStateChange.value}
-            required
-          />
-        </Control>
-        <Control className="mt20">
-          <Control.Label>Тип объектов</Control.Label>
-          <RadioGroup
-            name="object_type"
-            valueToCompare={state.object_type}
-            onChange={handleStateChange.value}
-          >
-            <Radio value="org">Организации</Radio>
-            <Radio value="place">Места</Radio>
-          </RadioGroup>
-        </Control>
+        <Card.Section>
+          <Control>
+            <Control.Label>ID</Control.Label>
+            <Input value={state.id} disabled />
+          </Control>
+          <Control className="mt20">
+            <Control.Label>Название (служебное)</Control.Label>
+            <Input
+              name="name_service"
+              value={state.name_service}
+              onChange={handleStateChange.value}
+              required
+            />
+          </Control>
+          <Control className="mt20">
+            <Control.Label>Название (в поиске и редактировании)</Control.Label>
+            <Input
+              name="name_filter"
+              value={state.name_filter}
+              onChange={handleStateChange.value}
+              required
+            />
+          </Control>
+          <Control className="mt20">
+            <Control.Label>Тип объектов</Control.Label>
+            <RadioGroup
+              name="object_type"
+              valueToCompare={state.object_type}
+              onChange={handleStateChange.value}
+            >
+              <Radio value="org">Организации</Radio>
+              <Radio value="place">Места</Radio>
+            </RadioGroup>
+          </Control>
+        </Card.Section>
       </Card>
 
       <Card className="mt10">
         <Card.Heading>Страница "Редактировать"</Card.Heading>
-        <Control>
-          <Control.Label>Элемент выбора опции</Control.Label>
-          <RadioGroup
-            name="control_type"
-            valueToCompare={state.control_type}
-            onChange={handleStateChange.value}
-          >
-            <Radio value="checkbox">Checkbox</Radio>
-            <Radio value="radio">Radio</Radio>
-          </RadioGroup>
-        </Control>
+        <Card.Section>
+          <Control>
+            <Control.Label>Элемент выбора опции</Control.Label>
+            <RadioGroup
+              name="control_type"
+              valueToCompare={state.control_type}
+              onChange={handleStateChange.value}
+            >
+              <Radio value="checkbox">Checkbox</Radio>
+              <Radio value="radio">Radio</Radio>
+            </RadioGroup>
+          </Control>
+        </Card.Section>
       </Card>
 
       <Card className="mt10">
@@ -115,15 +121,17 @@ export default function SpecEdit(props) {
           <span>Опции</span>
           <Button onClick={handleOptions.add}>+</Button>
         </Card.Heading>
-        <ul style={{paddingInlineStart: 0}}>
-          {state.options?.map((opt) => (
-            <li key={opt.localId} style={{display: "flex"}}>
-              <Button onClick={() => handleOptions.delete(opt.localId)} tabIndex="-1">X</Button>
-              <InputAddon>{opt.id}</InputAddon>
-              <Input value={opt.name} onChange={(e) => handleOptions.change(e, opt.localId)} required/>
-            </li>
-          ))}
-        </ul>
+        <Card.Section>
+          <ul style={{paddingInlineStart: 0}}>
+            {state.options?.map((opt) => (
+              <li key={opt.localId} style={{display: "flex"}}>
+                <Button onClick={() => handleOptions.delete(opt.localId)} tabIndex="-1">X</Button>
+                <InputAddon>{opt.id}</InputAddon>
+                <Input value={opt.name} onChange={(e) => handleOptions.change(e, opt.localId)} required/>
+              </li>
+            ))}
+          </ul>
+        </Card.Section>
       </Card>
 
       <BottomPanel

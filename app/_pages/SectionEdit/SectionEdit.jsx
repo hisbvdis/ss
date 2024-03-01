@@ -23,10 +23,12 @@ export default function SectionEdit(props) {
   useEffect(() => setState(props.init), [props.init]);
   const router = useRouter();
 
-  const handleStateChange = (e) => {
-    setState((state) => {
-      state[e.target.name] = e.target.value;
-    });
+  const handleStateChange = {
+    value: (e) => {
+      setState((state) => {
+        state[e.target.name] = e.target.value;
+      });
+    }
   }
 
   const handleSpecs = {
@@ -58,52 +60,65 @@ export default function SectionEdit(props) {
     <Form onSubmit={handleFormSubmit} noEnterSubmit ctrlEnterSubmit>
       <Card className="mt10">
         <Card.Heading>Название и Тип</Card.Heading>
-        <Control>
-          <Control.Label>id</Control.Label>
-          <Input value={state.id} disabled/>
-        </Control>
-        <Control className="mt20">
-          <Control.Label>Название (множ. число)</Control.Label>
-          <Input
-            name="name"
-            value={state.name}
-            onChange={handleStateChange.value}
-            required
-          />
-        </Control>
-        <Control className="mt20">
-          <Control.Label>Тип объектов</Control.Label>
-          <RadioGroup
-            name="object_type"
-            valueToCompare={state.object_type}
-            onChange={handleStateChange.value}
-          >
-            <Radio value="org">Организация</Radio>
-            <Radio value="place">Место</Radio>
-          </RadioGroup>
-        </Control>
+        <Card.Section>
+          <Control>
+            <Control.Label>id</Control.Label>
+            <Input value={state.id} disabled/>
+          </Control>
+          <Control className="mt20">
+            <Control.Label>Название (множ. число)</Control.Label>
+            <Input
+              name="name_plural"
+              value={state.name_plural}
+              onChange={handleStateChange.value}
+              required
+            />
+          </Control>
+          <Control className="mt20">
+            <Control.Label>Название (ед. число)</Control.Label>
+            <Input
+              name="name_singular"
+              value={state.name_singular}
+              onChange={handleStateChange.value}
+              required
+            />
+          </Control>
+          <Control className="mt20">
+            <Control.Label>Тип объектов</Control.Label>
+            <RadioGroup
+              name="object_type"
+              valueToCompare={state.object_type}
+              onChange={handleStateChange.value}
+            >
+              <Radio value="org">Организация</Radio>
+              <Radio value="place">Место</Radio>
+            </RadioGroup>
+          </Control>
+        </Card.Section>
       </Card>
 
       <Card className="mt10">
         <Card.Heading>Характеристики раздела</Card.Heading>
-        <Select
-          isAutocomplete
-          onChange={handleSpecs.add}
-          placeholder="Добавить характеристику"
-          requestItemsOnFirstTouch={async () =>
-            (await getSpecsByFilters({objectType: state.type}))
-              ?.map((spec) => ({id: spec.id, text: spec.name_service, data: spec}))
-          }
-        />
-        <ul className="mt20" style={{paddingInlineStart: 0}}>
-          {state?.specs?.map(({id, name_service}) => (
-            <li key={id} style={{display: "flex"}}>
-              <Button onClick={() => handleSpecs.delete(id)}>X</Button>
-              <InputAddon>{id}</InputAddon>
-              <Link href={`/admin/specs/${id}`}>{name_service}</Link>
-            </li>
-          ))}
-        </ul>
+        <Card.Section>
+          <Select
+            isAutocomplete
+            onChange={handleSpecs.add}
+            placeholder="Добавить характеристику"
+            requestItemsOnFirstTouch={async () =>
+              (await getSpecsByFilters({objectType: state.type}))
+                ?.map((spec) => ({id: spec.id, text: spec.name_service, data: spec}))
+            }
+          />
+          <ul className="mt20" style={{paddingInlineStart: 0}}>
+            {state?.specs?.map(({id, name_service}) => (
+              <li key={id} style={{display: "flex"}}>
+                <Button onClick={() => handleSpecs.delete(id)}>X</Button>
+                <InputAddon>{id}</InputAddon>
+                <Link href={`/admin/specs/${id}`}>{name_service}</Link>
+              </li>
+            ))}
+          </ul>
+        </Card.Section>
       </Card>
 
       <BottomPanel

@@ -14,7 +14,8 @@ export async function GET(req) {
 export async function POST(req) {
   const { state, init } = await req.json();
   const fields = {
-    name: state.name || null,
+    name_plural: state.name_plural || null,
+    name_singular: state.name_singular || null,
     object_type: state.object_type || null,
   }
   const specsAdded = state.specs?.filter((stateSpec) => !init.specs?.some((initSpec) => stateSpec.id === initSpec.id));

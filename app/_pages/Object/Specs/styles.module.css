@@ -1,0 +1,27 @@
+.specs__sectionName {
+  color: var(--fontColor);
+  text-decoration: none;
+}
+
+.specs__sectionName:hover {
+  text-decoration: underline;
+}
+
+.specs__sectionName + .specs__spec {
+  margin-block-start: 10px;
+}
+
+.specs__specName {
+  flex-basis: 100px;
+
+  color: var(--fontColor-lighter);
+}
+
+.specs__optionLink {
+  color: var(--fontColor);
+  text-decoration: none;
+}
+
+.specs__optionLink:hover {
+  text-decoration: underline;
+}

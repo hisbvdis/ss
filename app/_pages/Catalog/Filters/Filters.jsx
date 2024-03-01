@@ -9,12 +9,12 @@ import { Checkbox, CheckboxGroup } from "@/app/_components/Choice";
 
 
 export default function Filters(props) {
-  const { searchParams, searchResults, objectCounts, manageSearchParams, section } = useContext(CatalogContext);
+  const { searchParams, objectCounts, manageSearchParams, section } = useContext(CatalogContext);
 
   return (
     <Card className="object__filters  mt10">
       <Card.Heading style={{display: "flex", alignItems: "center", gap: "10px"}}>
-        <span style={{marginInlineEnd: "auto"}}>{section?.name}</span>
+        <span style={{marginInlineEnd: "auto"}}>{section?.name_plural}</span>
         {searchParams.options
           ? <Link href={manageSearchParams("delete", "options")} style={{display: "flex", alignItems: "center"}}>
               <BinIcon width="18" height="18"/>

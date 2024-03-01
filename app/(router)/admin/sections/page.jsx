@@ -16,10 +16,10 @@ export default async function SectionListPage(props) {
       <Card className="mt10">
         <Link href="/admin/sections/add">Создать</Link>
         <ul style={{listStyle: "none", paddingInlineStart: 0}}>
-          {sections.map(({id, name}) => (
+          {sections.map(({id, name_plural}) => (
             <li key={id} style={{display: "flex", gap: "10px"}}>
               <DelBtn id={id} delFunc={deleteSectionById}/>
-              <Link href={`/admin/sections/${id}`}>{name}</Link>
+              <Link href={`/admin/sections/${id}`}>{name_plural}</Link>
             </li>
           ))}
         </ul>

@@ -59,6 +59,6 @@ export async function deleteObject(id) {
 export async function getEmptyObject() {
   return {
     status: "works",
-    schedule: Array(7).fill({}),
+    schedule: Array(7).fill().map((_,i) => ({day_num: i})),
   }
 }

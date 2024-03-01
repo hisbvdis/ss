@@ -48,8 +48,3 @@
 .select__btn--arrow {
   pointer-events: none;
 }
-
-.select__icon {
-  inline-size: 18px;
-  block-size: 18px;
-}

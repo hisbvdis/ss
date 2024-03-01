@@ -10,8 +10,11 @@ export default function Description(props) {
   const { state, handleStateChange } = useContext(ObjectEditContext);
 
   return (
-    <Card heading="Описание" className="mt10">
-      <Textarea name="description" value={state.description} onChange={handleStateChange.value} maxLength="1000"/>
+    <Card className="mt10">
+      <Card.Heading>Описание</Card.Heading>
+      <Card.Section>
+        <Textarea name="description" value={state.description} onChange={handleStateChange.value} maxLength="1000"/>
+      </Card.Section>
     </Card>
   )
 }

@@ -149,9 +149,6 @@ export default function Select(props) {
         {isAutocomplete ? null :
           <Button className={clsx(styles["select__btn"], styles["select__btn--arrow"])} disabled={disabled} tabIndex={-1}>
             <ArrowDownIcon
-              className={styles["select__icon"]}
-              width="15"
-              height="15"
               style={{fill: disabled && "var(--disabled-fontColor)"}}
             />
           </Button>
@@ -159,7 +156,6 @@ export default function Select(props) {
         {isAutocomplete && value ?
           <Button className={styles["select__btn"]} onClick={handleClearBtnClick} disabled={disabled}>
             <CloseIcon
-              className={styles["select__icon"]}
               width="15"
               height="15"
               style={{fill: disabled && "var(--disabled-fontColor)"}}

@@ -1,0 +1,4 @@
+.contacts__content {
+  display: flex;
+  gap: 20px;
+}
