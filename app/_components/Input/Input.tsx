@@ -59,7 +59,7 @@ export const Textarea = (props:Props) => <Input {...props} type="textarea"/>
 
 interface Props {
   name?: string;
-  value?: string;
+  value?: string | number;
   required?: boolean;
   id?: string;
   type?: "text" | "textarea";
@@ -76,5 +76,5 @@ interface Props {
   onBlurIfChanged?: React.FocusEventHandler;
   onClick?: React.MouseEventHandler;
   onKeyDown?: React.KeyboardEventHandler;
-  maxLength: string;
+  maxLength?: string;
 }

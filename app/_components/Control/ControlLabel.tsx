@@ -21,9 +21,9 @@ export default function _(props:Props) {
 }
 
 interface Props {
-  id:string;
-  className: string;
-  style: React.CSSProperties;
-  children: React.ReactNode;
-  srOnly: boolean;
+  id?:string;
+  className?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+  srOnly?: boolean;
 }

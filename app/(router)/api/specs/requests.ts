@@ -1,6 +1,7 @@
 "use server";
 import { revalidateTag } from "next/cache";
 import { spec } from "@prisma/client";
+import { ISpec } from "@/app/_types/types";
 
 export async function getSpecsByFilters(filtersObj={}): Promise<spec[]> {
   const filters = Object.entries(filtersObj).map(([name, value]) => `${name}=${value}`).join("&");
@@ -13,7 +14,7 @@ export async function getSpecsByFilters(filtersObj={}): Promise<spec[]> {
   return data;
 }
 
-export async function getSpecById(id:string): Promise<spec> {
+export async function getSpecById(id:string): Promise<ISpec> {
   const res = await fetch(`http://localhost:3000/api/specs/${id}`, {
     method: "GET",
     next: { tags: ["specs"] },
@@ -23,7 +24,7 @@ export async function getSpecById(id:string): Promise<spec> {
   return data;
 }
 
-export async function upsertSpec(state:spec, init:spec): Promise<spec> {
+export async function upsertSpec(state:ISpec, init:ISpec): Promise<spec> {
   const res = await fetch("http://localhost:3000/api/specs", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
@@ -36,7 +37,7 @@ export async function upsertSpec(state:spec, init:spec): Promise<spec> {
   return data;
 }
 
-export async function deleteSpecById(id:string): Promise<string> {
+export async function deleteSpecById(id:number): Promise<spec> {
   const res = await fetch(`http://localhost:3000/api/specs/${id}`, {
     method: "DELETE",
     next: { tags: ["specs"] },
@@ -47,8 +48,10 @@ export async function deleteSpecById(id:string): Promise<string> {
   return data;
 }
 
-export async function getEmptySpec() {
+export async function getEmptySpec(): Promise<ISpec> {
   return {
+    name_service: "",
+    name_filter: "",
     object_type: "org",
     control_type: "checkbox",
   }

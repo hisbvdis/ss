@@ -49,17 +49,17 @@ function Choice(props:Props) {
 }
 
 interface Props {
-  type: "radio" | "checkbox";
-  name: string;
+  type?: "radio" | "checkbox";
   value: string;
-  valueToCompare: string;
-  arrayToCompare: any[];
-  checked: boolean;
-  onChange: ReactEventHandler;
-  required: boolean;
-  disabled: boolean;
-  className: string;
-  style: React.CSSProperties;
-  children: React.ReactNode;
-  tabIndex: number;
+  name?: string;
+  valueToCompare?: string;
+  arrayToCompare?: any[];
+  checked?: boolean;
+  onChange?: ReactEventHandler;
+  required?: boolean;
+  disabled?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+  tabIndex?: number;
 }

@@ -4,7 +4,7 @@ import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 import { getEmptySpec, getSpecById } from "@/app/(router)/api/specs/requests";
 
 
-export default async function SpecEditPage({params}) {
+export default async function SpecEditPage({params}:{params: {id: string}}) {
   const spec = (params.id === "add") ? await getEmptySpec() : await getSpecById(params.id);
 
   return (

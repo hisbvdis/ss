@@ -1,7 +1,7 @@
 "use client";
-import { useEffect } from "react";
-import { useImmer } from "use-immer";
+import { produce } from "immer";
 import { useRouter } from "next/navigation";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 // -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card";
 import { Form } from "@/app/_components/Form";
@@ -13,42 +13,43 @@ import { InputAddon } from "@/app/_components/InputAddon";
 import { Radio, RadioGroup } from "@/app/_components/Choice";
 // -----------------------------------------------------------------------------
 import { upsertSpec, deleteSpecById } from "@/app/(router)/api/specs/requests";
+import { ISpec } from "@/app/_types/types";
 
 
-export default function SpecEdit(props) {
-  const [ state, setState ] = useImmer(props.init);
+export default function SpecEdit(props:{init: ISpec}) {
+  const [ state, setState ] = useState(props.init);
   useEffect(() => setState(props.init), [props.init]);
   const router = useRouter();
 
   const handleStateChange = {
-    value: (e) => {
-      setState((state) => {
-        state[e.target.name] = e.target.value;
-      });
+    value: (e:React.ChangeEvent<HTMLInputElement>) => {
+      setState(produce(state, (draft) => {
+        draft[e.target.name] = e.target.value;
+      }));
     }
   }
 
   const handleOptions = {
     add: () => {
-      setState((state) => {
-        if (!state.options) state.options = [];
-        state.options.push({name: "", localId: crypto.randomUUID()});
-      })
+      setState(produce(state, (draft) => {
+        if (!draft.options) draft.options = [];
+        draft.options.push({name: "", order: draft.options.length, localId: crypto.randomUUID()});
+      }))
     },
-    change: (e, localId) => {
-      setState((state) => {
-        const option = state.options.find((option) => option.localId === localId);
-        option.name = e.target.value;
-      });
+    change: (e:React.ChangeEvent<HTMLInputElement>, localId:string) => {
+      setState(produce(state, (draft) => {
+        const option = draft.options?.find((option) => option.localId === localId);
+        if (option) option.name = e.target.value;
+      }))
     },
-    delete: (localId) => {
-      setState((state) => {
-        state.options = state.options.filter((option) => option.localId !== localId);
-      });
+    delete: (localId:string) => {
+      setState(produce(state, (draft) => {
+        draft.options = draft.options?.filter((option) => option.localId !== localId);
+      }));
     }
   }
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e:SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     e.preventDefault();
     const { id } = await upsertSpec(state, props.init);
     if (e.nativeEvent.submitter?.dataset?.leavePage) {
@@ -125,7 +126,7 @@ export default function SpecEdit(props) {
           <ul style={{paddingInlineStart: 0}}>
             {state.options?.map((opt) => (
               <li key={opt.localId} style={{display: "flex"}}>
-                <Button onClick={() => handleOptions.delete(opt.localId)} tabIndex="-1">X</Button>
+                <Button onClick={() => handleOptions.delete(opt.localId)} tabIndex={-1}>X</Button>
                 <InputAddon>{opt.id}</InputAddon>
                 <Input value={opt.name} onChange={(e) => handleOptions.change(e, opt.localId)} required/>
               </li>

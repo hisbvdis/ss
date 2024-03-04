@@ -7,7 +7,7 @@ import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 import { deleteSectionById, getSectionsByFilters } from "@/app/(router)/api/sections/requests";
 
 
-export default async function SectionListPage(props) {
+export default async function SectionListPage() {
   const sections = await getSectionsByFilters();
 
   return (

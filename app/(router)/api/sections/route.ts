@@ -1,6 +1,8 @@
+import { NextRequest } from "next/server";
+import { ISection } from "@/app/_types/types";
 import { prisma } from "@/prisma/client.prisma";
 
-export async function GET(req) {
+export async function GET(req:NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const dbData = await prisma.section.findMany({
     where: {
@@ -11,8 +13,8 @@ export async function GET(req) {
   return Response.json(dbData);
 }
 
-export async function POST(req) {
-  const { state, init } = await req.json();
+export async function POST(req:NextRequest) {
+  const { state, init }:{state:ISection; init: ISection} = await req.json();
   const fields = {
     name_plural: state.name_plural || null,
     name_singular: state.name_singular || null,
