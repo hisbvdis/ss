@@ -22,4 +22,5 @@ export interface ISection {
   name_plural: string;
   object_type: string;
   specs?: ISpec[];
+  [key: string]: any;
 }

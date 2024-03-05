@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
-import { useEffect } from "react";
-import { useImmer } from "use-immer";
-import { useRouter } from "next/navigation";
+import { SyntheticEvent, useEffect, useState } from "react";
+import { spec } from "@prisma/client";
+import { useRouter } from "next/navigation";import { produce } from "immer";
 // -----------------------------------------------------------------------------
 import { Card } from "@/app/_components/Card";
 import { Form } from "@/app/_components/Form";
@@ -14,39 +14,40 @@ import { BottomPanel } from "@/app/_ui/BottomPanel";
 import { InputAddon } from "@/app/_components/InputAddon";
 import { Radio, RadioGroup } from "@/app/_components/Choice";
 // -----------------------------------------------------------------------------
+import { ISection } from "@/app/_types/types";
 import { getSpecsByFilters } from "@/app/(router)/api/specs/requests";
 import { deleteSectionById, upsertSection } from "@/app/(router)/api/sections/requests";
 
 
-export default function SectionEdit(props) {
-  const [ state, setState ] = useImmer(props.init);
+export default function SectionEdit(props: {init: ISection}) {
+  const [ state, setState ] = useState(props.init);
   useEffect(() => setState(props.init), [props.init]);
   const router = useRouter();
 
   const handleStateChange = {
-    value: (e) => {
-      setState((state) => {
-        state[e.target.name] = e.target.value;
-      });
+    value: (e:React.ChangeEvent<HTMLInputElement>) => {
+      setState(produce(state, (draft) => {
+        draft[e.target.name] = e.target.value;
+      }))
     }
   }
 
   const handleSpecs = {
-    add: (e) => {
-      if (!e.target.value || state.specs?.some((stateSpec) => stateSpec.id === e.target.value)) return;
-      setState((state) => {
-        if (!state.specs) state.specs = [];
-        state.specs.push(e.target.data);
-      });
+    add: (e:React.ChangeEvent<HTMLInputElement & {data: spec}>) => {
+      if (!e.target.value || state.specs?.some((stateSpec) => String(stateSpec.id) === e.target.value)) return;
+      setState(produce(state, (draft) => {
+        if (!draft.specs) draft.specs = [];
+        draft.specs.push(e.target.data);
+      }))
     },
-    delete: (id) => {
-      setState((state) => {
-        state.specs = state.specs.filter((spec) => spec.id !== id);
-      })
+    delete: (id:number) => {
+      setState(produce(state, (draft) => {
+        draft.specs = draft.specs?.filter((spec) => spec.id !== id);
+      }))
     },
   }
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     e.preventDefault();
     const { id } = await upsertSection(state, props.init);
     if (e.nativeEvent.submitter?.dataset?.leavePage) {
@@ -112,7 +113,7 @@ export default function SectionEdit(props) {
           <ul className="mt20" style={{paddingInlineStart: 0}}>
             {state?.specs?.map(({id, name_service}) => (
               <li key={id} style={{display: "flex"}}>
-                <Button onClick={() => handleSpecs.delete(id)}>X</Button>
+                <Button onClick={() => id && handleSpecs.delete(id)}>X</Button>
                 <InputAddon>{id}</InputAddon>
                 <Link href={`/admin/specs/${id}`}>{name_service}</Link>
               </li>

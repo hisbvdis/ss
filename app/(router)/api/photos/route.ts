@@ -1,13 +1,13 @@
 import sharp from "sharp";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { existsSync, mkdirSync, unlinkSync } from "fs";
 
-export async function POST(req) {
+export async function POST(request:NextRequest) {
   if (!existsSync("./public/photos")) mkdirSync("./public/photos");
-  const formData = await req.formData();
-  const files = formData.getAll("file");
-  const names = formData.getAll("name");
-  const photos = files.reduce((acc, _, i) => acc.concat({file: files[i], name: names[i]}), []);
+  const formData = await request.formData();
+  const files: File[] = formData.getAll("file") as File[];
+  const names: string[] = formData.getAll("name") as string[];
+  const photos = files.reduce<{file:File; name:string}[]>((acc, file, i) => acc.concat({file: file, name: names[i]}), []);
   for (let {file, name} of photos) {
     const buffer = Buffer.from(await file.arrayBuffer());
     await sharp(buffer)
@@ -18,11 +18,16 @@ export async function POST(req) {
   return NextResponse.json("Ok");
 }
 
-export async function DELETE(req) {
-  const formData = await req.formData();
+export async function DELETE(request:NextRequest) {
+  const formData = await request.formData();
   const names = formData.getAll("name");
   for (let name of names) {
     if (existsSync(`./public/photos/${name}`)) unlinkSync(`./public/photos/${name}`);
   }
   return NextResponse.json("Ok");
+}
+
+interface IPhoto {
+  file: File;
+  name: string;
 }

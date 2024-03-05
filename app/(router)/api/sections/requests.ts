@@ -14,7 +14,7 @@ export async function getSectionsByFilters(filtersObj={}): Promise<section[]> {
   return data;
 }
 
-export async function getSectionById(id:string) {
+export async function getSectionById(id:string): Promise<ISection> {
   const res = await fetch(`http://localhost:3000/api/sections/${id}`, {
     method: "GET",
     next: { tags: ["sections"] },
