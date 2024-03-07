@@ -59,10 +59,10 @@ export const Textarea = (props:Props) => <Input {...props} type="textarea"/>
 
 interface Props {
   name?: string;
-  value?: string | number;
+  value?: string | number | null;
   required?: boolean;
   id?: string;
-  type?: "text" | "textarea";
+  type?: "text" | "textarea" | "search";
   placeholder?: string;
   disabled?: boolean;
   pattern?: string;

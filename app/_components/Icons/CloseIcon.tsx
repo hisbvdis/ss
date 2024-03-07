@@ -1,22 +1,23 @@
 export default function CloseIcon(props:Props) {
-  const { width="24", height="24", className } = props;
+  const { width="14", height="14" } = props;
 
   return (
     <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
       width={width}
       height={height}
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M12 10.586l4.95-4.95 1.415 1.415-4.95 4.95 4.95 4.95-1.415 1.414-4.95-4.95-4.95 4.95-1.413-1.415 4.95-4.95-4.95-4.95L7.05 5.638l4.95 4.95z"></path>
+      <path
+        d="M6.99996 5.58599L11.95 0.635986L13.365 2.05099L8.41496 7.00099L13.365 11.951L11.95 13.365L6.99996 8.41499L2.04996 13.365L0.636963 11.95L5.58696 6.99999L0.636963 2.04999L2.04996 0.637986L6.99996 5.58799V5.58599Z"
+        fill="black"
+      />
     </svg>
   );
 }
 
 interface Props {
-  width: string;
-  height: string;
-  className: string;
-  style: React.CSSProperties;
+  width?: string;
+  height?: string;
 }
