@@ -1,7 +1,8 @@
 "use client";
-import { useImmer } from "use-immer";
+import { produce } from "immer";
 import { useRouter } from "next/navigation";
-import { createContext, useEffect } from "react";
+import { IObject } from "@/app/_types/types";
+import { ChangeEvent, SyntheticEvent, createContext, useEffect, useState } from "react";
 // -----------------------------------------------------------------------------
 import { Form } from "@/app/_components/Form";
 import { BottomPanel } from "@/app/_ui/BottomPanel";
@@ -11,17 +12,17 @@ import { upsertObject, deleteObject } from "@/app/(router)/api/objects/requests"
 import "./styles.css";
 
 
-export default function ObjectEdit(props) {
-  const [ state, setState ] = useImmer(props.init);
+export default function ObjectEdit(props: {init: IObject, parent: IObject}) {
+  const [ state, setState ] = useState(props.init);
   useEffect(() => setState(props.init), [props.init]);
   const router = useRouter();
 
   const handleStateChange = {
-    value: (e) => {
-      setState((state) => {state[e.target.name] = e.target.value});
+    value: (e:ChangeEvent<HTMLInputElement>) => {
+      setState(produce(state, (draft) => {draft[e.target.name] = e.target.value}));
     },
-    checked: (e) => {
-      setState((state) => {state[e.target.name] = e.target.checked});
+    checked: (e:ChangeEvent<HTMLInputElement>) => {
+      setState(produce(state, (draft) => {draft[e.target.name] = e.target.checked}))
     }
   }
 
@@ -30,7 +31,7 @@ export default function ObjectEdit(props) {
     setInheritedData(props.parent, setState);
   }, [])
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e:SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     const stateWithoutPhotoFiles = {...state, photos: state.photos?.map((photo) => ({...photo, file: undefined}))};
     const { id } = await upsertObject(stateWithoutPhotoFiles, props.init);
     await syncPhotos(id, state, props.init);
@@ -57,11 +58,10 @@ export default function ObjectEdit(props) {
           delFunc={deleteObject}
           exitRedirectPath="./"
           delRedirectPath="/catalog"
-          handleFormSubmit={handleFormSubmit}
         />
       </Form>
     </ObjectEditContext.Provider>
   )
 }
 
-export const ObjectEditContext = createContext();
+export const ObjectEditContext = createContext({});

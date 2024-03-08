@@ -34,5 +34,7 @@ export interface IObject extends object {
   options?: (object_on_option & {option: option})[];
   schedule?: object_schedule[];
   photos?: (object_photo & {localId: string})[];
-  children?: IObject[]
+  children?: IObject[];
+  parent?: IObject;
+  [key: string]:any;
 }
