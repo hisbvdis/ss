@@ -22,7 +22,7 @@ export default function Filters(props) {
           : null
         }
         <Link href={manageSearchParams("delete", ["section", "options"])} style={{display: "flex", alignItems: "center"}}>
-          <CloseIcon width="20" height="20"/>
+          <CloseIcon/>
         </Link>
       </Card.Heading>
       {section?.specs?.map((spec) => (

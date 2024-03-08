@@ -4,7 +4,7 @@ import { getObjectById } from "@/app/(router)/api/objects/requests";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 
 
-export default async function ObjectEditPage({params}) {
+export default async function ObjectEditPage({params}:{params: {id:string, type: string}}) {
   const object = await getObjectById(params.id);
 
   return (

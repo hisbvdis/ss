@@ -1,13 +1,14 @@
 import { prisma } from "@/prisma/client.prisma";
+import { NextRequest } from "next/server";
 
-export async function GET(req) {
-  const searchParams = req.nextUrl.searchParams;
-  const options = searchParams.get("options").split(",").map((v) => v.split(":")).map(([_, opt]) => opt).join(",");
-  const dbData = await prisma.$queryRawUnsafe(`
+export async function GET(request:NextRequest) {
+  const searchParams:URLSearchParams = request.nextUrl.searchParams;
+  const options = searchParams.get("options")?.split(",").map((v) => v.split(":")).map(([_, opt]) => opt).join(",");
+  const dbData:{[key:string]: number}[] = await prisma.$queryRawUnsafe(`
     WITH RelevantObjects AS (
       SELECT object_id
       FROM object_on_option
-      ${options.length ? `WHERE option_id in (${options})` : ""}
+      ${options?.length ? `WHERE option_id in (${options})` : ""}
     )
     SELECT
         option.id as "optionId",

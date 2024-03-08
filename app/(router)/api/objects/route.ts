@@ -1,19 +1,22 @@
+import { IObject } from "@/app/_types/types";
 import { prisma } from "@/prisma/client.prisma";
 import { format } from "date-fns";
+import { NextRequest } from "next/server";
 
-export async function GET(req) {
+export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const query = searchParams.get("query") ?? undefined;
   const cityId = searchParams.get("city") ? Number(searchParams.get("city")) : undefined;
   const type = searchParams.get("type") ?? undefined;
   const sectionId = searchParams.get("section") ? Number(searchParams.get("section")) : undefined;
   const options = searchParams.get("options") ?? undefined;
-  const groupedOptions = Object.values(
-    options
-      ? options?.split(",")
-        .map((str) => str.split(":"))
-        .map((arr) => arr.map((str) => Number(str)))
-        .reduce((acc, [key, value]) => ({...acc,[key]: acc[key] ? [...acc[key], value] : [value]}),{})
+  const groupedOptions =
+    Object.values(options ?
+      options /* "1:1,1:2" */
+      ?.split(",") /* ["1:1"],["1:2"] */
+      .map((str) => str.split(":")) /* [["1":"1"],["1":"2"]] */
+      .map((arr) => arr.map((str) => Number(str))) /* [1:1],[1:2] */
+      .reduce((acc, [key, value]) => ({...acc,[key]: acc[key] ? [...acc[key], value] : [value]}), {} as {[key:string]: number[]}) /* { '1': [ 1, 2 ] } */
       : {}
     )
   const dbData = await prisma.object.findMany({
@@ -41,8 +44,8 @@ export async function GET(req) {
   return Response.json(dbData);
 }
 
-export async function POST(req) {
-  const { state, init } = await req.json();
+export async function POST(req:NextRequest) {
+  const { state, init }:{state: IObject, init: IObject} = await req.json();
   const fields = {
     name_type: state.name_type || null,
     name_where: state.name_where || null,
@@ -58,8 +61,8 @@ export async function POST(req) {
     address: state.address || null,
     address_2: state.address_2 || null,
     coord_inherit: state.coord_inherit || null,
-    coord_lat: state.coord_lat ? Number.parseFloat(state.coord_lat) : null,
-    coord_lon: state.coord_lon ? Number.parseFloat(state.coord_lon) : null,
+    coord_lat: state.coord_lat || null,
+    coord_lon: state.coord_lon || null,
     description: state.description || null,
     schedule_inherit: state.schedule_inherit || null,
     schedule_247: state.schedule_247 || null,
@@ -70,19 +73,19 @@ export async function POST(req) {
   };
   const phonesAdded = state.phones?.filter((statePhone) => !init?.phones?.some((initPhone) => statePhone.localId === initPhone.localId && statePhone.value !== ""));
   const phonesChanged = state.phones?.filter((statePhone) => init.phones?.some((initPhone) => statePhone.localId === initPhone.localId && (statePhone.value !== initPhone.value || statePhone.comment !== initPhone.comment)));
-  const phonesDeleted = init.phones?.filter((initPhone) => !state.phones.some((statePhone) => initPhone.localId === statePhone.localId));
+  const phonesDeleted = init.phones?.filter((initPhone) => !state.phones?.some((statePhone) => initPhone.localId === statePhone.localId));
   const linksAdded = state.links?.filter((stateLink) => !init?.links?.some((initLink) => stateLink.localId === initLink.localId && stateLink.value !== ""));
   const linksChanged = state.links?.filter((stateLink) => init.links?.some((initLink) => stateLink.localId === initLink.localId && (stateLink.value !== initLink.value || stateLink.comment !== initLink.comment)));
-  const linksDeleted = init.links?.filter((initLink) => !state.links.some((stateLink) => initLink.localId === stateLink.localId));
+  const linksDeleted = init.links?.filter((initLink) => !state.links?.some((stateLink) => initLink.localId === stateLink.localId));
   const optionsAdded = state.options?.filter((stateOption) => !init?.options?.some((initOption) => stateOption.id === initOption.id));
-  const optionsDeleted = init.options?.filter((initOption) => !state.options.some((stateOption) => initOption.id === stateOption.id));
+  const optionsDeleted = init.options?.filter((initOption) => !state.options?.some((stateOption) => initOption.id === stateOption.id));
   const sectionsAdded = state.sections?.filter((stateSection) => !init?.sections?.some((initSection) => stateSection.id === initSection.id));
-  const sectionsDeleted = init.sections?.filter((initSection) => !state.sections.some((stateSection) => initSection.id === stateSection.id));
-  const scheduleAdded = state.schedule.filter((stateDay) => init.schedule.some((initDay) => stateDay.day_num === initDay.day_num && !initDay.time && stateDay.time));
-  const scheduleChanged = state.schedule.filter((stateDay) => init.schedule.some((initDay) => stateDay.day_num === initDay.day_num && initDay.id && stateDay.time && stateDay.time !== initDay.time));
-  const scheduleDeleted = init.schedule.filter((initDay) => state.schedule.some((stateDay) => initDay.day_num === stateDay.day_num && initDay.time && !stateDay.time));
+  const sectionsDeleted = init.sections?.filter((initSection) => !state.sections?.some((stateSection) => initSection.id === stateSection.id));
+  const scheduleAdded = state.schedule?.filter((stateDay) => init.schedule?.some((initDay) => stateDay.day_num === initDay.day_num && !initDay.time && stateDay.time));
+  const scheduleChanged = state.schedule?.filter((stateDay) => init.schedule?.some((initDay) => stateDay.day_num === initDay.day_num && initDay.id && stateDay.time && stateDay.time !== initDay.time));
+  const scheduleDeleted = init.schedule?.filter((initDay) => state.schedule?.some((stateDay) => initDay.day_num === stateDay.day_num && initDay.time && !stateDay.time));
   const photosAdded = state.photos?.filter((statePhoto) => !init?.photos?.some((initPhoto) => statePhoto.localId === initPhoto.localId));
-  const photosDeleted = init.photos?.filter((initPhoto) => !state.photos.some((statePhoto) => initPhoto.localId === statePhoto.localId));
+  const photosDeleted = init.photos?.filter((initPhoto) => !state.photos?.some((statePhoto) => initPhoto.localId === statePhoto.localId));
   const photosMoved = state.photos?.filter((statePhoto) => init.photos?.some((initPhoto) => statePhoto.localId === initPhoto.localId && statePhoto.order !== initPhoto.order));
   const addedObject = await prisma.object.upsert({
     where: {
@@ -148,13 +151,13 @@ export async function POST(req) {
           status_comment: child.status_inherit && child.status_comment !== state.status_comment ? state.status_comment : undefined,
           status_confirm: child.status_inherit && child.status_confirm !== state.status_confirm ? state.status_confirm : undefined,
           status_instead_id: child.status_inherit && child.status_instead_id !== state.status_instead_id ? state.status_instead_id : undefined,
-          city_id: child.city_id !== state.city_Id ? state.city_Id : undefined,
+          city_id: child.city_id !== state.city_id ? state.city_id : undefined,
           address: child.address !== state.address ? state.address : undefined,
           address_2: child.address_2 !== state.address_2 ? state.address_2 : undefined,
           coord_lat: child.coord_inherit && child.coord_lat !== state.coord_lat ? state.coord_lat : undefined,
           coord_lon: child.coord_inherit && child.coord_lat !== state.coord_lat ? state.coord_lon : undefined,
           schedule_247: child.schedule_inherit && child.schedule_247 !== state.schedule_247 ? state.schedule_247 : undefined,
-          schedule_date: (child.schedule_inherit && state.schedule_date) && !child.schedule_date || format(child.schedule_date, "yyyy-MM-dd") !== state.schedule_date ? new Date(state.schedule_date) : null,
+          schedule_date: (child.schedule_inherit && state.schedule_date) && !child.schedule_date || format(child.schedule_date || "", "yyyy-MM-dd") !== format(state.schedule_date || "", "yyyy-MM-dd") ? new Date(state.schedule_date || "") : null,
           schedule_source: child.schedule_inherit && child.schedule_source !== state.schedule_source ? state.schedule_source : undefined,
           schedule_comment: child.schedule_inherit && child.schedule_comment !== state.schedule_comment ? state.schedule_comment : undefined,
           phones: {
@@ -168,9 +171,9 @@ export async function POST(req) {
             delete: linksDeleted?.length ? linksDeleted.map((item) => ({object_id_order: {object_id: child.id, order: item.order}})) : undefined,
           },
           schedule: {
-            create: (child.schedule_inherit && scheduleAdded.length) ? scheduleAdded.map((day) => ({...day, isWork: undefined, id: undefined, object_id: undefined})) : undefined,
-            update: (child.schedule_inherit && scheduleChanged.length) ? scheduleChanged.map((day) => ({where: {object_id_day_num: {object_id: child.id, day_num: day.day_num}}, data: {...day, id: undefined, object_id: undefined, isWork: undefined}})) : undefined,
-            delete: (child.schedule_inherit && scheduleDeleted.length) ? scheduleDeleted.map((day) => ({object_id_day_num: {object_id: child.id, day_num: day.day_num}})) : undefined,
+            create: (child.schedule_inherit && scheduleAdded?.length) ? scheduleAdded.map((day) => ({...day, isWork: undefined, id: undefined, object_id: undefined})) : undefined,
+            update: (child.schedule_inherit && scheduleChanged?.length) ? scheduleChanged.map((day) => ({where: {object_id_day_num: {object_id: child.id, day_num: day.day_num}}, data: {...day, id: undefined, object_id: undefined, isWork: undefined}})) : undefined,
+            delete: (child.schedule_inherit && scheduleDeleted?.length) ? scheduleDeleted.map((day) => ({object_id_day_num: {object_id: child.id, day_num: day.day_num}})) : undefined,
           },
           modified: new Date(),
         }})) : undefined
@@ -178,7 +181,7 @@ export async function POST(req) {
     }
   });
   // Rename photo names of created object
-  if (!state.id && state.photos?.length > 0) {
+  if (!state.id && state.photos?.length) {
     const updatedObject = await prisma.object.update({
       where: {id: addedObject.id},
       data: {

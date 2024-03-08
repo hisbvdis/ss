@@ -4,7 +4,7 @@ import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 import { getEmptyObject, getObjectById } from "@/app/(router)/api/objects/requests";
 
 
-export default async function AddObjectPage({params, searchParams}) {
+export default async function AddObjectPage({params, searchParams}:Props) {
   const emptyObject = await getEmptyObject();
   const parent = searchParams.parent ? await getObjectById(searchParams.parent) : null;
 
@@ -17,4 +17,9 @@ export default async function AddObjectPage({params, searchParams}) {
       <ObjectEdit init={{...emptyObject, type: params.type }} parent={parent}/>
     </div>
   )
+}
+
+interface Props {
+  params: { type: string };
+  searchParams: { [key: string]: string };
 }
