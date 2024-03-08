@@ -37,7 +37,7 @@ export async function upsertSpec(state:ISpec, init:ISpec): Promise<spec> {
   return data;
 }
 
-export async function deleteSpecById(id:number): Promise<spec> {
+export async function deleteSpecById(id:number): Promise<void> {
   const res = await fetch(`http://localhost:3000/api/specs/${id}`, {
     method: "DELETE",
     next: { tags: ["specs"] },

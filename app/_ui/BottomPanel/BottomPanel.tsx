@@ -7,7 +7,7 @@ import { DelBtn } from "@/app/_components/DelBtn";
 import styles from "./styles.module.css";
 
 
-export default function BottomPanel(props:Props) {
+export default function BottomPanel(props:IProps) {
   const { id, delFunc, exitRedirectPath, delRedirectPath } = props;
 
   return (
@@ -22,8 +22,8 @@ export default function BottomPanel(props:Props) {
   )
 }
 
-interface Props {
-  id: number;
+interface IProps {
+  id?: number;
   delFunc: (id: number) => Promise<void>;
   exitRedirectPath: string;
   delRedirectPath: string;
