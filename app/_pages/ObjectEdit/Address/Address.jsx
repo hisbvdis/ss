@@ -1,11 +1,12 @@
 "use client";
+import { produce } from "immer";
 import { useContext, useEffect, useState } from "react";
 // -----------------------------------------------------------------------------
-import { ObjectEditContext } from "../ObjectEdit";
 import { Card } from "@/app/_components/Card";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
 import { Select } from "@/app/_components/Select";
+import { ObjectEditContext } from "../ObjectEdit";
 import { Control } from "@/app/_components/Control";
 import { Checkbox } from "@/app/_components/Choice";
 import { Map, Marker } from "@/app/_components/Map";
@@ -31,10 +32,10 @@ export default function Address(props) {
         street: state.address
       });
       if (!result) return;
-      setState((state) => {
-        state.coord_lat = result.lat;
-        state.coord_lon = result.lon;
-      });
+      setState(produce(state, (draft) => {
+        draft.coord_lat = result.lat;
+        draft.coord_lon = result.lon;
+      }));
       mapInstance.setView([result.lat, result.lon]);
       mapInstance.setZoom(17);
     },
@@ -47,33 +48,33 @@ export default function Address(props) {
       if (!result) return;
       const road = result.address.road;
       const house = result.address.house_number;
-      setState((state) => {
-        state.address = `${road}${house ? `, ${house}` : ""}`;
-      });
+      setState(produce(state, (draft) => {
+        draft.address = `${road}${house ? `, ${house}` : ""}`;
+      }));
     },
     markerDragEnd: (e) => {
       const { lat, lng } = e.target._latlng;
-      setState((state) => {
-        state.coord_lat = lat;
-        state.coord_lon = lng;
-      });
+      setState(produce(state, (draft) => {
+        draft.coord_lat = lat;
+        draft.coord_lon = lng;
+      }));
     },
     rightClick: (e) => {
       const { lat, lng } = e.latlng;
-      setState((state) => {
-        if (state.coord_inherit) return;
-        state.coord_lat = lat;
-        state.coord_lon = lng;
-      });
+      setState(produce(state, (draft) => {
+        if (draft.coord_inherit) return;
+        draft.coord_lat = lat;
+        draft.coord_lon = lng;
+      }));
     }
   }
 
   useEffect(() => {
     if (!state.coord_inherit) return;
-    setState((state) => {
-      state.coord_lat = state.parent?.coord_lat;
-      state.coord_lon = state.parent?.coord_lon;
-    })
+    setState(produce(state, (draft) => {
+      draft.coord_lat = draft.parent?.coord_lat;
+      draft.coord_lon = draft.parent?.coord_lon;
+    }))
   }, [state.coord_inherit])
 
   return (
@@ -89,7 +90,7 @@ export default function Address(props) {
             value={state.city_id}
             text={state?.city?.name}
             onChange={handleStateChange.value}
-            onChangeData={(data) => setState((state) => {state.city = data})}
+            onChangeData={(data) => setState(produce(state, (draft) => {draft.city = data}))}
             isAutocomplete disabled={state.parent_id}
             placeholder="Введите название"
             requestItemsOnInputChange={async (name) => (

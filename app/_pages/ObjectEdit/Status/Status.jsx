@@ -1,4 +1,5 @@
 "use client";
+import { produce } from "immer";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
 import { ObjectEditContext } from "../ObjectEdit";
@@ -16,17 +17,17 @@ export default function Status(props) {
   const { className, style } = props;
 
   const handleStatusChange = (e) => {
-    setState((state) => {
-      state.status = e.target.value;
+    setState(produce(state, (draft) => {
+      draft.status = e.target.value;
       if (e.target.value === "works") {
-        state.status_comment = null;
-        state.status_confirm = null;
+        draft.status_comment = null;
+        draft.status_confirm = null;
       }
       if (e.target.value !== "closed_forever") {
-        state.status_instead_id = null;
-        state.statusInstead = null;
+        draft.status_instead_id = null;
+        draft.statusInstead = null;
       }
-    })
+    }))
   }
 
   return (
@@ -84,7 +85,7 @@ export default function Status(props) {
           value={state?.status_instead_id}
           text={state.statusInstead?.name_full}
           onChange={handleStateChange.value}
-          onChangeData={(data) => setState((state) => {state.statusInstead = data})}
+          onChangeData={(data) => setState(produce(state, (draft) => {draft.statusInstead = data}))}
           isAutocomplete
           placeholder="Введите название"
           disabled={state.status_inherit || state.status !== "closed_forever"}

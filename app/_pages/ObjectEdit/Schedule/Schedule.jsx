@@ -1,13 +1,15 @@
 "use client";
+import { produce } from "immer";
 import { useContext } from "react";
 // -----------------------------------------------------------------------------
-import { ObjectEditContext } from "../ObjectEdit";
 import { Card } from "@/app/_components/Card";
 import { Flex } from "@/app/_components/Flex";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
+import { ObjectEditContext } from "../ObjectEdit";
 import { Checkbox } from "@/app/_components/Choice";
 import { Control } from "@/app/_components/Control";
+// -----------------------------------------------------------------------------
 
 
 export default function Schedule(props) {
@@ -15,15 +17,15 @@ export default function Schedule(props) {
 
   const handleSchedule = {
     changeIsWork: (e) => {
-      setState((state) => {
-        state.schedule[e.target.name].isWork = e.target.checked;
-        if (!e.target.checked) state.schedule[e.target.name].time = "";
-      });
+      setState(produce(state, (draft) => {
+        draft.schedule[e.target.name].isWork = e.target.checked;
+        if (!e.target.checked) draft.schedule[e.target.name].time = "";
+      }));
     },
     changeTime: (e) => {
-      setState((state) => {
-        state.schedule[e.target.name].time = e.target.value;
-      });
+      setState(produce(state, (draft) => {
+        draft.schedule[e.target.name].time = e.target.value;
+      }));
     },
     formatTime: (e) => {
       if (!e.target.value) return;
@@ -37,43 +39,43 @@ export default function Schedule(props) {
         }
       });
       if (!from || !to) return;
-      setState((state) => {
-        state.schedule[e.target.name].time = [from.string, to.string].join(" - ");
-        state.schedule[e.target.name].from = from.min;
-        state.schedule[e.target.name].to = to.min;
-      });
+      setState(produce(state, (draft) => {
+        draft.schedule[e.target.name].time = [from.string, to.string].join(" - ");
+        draft.schedule[e.target.name].from = from.min;
+        draft.schedule[e.target.name].to = to.min;
+      }));
     },
     copyToAll: (isWork, time, from, to) => {
-      setState((state) => {
-        state.schedule = state.schedule.map((day) => ({...day, isWork, time, from, to}));
-      });
+      setState(produce(state, (draft) => {
+        draft.schedule = draft.schedule.map((day) => ({...day, isWork, time, from, to}));
+      }));
     },
     change247: (e) => {
-      setState((state) => {
-        state.schedule_247 = e.target.checked;
+      setState(produce(state, (draft) => {
+        draft.schedule_247 = e.target.checked;
         if (e.target.checked) {
-          state.schedule = state.schedule.map((day) => ({...day, isWork: true, time: "0:00 - 24:00", from: 0, to: 1440}));
+          draft.schedule = draft.schedule.map((day) => ({...day, isWork: true, time: "0:00 - 24:00", from: 0, to: 1440}));
         }
-      });
+      }));
     },
     setDate: (date) => {
-      setState((state) => {
+      setState(produce(state, (produce) => {
         if (date === "") {
-          state.schedule_date = "";
+          produce.schedule_date = "";
         } else {
-          state.schedule_date = new Intl.DateTimeFormat('en-CA', {year: 'numeric', month: '2-digit', day: '2-digit'}).format(date);
+          produce.schedule_date = new Intl.DateTimeFormat('en-CA', {year: 'numeric', month: '2-digit', day: '2-digit'}).format(date);
         }
-      });
+      }));
     },
     cleanAll: () => {
-      setState((state) => {
-        state.schedule_inherit = false;
-        state.schedule_247 = false;
-        state.schedule = Array(7).fill().map((_,i) => ({day_num: i}));
-        state.schedule_date = "";
-        state.schedule_source = "";
-        state.schedule_comment = "";
-      });
+      setState(produce(state, (draft) => {
+        draft.schedule_inherit = false;
+        draft.schedule_247 = false;
+        draft.schedule = Array(7).fill().map((_,i) => ({day_num: i}));
+        draft.schedule_date = "";
+        draft.schedule_source = "";
+        draft.schedule_comment = "";
+      }));
     }
   }
 

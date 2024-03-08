@@ -1,42 +1,43 @@
+import { produce } from "immer";
 import { objectReadProcessing } from "@/app/(router)/api/objects/processing";
 
 export const setInheritedData = (parent, setState) => {
   if (parent) {
     const processed = objectReadProcessing(parent);
-    setState((state) => {
-      state.status_inherit = true;
-      state.coord_inherit = true;
-      state.schedule_inherit = true;
-      state.name_where = processed?.name_where;
-      state.status = processed?.status;
-      state.status_comment = processed?.status_comment;
-      state.status_confirm = processed?.status_confirm;
-      state.city_id = processed?.city_id;
-      state.city = processed?.city;
-      state.parent_id = processed?.id;
-      state.parent = processed;
-      state.address = processed?.address;
-      state.address_2 = processed?.address_2;
-      state.coord_lat = processed?.coord_lat;
-      state.coord_lon = processed?.coord_lon;
-      state.phones = processed?.phones;
-      state.links = processed?.links;
-      state.schedule_247 = processed?.schedule_247;
-      state.schedule = processed?.schedule;
-      state.schedule_date = processed?.schedule_date;
-      state.schedule_comment = processed?.schedule_comment;
-      state.schedule_source = processed?.schedule_source;
-      state.statusInstead = processed?.statusInstead;
-      state.status_instead_id = processed?.status_instead_id;
-    });
+    setState(produce(state, (draft) => {
+      draft.status_inherit = true;
+      draft.coord_inherit = true;
+      draft.schedule_inherit = true;
+      draft.name_where = processed?.name_where;
+      draft.status = processed?.status;
+      draft.status_comment = processed?.status_comment;
+      draft.status_confirm = processed?.status_confirm;
+      draft.city_id = processed?.city_id;
+      draft.city = processed?.city;
+      draft.parent_id = processed?.id;
+      draft.parent = processed;
+      draft.address = processed?.address;
+      draft.address_2 = processed?.address_2;
+      draft.coord_lat = processed?.coord_lat;
+      draft.coord_lon = processed?.coord_lon;
+      draft.phones = processed?.phones;
+      draft.links = processed?.links;
+      draft.schedule_247 = processed?.schedule_247;
+      draft.schedule = processed?.schedule;
+      draft.schedule_date = processed?.schedule_date;
+      draft.schedule_comment = processed?.schedule_comment;
+      draft.schedule_source = processed?.schedule_source;
+      draft.statusInstead = processed?.statusInstead;
+      draft.status_instead_id = processed?.status_instead_id;
+    }));
   }
   else {
-    setState((state) => {
-      state.parent_id = null;
-      state.parent = null;
-      state.status_inherit = false;
-      state.coord_inherit = false;
-      state.schedule_inherit = false;
-    })
+    setState(produce(state, (draft) => {
+      draft.parent_id = null;
+      draft.parent = null;
+      draft.status_inherit = false;
+      draft.coord_inherit = false;
+      draft.schedule_inherit = false;
+    }))
   }
 }
