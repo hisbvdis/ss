@@ -26,8 +26,3 @@ export async function DELETE(request:NextRequest) {
   }
   return NextResponse.json("Ok");
 }
-
-interface IPhoto {
-  file: File;
-  name: string;
-}

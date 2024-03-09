@@ -4,7 +4,7 @@ import { prisma } from "@/prisma/client.prisma";
 import { revalidateTag, unstable_cache } from "next/cache";
 // -----------------------------------------------------------------------------
 import { ISpec } from "../_types/types";
-import { specsReadProcessing } from "./spec.processing";
+import { specReadProcessing } from "./spec.processing";
 
 
 export const getSpecsByFilters = unstable_cache(
@@ -35,7 +35,7 @@ export const getSpecById = unstable_cache(
         options: {orderBy: {order: "asc"}}
       },
     });
-    const processed = specsReadProcessing(dbData);
+    const processed = specReadProcessing(dbData);
     return processed;
   },
   [],

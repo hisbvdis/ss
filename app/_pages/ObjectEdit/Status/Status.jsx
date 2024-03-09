@@ -8,8 +8,9 @@ import { Input } from "@/app/_components/Input";
 import { Select } from "@/app/_components/Select";
 import { Checkbox } from "@/app/_components/Choice";
 import { Control } from "@/app/_components/Control";
+import { getObjectsByFilters } from "@/app/_db/object";
 // -----------------------------------------------------------------------------
-import { getObjectsByFilters } from "@/app/(router)/api/objects/requests";
+
 
 
 export default function Status(props) {

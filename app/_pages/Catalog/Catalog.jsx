@@ -15,12 +15,12 @@ import { getCitiesByFilters } from "@/app/_db/city";
 
 
 export default function Catalog(props) {
-  const { searchParams, searchResults, sectionList, section, city, objectCounts } = props;
+  const { searchParams, searchResults, sectionList, section, city } = props;
   const router = useRouter();
   const manageSearchParams = useManageSearchParams();
 
   return (
-    <CatalogContext.Provider value={{searchParams, objectCounts, searchResults, manageSearchParams, sectionList, router, section, city}}>
+    <CatalogContext.Provider value={{searchParams, searchResults, manageSearchParams, sectionList, router, section, city}}>
       <div className={clsx("catalog", "page", !searchParams?.map && "container", searchParams?.map && "catalog--map")}>
         <aside className="catalog__aside">
           <Card>

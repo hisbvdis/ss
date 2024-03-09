@@ -8,8 +8,8 @@ import { Form } from "@/app/_components/Form";
 import { BottomPanel } from "@/app/_ui/BottomPanel";
 import { Address, Contacts, Description, NameOrg, NamePlace, Photos, Schedule, SectionsOptions, setInheritedData, syncPhotos } from ".";
 // -----------------------------------------------------------------------------
-import { upsertObject, deleteObject } from "@/app/(router)/api/objects/requests";
 import "./styles.css";
+import { deleteObjectById, upsertObject } from "@/app/_db/object";
 
 
 export default function ObjectEdit(props: {init: IObject, parent: IObject}) {
@@ -55,7 +55,7 @@ export default function ObjectEdit(props: {init: IObject, parent: IObject}) {
         <Photos/>
         <BottomPanel
           id={state.id}
-          delFunc={deleteObject}
+          delFunc={deleteObjectById}
           exitRedirectPath="./"
           delRedirectPath="/catalog"
         />

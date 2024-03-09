@@ -14,9 +14,9 @@ import { Map, Marker } from "@/app/_components/Map";
 import { setInheritedData } from "../";
 import { getCitiesByFilters } from "@/app/_db/city";
 import { handleQuotes } from "@/app/_utils/handleQuotes";
-import { getObjectsByFilters } from "@/app/(router)/api/objects/requests";
 import { queryAddressForCoord, queryCoodFromAddress } from "@/app/_utils/nominatim";
 import styles from "./styles.module.css";
+import { getObjectsByFilters } from "@/app/_db/object";
 
 
 export default function Address(props) {

@@ -8,7 +8,7 @@ import { Card } from "@/app/_components/Card";
 import { DelBtn } from "@/app/_components/DelBtn";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 // -----------------------------------------------------------------------------
-import { deleteObject } from "@/app/(router)/api/objects/requests";
+import { deleteObjectById } from "@/app/(router)/api/objects/requests";
 
 
 export default function Header(props) {
@@ -25,7 +25,7 @@ export default function Header(props) {
             {label: `${state.sections?.[0]?.name_plural ?? ""}`, href: `/catalog?city=${state.city?.id}&section=${state.sections?.[0]?.id}`}
           ]}/>
           <a href={`/object/${state.id}/edit`} style={{marginInlineStart: "auto"}}>Ред</a>
-          <DelBtn id={state.id} delFunc={deleteObject} redirectPath="/">X</DelBtn>
+          <DelBtn id={state.id} delFunc={deleteObjectById} redirectPath="/">X</DelBtn>
         </Flex>
         <h1 style={{fontSize: "23rem", fontWeight: "400"}}>{state.name_full}</h1>
         {state.parent_id ? <Link href={`/object/${state.parent_id}`}>&lt; {state.parent?.name_full}</Link> : null}
