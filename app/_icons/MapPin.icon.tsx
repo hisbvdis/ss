@@ -1,4 +1,4 @@
-export default function MapPin(props:Props) {
+export default function MapPin(props:IProps) {
   const { className, style, width="15", height="20", fill="#FF0000" } = props;
 
   return (
@@ -16,7 +16,7 @@ export default function MapPin(props:Props) {
   );
 }
 
-interface Props {
+interface IProps {
   className: string;
   style: React.CSSProperties;
   width: string;

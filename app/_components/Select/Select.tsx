@@ -1,16 +1,16 @@
 import clsx from "clsx";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 // -----------------------------------------------------------------------------
 import { useDebounce } from "@/app/_utils/useDebounce";
 // -----------------------------------------------------------------------------
 import { Menu } from "@/app/_components/Menu";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
-import { ArrowDownIcon, CloseIcon } from "@/app/_components/Icons";
+import { ArrowDownIcon, CloseIcon } from "@/app/_icons";
 import styles from "./styles.module.css";
 
 
-export default function Select(props) {
+export default function Select(props:IProps) {
   const { name, value, text } = props;
   const { requestItemsOnInputChange, requestItemsOnFirstTouch, requestMinInputLenght=3 } = props;
   const { onChange=(e=>e), onChangeData=(e=>e) } = props;
@@ -21,7 +21,7 @@ export default function Select(props) {
   const [ inputValue, setInputValue ] = useState(isAutocomplete ? text : selectedItem?.text);
   const [ isShowMenu, setIsShowMenu ] = useState(false);
   const debounce = useDebounce();
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>();
   useEffect(() => {isAutocomplete ? null : setSelectedItem(localItems?.find((item) => item.id === value))}, [value]);
   useEffect(() => {isAutocomplete ? setInputValue(text) : null}, [text]);
   useEffect(() => {isAutocomplete ? null : setInputValue(selectedItem?.text)}, [selectedItem]);
@@ -44,7 +44,7 @@ export default function Select(props) {
     }
   }
 
-  const handleInputChange = async (e) => {
+  const handleInputChange = async (e:ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     if (requestItemsOnInputChange) {
       if (e.target.value.length < requestMinInputLenght) return;
@@ -58,8 +58,8 @@ export default function Select(props) {
     }
   }
 
-  const handleDocumentMousedown = (e) => {
-    if (e.target.closest("." + styles["select"])) return;
+  const handleDocumentMousedown = (e:MouseEvent) => {
+    if (e.target?.closest("." + styles["select"])) return;
     setIsShowMenu(false);
     setSuggestions(localItems ?? []);
     isAutocomplete ? setInputValue(text) : setInputValue(selectedItem?.text);
@@ -72,7 +72,7 @@ export default function Select(props) {
     inputRef.current?.focus();
   }
 
-  const handleMenuSelect = (index) => {
+  const handleMenuSelect = (index:number) => {
     const item = suggestions?.[index];
     // !isAutocomplete ?? setSelectedItem(item);
     onChange({target: {name, value: item?.id, data: item?.data}});
@@ -81,7 +81,7 @@ export default function Select(props) {
     setIsShowMenu(false);
   }
 
-  const handleInputKeydown = (e) => {
+  const handleInputKeydown = (e:React.KeyboardEvent<HTMLElement>) => {
     if (!["Escape", "Tab", "Enter", "ArrowUp", "ArrowDown"].includes(e.code)) return;
     switch (e.code) {
       case "Escape":
@@ -168,27 +168,27 @@ export default function Select(props) {
   )
 }
 
-// interface Props {
-//   isAutocomplete?: boolean;
-//   name?: string;
-//   value: string;
-//   text?: string;
-//   items?: Item[];
-//   requestItemsOnInputChange?: (value:string) => Promise<Item[]>;
-//   requestItemsOnFirstTouch?: (value:string) => Promise<Item[]>;
-//   requestMinInputLenght?: number;
-//   onChange?: (e:ChangeEvent) => ChangeEvent;
-//   onChangeData?: (data: any) => any;
-//   placeholder?: string;
-//   disabled?: boolean;
-// }
+interface IProps {
+  isAutocomplete?: boolean;
+  name?: string;
+  value: string;
+  text?: string;
+  items: Item[];
+  requestItemsOnInputChange?: (value:string) => Promise<Item[]>;
+  requestItemsOnFirstTouch?: (value:string) => Promise<Item[]>;
+  requestMinInputLenght?: number;
+  onChange?: (e:ChangeEvent) => ChangeEvent;
+  onChangeData?: (data: any) => any;
+  placeholder?: string;
+  disabled?: boolean;
+}
 
-// interface Item {
-//   id: string;
-//   text: string;
-//   text2?: string;
-//   text3?: string;
-//   text4?: string;
-//   data?: any;
-//   index: number;
-// }
+interface Item {
+  id: string;
+  text: string;
+  text2?: string;
+  text3?: string;
+  text4?: string;
+  data?: any;
+  index: number;
+}

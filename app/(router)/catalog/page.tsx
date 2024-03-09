@@ -6,7 +6,7 @@ import { Catalog } from "@/app/_pages/Catalog";
 import { SearchPanel } from "@/app/_ui/SearchPanel";
 
 
-export default async function CatalogPage({searchParams}:{searchParams: SearchParams}) {
+export default async function CatalogPage({searchParams}:{searchParams: ISearchParams}) {
   const city = searchParams.city ? await getCityById(Number(searchParams.city)) : undefined;
   const section = searchParams.section ? await getSectionById(Number(searchParams.section)) : undefined;
   const sectionList = await getSectionsByFilters();
@@ -26,7 +26,7 @@ export default async function CatalogPage({searchParams}:{searchParams: SearchPa
   );
 }
 
-interface SearchParams {
+interface ISearchParams {
   city: string;
   section: string;
   options: string;

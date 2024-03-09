@@ -2,7 +2,7 @@ import clsx from "clsx";
 // -----------------------------------------------------------------------------
 import styles from "./styles.module.css";
 
-export default function Button(props: Props) {
+export default function Button(props: IProps) {
   const { type = "button", onClick, tabIndex, disabled } = props;
   const { className, style, children } = props;
 
@@ -21,7 +21,7 @@ export default function Button(props: Props) {
   );
 }
 
-interface Props {
+interface IProps {
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;

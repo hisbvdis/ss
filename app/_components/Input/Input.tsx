@@ -7,7 +7,7 @@ import { ControlContext } from "@/app/_components/Control";
 import styles from "./styles.module.css";
 
 
-export const Input = forwardRef<HTMLInputElement, Props>(function Input(props, forwardedRef:any) {
+export const Input = forwardRef<HTMLInputElement, IProps>(function Input(props, forwardedRef) {
   const dataFromControl = useContext(ControlContext);
   const [changed, setChanged] = useState(false);
 
@@ -55,9 +55,9 @@ export const Input = forwardRef<HTMLInputElement, Props>(function Input(props, f
   )
 })
 
-export const Textarea = (props:Props) => <Input {...props} type="textarea"/>
+export const Textarea = (props:IProps) => <Input {...props} type="textarea"/>
 
-interface Props {
+interface IProps {
   name?: string;
   value?: string | number | null;
   required?: boolean;

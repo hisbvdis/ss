@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "./styles.module.css";
 
 
-export default function Breadcrumbs(props:Props) {
+export default function Breadcrumbs(props:IProps) {
   const { items } = props;
   const { className, id, style } = props;
 
@@ -28,14 +28,14 @@ export default function Breadcrumbs(props:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   className?: string;
   style?: React.CSSProperties;
   id?: string;
-  items?: Breadcrumb[];
+  items?: IBreadcrumb[];
 }
 
-interface Breadcrumb {
+interface IBreadcrumb {
   label: string;
   href?: string;
 }

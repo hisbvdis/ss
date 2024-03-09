@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import styles from "./styles.module.css";
 
-export default function Flex(props:Props) {
+export default function Flex(props:IProps) {
   const { gap, direction="row" } = props;
   const { className, style, children } = props;
 
@@ -15,7 +15,7 @@ export default function Flex(props:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   className: string;
   style: React.CSSProperties;
   children: React.ReactNode;

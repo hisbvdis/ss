@@ -1,7 +1,7 @@
 import styles from "./styles.module.css";
 
 
-export default function InputAddon(props:Props) {
+export default function InputAddon(props:IProps) {
   const { children } = props;
 
   return (
@@ -11,6 +11,6 @@ export default function InputAddon(props:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   children: React.ReactNode;
 }

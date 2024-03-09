@@ -1,4 +1,4 @@
-export default function ArrowDownIcon(props:Props) {
+export default function ArrowDownIcon(props:IProps) {
   return (
     <svg
       width="14"
@@ -12,7 +12,7 @@ export default function ArrowDownIcon(props:Props) {
   );
 }
 
-interface Props {
+interface IProps {
   className?: string;
   width?: string;
   height?: string;

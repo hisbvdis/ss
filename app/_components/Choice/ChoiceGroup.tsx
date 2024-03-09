@@ -6,10 +6,10 @@ import { ReactEventHandler, createContext, useContext, useId, useRef } from 'rea
 import { ControlContext } from "@/app/_components/Control";
 import styles from "./styles.module.css";
 
-export const CheckboxGroup = (props:Props) => <ChoiceGroup {...props}/>
-export const RadioGroup = (props:Props) => <ChoiceGroup {...props}/>
+export const CheckboxGroup = (props:IProps) => <ChoiceGroup {...props}/>
+export const RadioGroup = (props:IProps) => <ChoiceGroup {...props}/>
 
-function ChoiceGroup(props:Props) {
+function ChoiceGroup(props:IProps) {
   const fieldsetRef = useRef<HTMLFieldSetElement>(null);
   const controlContext = useContext(ControlContext);
   const { name=useId(), valueToCompare="", arrayToCompare=[] } = props;
@@ -34,9 +34,9 @@ function ChoiceGroup(props:Props) {
   );
 }
 
-export const ChoiceGroupContext = createContext<ChoiceGroupContextType>({});
+export const ChoiceGroupContext = createContext<IChoiceGroupContextType>({});
 
-interface Props {
+interface IProps {
   name?: string;
   valueToCompare?: string;
   arrayToCompare?: any[];
@@ -48,7 +48,7 @@ interface Props {
   disabled?: boolean;
 }
 
-interface ChoiceGroupContextType {
+interface IChoiceGroupContextType {
   name?: string;
   onChange?: ReactEventHandler;
   valueToCompare?: string;

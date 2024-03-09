@@ -1,4 +1,4 @@
-export default function SearchIcon(props:Props) {
+export default function SearchIcon(props:IProps) {
   const { width="24", height="24" } = props;
 
   return (
@@ -17,7 +17,7 @@ export default function SearchIcon(props:Props) {
   );
 }
 
-interface Props {
+interface IProps {
   width?: number;
   height?: number;
 }

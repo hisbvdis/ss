@@ -4,7 +4,7 @@ import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 import { getEmptyObject, getObjectById } from "@/app/_db/object";
 
 
-export default async function AddObjectPage({params, searchParams}:Props) {
+export default async function AddObjectPage({params, searchParams}:IProps) {
   const emptyObject = await getEmptyObject();
   const parent = searchParams.parent ? await getObjectById(Number(searchParams.parent)) : null;
 
@@ -19,7 +19,7 @@ export default async function AddObjectPage({params, searchParams}:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   params: { type: string };
   searchParams: { [key: string]: string };
 }

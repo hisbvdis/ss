@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 // -----------------------------------------------------------------------------
 import { Button } from "../Button";
 
-export default function DelBtn(props:Props) {
+export default function DelBtn(props:IProps) {
   const router = useRouter();
   const { id, delFunc, redirectPath } = props;
   const { style, children="X" } = props;
@@ -26,7 +26,7 @@ export default function DelBtn(props:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   id: number;
   delFunc: (id:number) => Promise<any>;
   style?: React.CSSProperties;

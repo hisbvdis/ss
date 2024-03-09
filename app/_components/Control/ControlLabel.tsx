@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { ControlContext } from "./Control";
 import styles from "./styles.module.css";
 
-export default function _(props:Props) {
+export default function _(props:IProps) {
   const controlContext = useContext(ControlContext);
   const labelId = props.id ?? controlContext?.labelId;
   const required = controlContext?.required;
@@ -20,7 +20,7 @@ export default function _(props:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   id?:string;
   className?: string;
   style?: React.CSSProperties;

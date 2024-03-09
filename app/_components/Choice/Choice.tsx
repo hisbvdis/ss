@@ -2,14 +2,14 @@
 "use client";
 import clsx from "clsx";
 import { RequiredInput } from "@/app/_components/RequiredInput";
-import { useId, useContext, useRef, ReactEventHandler } from "react";
+import { useId, useContext, useRef, ReactEventHandler, EventHandler, ChangeEvent } from "react";
 import { ChoiceGroupContext } from "./ChoiceGroup";
 import styles from "./styles.module.css";
 
-export const Checkbox = (props:Props) => <Choice {...props} type="checkbox"/>;
-export const Radio = (props:Props) => <Choice {...props} type="radio"/>;
+export const Checkbox = (props:IProps) => <Choice {...props} type="checkbox"/>;
+export const Radio = (props:IProps) => <Choice {...props} type="radio"/>;
 
-function Choice(props:Props) {
+function Choice(props:IProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
   const choiceGroupContext = useContext(ChoiceGroupContext);
@@ -20,7 +20,7 @@ function Choice(props:Props) {
   const valueToCompare = props.valueToCompare ?? choiceGroupContext?.valueToCompare ?? "";
   const arrayToCompare = props.arrayToCompare ?? choiceGroupContext?.arrayToCompare ?? [];
   const checked = props.checked ?? (valueToCompare ? value === valueToCompare : arrayToCompare.includes(value));
-  const onChange = props.onChange ?? choiceGroupContext?.onChange ?? ((e)=>e);
+  const onChange = props.onChange ?? choiceGroupContext?.onChange ?? ((e:ChangeEvent)=>e);
   const required = props.required ?? false;
   const requiredGroup = choiceGroupContext?.requiredGroup ?? false;
   const disabled = props.disabled ?? choiceGroupContext?.disabledGroup ?? false;
@@ -48,7 +48,7 @@ function Choice(props:Props) {
   );
 }
 
-interface Props {
+interface IProps {
   type?: "radio" | "checkbox";
   value: string;
   name?: string;

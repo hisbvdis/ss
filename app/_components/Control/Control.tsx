@@ -6,7 +6,7 @@ import ControlLabel from "./ControlLabel";
 import "./styles.module.css";
 
 
-export default function Control(props:Props) {
+export default function Control(props:IProps) {
   const ref = useRef<HTMLDivElement>(null);
   const labelId = useId();
   const inputId = useId();
@@ -30,16 +30,16 @@ export default function Control(props:Props) {
 
 Control.Label = ControlLabel;
 
-export const ControlContext = createContext<ControlContextType | null>(null);
+export const ControlContext = createContext<IControlContextType | null>(null);
 
-interface Props {
+interface IProps {
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
   required?: boolean;
 }
 
-interface ControlContextType {
+interface IControlContextType {
   labelId: string;
   required: boolean;
   inputId: string;

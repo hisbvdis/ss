@@ -1,4 +1,4 @@
-export default function BinIcon(props:Props) {
+export default function BinIcon(props:IProps) {
   const { width="24", height="24" } = props;
 
   return (
@@ -13,7 +13,7 @@ export default function BinIcon(props:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   width: string;
   height: string;
 }

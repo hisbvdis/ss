@@ -12,7 +12,7 @@ import "./styles.css";
 import { deleteObjectById, upsertObject } from "@/app/_db/object";
 
 
-export default function ObjectEdit(props: {init: IObject, parent: IObject}) {
+export default function ObjectEdit(props: {init: IObject, parent?: IObject}) {
   const [ state, setState ] = useState(props.init);
   useEffect(() => setState(props.init), [props.init]);
   const router = useRouter();

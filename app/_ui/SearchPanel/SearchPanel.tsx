@@ -6,7 +6,7 @@ import { useManageSearchParams } from "@/app/_utils/useManageSearchParams";
 // -----------------------------------------------------------------------------
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
-import { CloseIcon, SearchIcon } from "@/app/_components/Icons";
+import { CloseIcon, SearchIcon } from "@/app/_icons";
 import styles from "./styles.module.css";
 
 

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import styles from "./styles.module.css";
 
-export default function _(props:Props) {
+export default function _(props:IProps) {
   const { className, children, style } = props;
 
   return (
@@ -11,7 +11,7 @@ export default function _(props:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   className?: string,
   children?: React.ReactNode,
   style?: React.CSSProperties

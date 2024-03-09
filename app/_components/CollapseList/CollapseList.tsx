@@ -2,11 +2,11 @@
 import clsx from "clsx";
 import { useState } from "react";
 // -----------------------------------------------------------------------------
-import { ArrowDownIcon } from "@/app/_components/Icons";
+import { ArrowDownIcon } from "@/app/_icons";
 import styles from "./styles.module.css";
 
 
-export default function CollapseList(props:Props) {
+export default function CollapseList(props:IProps) {
   const { items } = props;
   const [ isOpen, setIsOpen ] = useState(false);
 
@@ -30,7 +30,7 @@ export default function CollapseList(props:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   items: Item[];
 }
 

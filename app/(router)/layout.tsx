@@ -3,7 +3,7 @@ import "@/app/_styles/global.css";
 import PageHeader from "@/app/_ui/PageHeader/PageHeader";
 
 
-export default function RootLayout(props:Props) {
+export default function RootLayout(props:IProps) {
   const { children } = props;
 
   return (
@@ -16,6 +16,6 @@ export default function RootLayout(props:Props) {
   );
 }
 
-interface Props {
+interface IProps {
   children: React.ReactNode;
 }

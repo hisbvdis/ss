@@ -4,7 +4,7 @@ import { useId } from "react";
 import styles from "./styles.module.css";
 
 
-export default function RequiredInput(props:Props) {
+export default function RequiredInput(props:IProps) {
   const { name=useId(), isValidIf=false, checked=false } = props;
 
   return (
@@ -20,8 +20,9 @@ export default function RequiredInput(props:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   name: string;
-  isValidIf: boolean;
+  isValidIf?: boolean;
   checked: boolean;
+  required: boolean;
 }

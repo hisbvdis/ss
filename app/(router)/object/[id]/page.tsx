@@ -3,7 +3,7 @@ import { Object } from "@/app/_pages/Object";
 // -----------------------------------------------------------------------------
 
 
-export default async function ObjectPage({params, searchParams}:Props) {
+export default async function ObjectPage({params, searchParams}:IProps) {
   const object = await getObjectById(Number(params.id));
 
   return (
@@ -11,7 +11,7 @@ export default async function ObjectPage({params, searchParams}:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   params: { id: string };
   searchParams: { [key: string]: string };
 }

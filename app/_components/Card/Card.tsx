@@ -3,7 +3,7 @@ import CardHeading from "./CardHeading";
 import CardSection from "./CardSeciton";
 import styles from "./styles.module.css";
 
-export default function Card(props:Props) {
+export default function Card(props:IProps) {
   const { className, children, style } = props;
   // const { heading } = props;
 
@@ -18,7 +18,7 @@ export default function Card(props:Props) {
 Card.Heading = CardHeading;
 Card.Section = CardSection;
 
-interface Props {
+interface IProps {
   className?: string,
   children?: React.ReactNode,
   style?: React.CSSProperties,

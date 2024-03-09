@@ -6,7 +6,7 @@ import FieldSetLegend from "./FieldSetLegend";
 import styles from "./styles.module.css";
 
 
-export default function FieldSet(props:Props) {
+export default function FieldSet(props:IProps) {
   const { children, className, style, row } = props;
   const legendId = useId();
 
@@ -23,16 +23,16 @@ export default function FieldSet(props:Props) {
   )
 }
 
-export const FieldSetContext = createContext<FieldSetContextType>({});
+export const FieldSetContext = createContext<IFieldSetContextType>({});
 FieldSet.Legend = FieldSetLegend;
 
-interface Props {
+interface IProps {
   children: React.ReactNode;
   className: string;
   style: React.CSSProperties;
   row: boolean;
 }
 
-interface FieldSetContextType {
+interface IFieldSetContextType {
   legendId?: string;
 }

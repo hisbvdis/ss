@@ -4,7 +4,7 @@ import { useContext } from "react";
 // -----------------------------------------------------------------------------
 import { CatalogContext } from "../Catalog";
 import { Card } from "@/app/_components/Card";
-import { MapPin } from "@/app/_components/Icons";
+import { MapPin } from "@/app/_icons";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 // -----------------------------------------------------------------------------
 import { useManageSearchParams } from "@/app/_utils/useManageSearchParams";

@@ -2,7 +2,7 @@
 import { useId, createContext, useEffect, useRef, FormEvent } from "react";
 
 
-export default function Form(props:Props) {
+export default function Form(props:IProps) {
   const { onSubmit=(e=>e), noEnterSubmit, ctrlEnterSubmit, action, noValidate, method } = props;
   const { className, id, style, children } = props;
   const formRef = useRef<HTMLFormElement>(null);
@@ -49,9 +49,9 @@ export default function Form(props:Props) {
   )
 }
 
-export const FormContext = createContext<FormContextType>({});
+export const FormContext = createContext<IFormContextType>({});
 
-interface Props {
+interface IProps {
   onSubmit?: React.FormEventHandler;
   action?: string;
   noEnterSubmit?: boolean;
@@ -64,6 +64,6 @@ interface Props {
   children?: React.ReactNode;
 }
 
-interface FormContextType {
+interface IFormContextType {
   formHeadingId?: string;
 }

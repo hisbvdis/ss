@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./styles.module.css";
 
 
-export default function Menu(props:Props) {
+export default function Menu(props:IProps) {
   const { isMenu, items, value } = props;
   const { className, style } = props;
   const { onSelect } = props;
@@ -42,7 +42,7 @@ export default function Menu(props:Props) {
     if (itemRect.bottom > listRect.bottom) listRef.current.scrollTo({top: itemElem.offsetTop + itemRect.height - listRect.height});
   }
 
-  const handlePointerDown = (e) => {
+  const handlePointerDown = (e:React.PointerEvent<HTMLLIElement>) => {
     if (e.pointerId !== 1) return;
     onSelect(focusIndex);
   }
@@ -79,7 +79,7 @@ export default function Menu(props:Props) {
   )
 }
 
-interface Props {
+interface IProps {
   isMenu: boolean;
   items: Item[];
   value: string;
