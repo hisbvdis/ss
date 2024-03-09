@@ -1,11 +1,11 @@
 import { SectionEdit } from "@/app/_pages/SectionEdit";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 // -----------------------------------------------------------------------------
-import { getEmptySection, getSectionById } from "@/app/(router)/api/sections/requests"
+import { getEmptySection, getSectionById } from "@/app/_db/section";
 
 
 export default async function SectionEditPage({params}:{params: {id:number | "add"}}) {
-  const section = (params.id === "add") ? await getEmptySection() : await getSectionById(params.id);
+  const section = (params.id === "add") ? await getEmptySection() : await getSectionById(Number(params.id));
 
   return (
     <div className="container  page">

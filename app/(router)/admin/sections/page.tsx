@@ -4,7 +4,7 @@ import { Card } from "@/app/_components/Card";
 import { DelBtn } from "@/app/_components/DelBtn";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 // -----------------------------------------------------------------------------
-import { deleteSectionById, getSectionsByFilters } from "@/app/(router)/api/sections/requests";
+import { deleteSectionById, getSectionsByFilters } from "@/app/_db/section";
 
 
 export default async function SectionListPage() {

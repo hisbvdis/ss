@@ -12,7 +12,7 @@ import { RequiredInput } from "@/app/_components/RequiredInput";
 import { Checkbox, CheckboxGroup, Radio, RadioGroup } from "@/app/_components/Choice";
 // -----------------------------------------------------------------------------
 import { ObjectEditContext } from "../ObjectEdit";
-import { getSectionsByFilters } from "@/app/(router)/api/sections/requests";
+import { getSectionsByFilters } from "@/app/_db/section";
 
 
 export default function Sections(props) {

@@ -17,7 +17,7 @@ import { Radio, RadioGroup } from "@/app/_components/Choice";
 // -----------------------------------------------------------------------------
 import { ISection } from "@/app/_types/types";
 import { getSpecsByFilters } from "@/app/_db/spec";
-import { deleteSectionById, upsertSection } from "@/app/(router)/api/sections/requests";
+import { deleteSectionById, upsertSection } from "@/app/_db/section";
 
 
 export default function SectionEdit(props: {init: ISection}) {
@@ -53,8 +53,10 @@ export default function SectionEdit(props: {init: ISection}) {
     const { id } = await upsertSection(state, props.init);
     if (e.nativeEvent.submitter?.dataset?.leavePage) {
       router.push("/admin/sections");
+      router.refresh();
     } else {
       router.replace(`/admin/sections/${id}`, {scroll: false});
+      router.refresh();
     }
   }
 
