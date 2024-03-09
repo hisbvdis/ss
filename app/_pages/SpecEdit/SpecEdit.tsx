@@ -12,7 +12,7 @@ import { Control } from "@/app/_components/Control";
 import { InputAddon } from "@/app/_components/InputAddon";
 import { Radio, RadioGroup } from "@/app/_components/Choice";
 // -----------------------------------------------------------------------------
-import { upsertSpec, deleteSpecById } from "@/app/(router)/api/specs/requests";
+import { deleteSpecById, upsertSpec } from "@/app/_db/spec";
 import { ISpec } from "@/app/_types/types";
 
 
@@ -54,8 +54,10 @@ export default function SpecEdit(props:{init: ISpec}) {
     const { id } = await upsertSpec(state, props.init);
     if (e.nativeEvent.submitter?.dataset?.leavePage) {
       router.push("/admin/specs");
+      router.refresh();
     } else {
       router.replace(`/admin/specs/${id}`, {scroll: false});
+      router.refresh();
     }
   }
 

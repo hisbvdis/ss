@@ -16,7 +16,7 @@ import { InputAddon } from "@/app/_components/InputAddon";
 import { Radio, RadioGroup } from "@/app/_components/Choice";
 // -----------------------------------------------------------------------------
 import { ISection } from "@/app/_types/types";
-import { getSpecsByFilters } from "@/app/(router)/api/specs/requests";
+import { getSpecsByFilters } from "@/app/_db/spec";
 import { deleteSectionById, upsertSection } from "@/app/(router)/api/sections/requests";
 
 
@@ -107,7 +107,7 @@ export default function SectionEdit(props: {init: ISection}) {
             onChange={handleSpecs.add}
             placeholder="Добавить характеристику"
             requestItemsOnFirstTouch={async () =>
-              (await getSpecsByFilters({objectType: state.type}))
+              (await getSpecsByFilters({objectType: state.object_type}))
                 ?.map((spec) => ({id: spec.id, text: spec.name_service, data: spec}))
             }
           />

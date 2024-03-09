@@ -4,7 +4,7 @@ import { Card } from "@/app/_components/Card";
 import { DelBtn } from "@/app/_components/DelBtn";
 import { Breadcrumbs } from "@/app/_components/Breadcrumbs";
 // -----------------------------------------------------------------------------
-import { deleteSpecById, getSpecsByFilters } from "@/app/(router)/api/specs/requests";
+import { deleteSpecById, getSpecsByFilters } from "@/app/_db/spec";
 
 
 export default async function SpecListPage() {
