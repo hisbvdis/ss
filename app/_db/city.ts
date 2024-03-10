@@ -1,10 +1,11 @@
 "use server";
 import { prisma } from "@/prisma/client.prisma";
+import { city } from "@prisma/client";
 import { unstable_cache } from "next/cache";
 
 
 export const getCitiesByFilters = unstable_cache(
-  async (filters:IFilters={}) => {
+  async (filters:IFilters={}): Promise<city[]> => {
     const name = filters.name ?? undefined;
     const dbData = await prisma.$queryRawUnsafe(`
       SELECT

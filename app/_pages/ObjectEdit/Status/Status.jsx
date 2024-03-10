@@ -51,11 +51,11 @@ export default function Status(props) {
           onChange={handleStatusChange}
           disabled={state.status_inherit}
           items={[
-            {id: "works", text: "Работает"},
-            {id: "opening_soon", text: "Скоро открытие"},
-            {id: "might_not_work", text: "Возможно, не работает"},
-            {id: "temp_not_work", text: "Временно не работает"},
-            {id: "closed_forever", text: "Закрыто навсегда"},
+            {id: "works", label: "Работает"},
+            {id: "opening_soon", label: "Скоро открытие"},
+            {id: "might_not_work", label: "Возможно, не работает"},
+            {id: "temp_not_work", label: "Временно не работает"},
+            {id: "closed_forever", label: "Закрыто навсегда"},
           ]}
         />
       </Control>
@@ -84,7 +84,7 @@ export default function Status(props) {
         <Select
           name="status_instead_id"
           value={state?.status_instead_id}
-          text={state.statusInstead?.name_full}
+          label={state.statusInstead?.name_full}
           onChange={handleStateChange.value}
           onChangeData={(data) => setState(produce((state) => {state.statusInstead = data}))}
           isAutocomplete
@@ -93,7 +93,7 @@ export default function Status(props) {
           requestItemsOnInputChange={
             async (value) => (await getObjectsByFilters({city: state.city_id, type: state.type, query: value}))
             ?.filter((object) => object.id !== state.id)
-            ?.map((object) => ({id: object.id, text: object.name_full, data: object}))
+            ?.map((object) => ({id: object.id, label: object.name_full, data: object}))
           }
         />
       </Control>

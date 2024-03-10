@@ -88,7 +88,7 @@ export default function Address(props) {
           <Select
             name="city_id"
             value={state.city_id}
-            text={state?.city?.name}
+            label={state?.city?.name}
             onChange={handleStateChange.value}
             onChangeData={(data) => setState(produce((state) => {state.city = data}))}
             isAutocomplete={true}
@@ -96,7 +96,7 @@ export default function Address(props) {
             placeholder="Введите название"
             requestItemsOnInputChange={async (name) => (
               await getCitiesByFilters({name})).map((city) => ({
-              id: city.id, text: city.name, text2: city.country_name, text3: city.admin1_name, text4: city.admin2_name, data: city
+              id: city.id, label: city.name, label2: city.country_name, label3: city.admin1_name, label4: city.admin2_name, data: city
             }))}
           />
           <Control className="mt20">
@@ -106,7 +106,7 @@ export default function Address(props) {
             <Select
               name="parent_id"
               value={state?.parent_id}
-              text={state?.parent?.name_full}
+              label={state?.parent?.name_full}
               onChangeData={(data) => setInheritedData(data, setState)}
               isAutocomplete
               placeholder="Введите название"
@@ -114,7 +114,7 @@ export default function Address(props) {
               requestItemsOnInputChange={async (value) => (
                 await getObjectsByFilters({cityId: state.city_id, type: "org", query: value}))
                   .filter((org) => org.id !== state.id)
-                  .map((org) => ({id: org.id, text: org.name_full, data: org})
+                  .map((org) => ({id: org.id, label: org.name_full, data: org})
               )}
             />
           </Control>

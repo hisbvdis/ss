@@ -110,7 +110,7 @@ export default function SectionEdit(props: {init: ISection}) {
             placeholder="Добавить характеристику"
             requestItemsOnFirstTouch={async () =>
               (await getSpecsByFilters({objectType: state.object_type}))
-                ?.map((spec) => ({id: spec.id, text: spec.name_service, data: spec}))
+                ?.map((spec) => ({id: spec.id, label: spec.name_service, data: spec}))
             }
           />
           <ul className="mt20" style={{paddingInlineStart: 0}}>

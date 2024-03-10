@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useEffect, useRef, useState } from "react";
 // -----------------------------------------------------------------------------
 import { useDebounce } from "@/app/_utils/useDebounce";
 // -----------------------------------------------------------------------------
@@ -7,25 +7,27 @@ import { Menu } from "@/app/_components/Menu";
 import { Input } from "@/app/_components/Input";
 import { Button } from "@/app/_components/Button";
 import { ArrowDownIcon, CloseIcon } from "@/app/_icons";
+// -----------------------------------------------------------------------------
 import styles from "./styles.module.css";
 
 
 export default function Select(props:IProps) {
-  const { name, value, text } = props;
   const { requestItemsOnInputChange, requestItemsOnFirstTouch, requestMinInputLenght=3 } = props;
   const { onChange=(e=>e), onChangeData=(e=>e) } = props;
   const { placeholder, disabled, isAutocomplete } = props;
-  const [ localItems, setLocalItems ] = useState(props.items);
-  const [ suggestions, setSuggestions ] = useState(localItems ?? []);
-  const [ selectedItem, setSelectedItem ] = useState(isAutocomplete ? null : localItems?.find((item) => item.id === value));
-  const [ inputValue, setInputValue ] = useState(isAutocomplete ? text : selectedItem?.text);
+  const [ localItems, setLocalItems ] = useState(props.items ?? []);
+  const [ suggestions, setSuggestions ] = useState(localItems);
+  const [ selectedItem, setSelectedItem ] = useState<Item | undefined>(isAutocomplete ? {id: props.value, label: props.label} : localItems?.find((item) => item.id === props.value));
+  const [ inputValue, setInputValue ] = useState(selectedItem?.label);
   const [ isShowMenu, setIsShowMenu ] = useState(false);
   const debounce = useDebounce();
-  const inputRef = useRef<HTMLInputElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {isAutocomplete ? null : setSelectedItem(localItems?.find((item) => item.id === value))}, [value]);
-  useEffect(() => {isAutocomplete ? setInputValue(text) : null}, [text]);
-  useEffect(() => {isAutocomplete ? null : setInputValue(selectedItem?.text)}, [selectedItem]);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const selectRef = useRef<HTMLSelectElement>(null);
+  useEffect(() => {isAutocomplete ? null : setSelectedItem(localItems?.find((item) => item.id === props.value))}, [props.value]);
+  useEffect(() => {selectRef.current?.dispatchEvent(new Event("change", {bubbles: true}))}, [selectedItem]);
+  useEffect(() => {isAutocomplete ? null : setInputValue(selectedItem?.label)}, [selectedItem]);
+  useEffect(() => {isAutocomplete ? setInputValue(props.label) : null}, [props.label]);
 
   const handleInputClick = async () => {
     isAutocomplete ? setIsShowMenu(true) : setIsShowMenu(!isShowMenu);
@@ -54,29 +56,30 @@ export default function Select(props:IProps) {
       }, 300);
       setIsShowMenu(true);
     } else {
-      setSuggestions(localItems?.filter(({text}) => text.toLowerCase().includes(e.target.value?.toLowerCase())));
+      setSuggestions(localItems?.filter(({label}) => label?.toLowerCase().includes(e.target.value?.toLowerCase())));
       setIsShowMenu(true);
     }
   }
 
   const handleDocumentMousedown = (e:MouseEvent) => {
-    if (e.target?.closest("." + styles["select"]) === divRef.current) return;
+    if ((e.target as HTMLElement).closest("." + styles["select"]) === divRef.current) return;
     setIsShowMenu(false);
     setSuggestions(localItems ?? []);
-    isAutocomplete ? setInputValue(text) : setInputValue(selectedItem?.text);
+    isAutocomplete ? setInputValue(props.label) : setInputValue(selectedItem?.label);
   }
 
   const handleClearBtnClick = () => {
     setInputValue("");
-    onChange({target: {name, value: ""}});
-    onChangeData(null);
+    setSelectedItem({id: "", label: ""});
+    // onChange({target: {name, value: ""}});
+    // onChangeData(null);
     inputRef.current?.focus();
   }
 
   const handleMenuSelect = (index:number) => {
     const item = suggestions?.[index];
-    // !isAutocomplete ?? setSelectedItem(item);
-    onChange({target: {name, value: item?.id}});
+    setSelectedItem(item);
+    // onChange({target: {name, value: item?.id}});
     onChangeData(item?.data);
     setSuggestions(localItems ?? []);
     setIsShowMenu(false);
@@ -87,7 +90,7 @@ export default function Select(props:IProps) {
     switch (e.code) {
       case "Escape":
       case "Tab": {
-        isAutocomplete ? setInputValue(text) : setInputValue(selectedItem?.text);
+        isAutocomplete ? setInputValue(props.label) : setInputValue(selectedItem?.label);
         setSuggestions(localItems ?? []);
         setIsShowMenu(false);
         break;
@@ -100,10 +103,10 @@ export default function Select(props:IProps) {
         if (isAutocomplete) return;
         if (isShowMenu) return;
         e.preventDefault();
-        if (localItems?.length === 0 || !selectedItem || selectedItem?.index === 0) return;
+        if (localItems?.length === 0 || !selectedItem || !selectedItem.index || selectedItem?.index === 0) return;
         const item = localItems?.[selectedItem?.index - 1];
         setSelectedItem(item);
-        onChange({target: {name, value: item?.id}});
+        // onChange({target: {name, value: item?.id}});
         onChangeData(item?.data);
         break;
       }
@@ -111,10 +114,10 @@ export default function Select(props:IProps) {
         if (isAutocomplete) return;
         if (isShowMenu) return;
         e.preventDefault();
-        if (localItems?.length === 0 || !selectedItem || selectedItem?.index === localItems?.length - 1) return;
+        if (localItems?.length === 0 || !selectedItem || !selectedItem.index || selectedItem?.index === localItems?.length - 1) return;
         const item = localItems?.[selectedItem?.index + 1];
         setSelectedItem(item);
-        onChange({target: {name, value: item?.id}});
+        // onChange({target: {name, value: item?.id}});
         onChangeData(item?.data);
         break;
       }
@@ -154,7 +157,7 @@ export default function Select(props:IProps) {
             />
           </Button>
         }
-        {isAutocomplete && value ?
+        {isAutocomplete && props.value ?
           <Button className={styles["select__btn"]} onClick={handleClearBtnClick} disabled={disabled}>
             <CloseIcon
               width="15"
@@ -164,7 +167,10 @@ export default function Select(props:IProps) {
           </Button>
         : null}
       </p>
-      <Menu isMenu={isShowMenu} value={value} items={suggestions} onSelect={handleMenuSelect}/>
+      <select className={styles["select__nativeSelect"]} name={props.name} value={props.value || ""} onChange={onChange} ref={selectRef}>
+        <option value={selectedItem?.id ?? ""}></option>
+      </select>
+      <Menu isMenu={isShowMenu} value={props.value} items={suggestions} onSelect={handleMenuSelect}/>
     </div>
   )
 }
@@ -172,24 +178,24 @@ export default function Select(props:IProps) {
 interface IProps {
   isAutocomplete?: boolean;
   name?: string;
-  value: string;
-  text?: string;
-  items: Item[];
+  value?: number | string;
+  label?: string;
+  items?: Item[];
   requestItemsOnInputChange?: (value:string) => Promise<Item[]>;
   requestItemsOnFirstTouch?: (value:string) => Promise<Item[]>;
   requestMinInputLenght?: number;
-  onChange?: (e:ChangeEvent) => ChangeEvent;
+  onChange?: ChangeEventHandler<HTMLSelectElement>;
   onChangeData?: (data: any) => any;
   placeholder?: string;
   disabled?: boolean;
 }
 
 interface Item {
-  id: string;
-  text: string;
-  text2?: string;
-  text3?: string;
-  text4?: string;
+  id?: number | string;
+  label?: string;
+  label2?: string;
+  label3?: string;
+  label4?: string;
   data?: any;
-  index: number;
+  index?: number;
 }

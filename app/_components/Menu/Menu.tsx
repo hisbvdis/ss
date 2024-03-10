@@ -67,12 +67,12 @@ export default function Menu(props:IProps) {
   if (!isMenu) return null;
   return (
     <ul className={clsx(styles["menu"], className)} style={style} ref={listRef}>
-      {items?.map(({text, text2, text3, text4}, i) => (
+      {items?.map(({label, label2, label3, label4}, i) => (
         <li key={i} className={clsx(styles["menu__item"], i === focusIndex && styles["menu__item--focus"])} onPointerDown={handlePointerDown} onPointerEnter={() => setFocusIndex(i)}>
-          <p>{text}</p>
-          <p style={{color: "#999", fontSize: "0.95em"}}>{text2}</p>
-          <p style={{color: "#999", fontSize: "0.95em"}}>{text3}</p>
-          <p style={{color: "#999", fontSize: "0.95em"}}>{text4}</p>
+          <p>{label}</p>
+          <p style={{color: "#999", fontSize: "0.95em"}}>{label2}</p>
+          <p style={{color: "#999", fontSize: "0.95em"}}>{label3}</p>
+          <p style={{color: "#999", fontSize: "0.95em"}}>{label4}</p>
         </li>
       ))}
     </ul>
@@ -82,16 +82,18 @@ export default function Menu(props:IProps) {
 interface IProps {
   isMenu: boolean;
   items: Item[];
-  value: string;
+  value?: number | string;
   className?: string;
   style?: React.CSSProperties;
   onSelect: (index:number) => void;
 }
 
 interface Item {
-  id: string;
-  text: string;
-  text2?: string;
-  text3?: string;
-  text4?: string;
+  id?: number | string;
+  label?: string;
+  label2?: string;
+  label3?: string;
+  label4?: string;
+  data?: any;
+  index?: number;
 }

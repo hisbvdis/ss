@@ -48,3 +48,15 @@
 .select__btn--arrow {
   pointer-events: none;
 }
+
+.select__nativeSelect {
+  position: absolute;
+
+  width: 0;
+  height: 0;
+
+  white-space: nowrap;
+
+  clip-path: inset(50%);
+  overflow: hidden;
+}
