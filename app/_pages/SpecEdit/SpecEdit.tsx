@@ -23,28 +23,28 @@ export default function SpecEdit(props:{init: ISpec}) {
 
   const handleStateChange = {
     value: (e:React.ChangeEvent<HTMLInputElement>) => {
-      setState(produce(state, (draft) => {
-        draft[e.target.name] = e.target.value;
+      setState(produce((state) => {
+        state[e.target.name] = e.target.value;
       }));
     }
   }
 
   const handleOptions = {
     add: () => {
-      setState(produce(state, (draft) => {
-        if (!draft.options) draft.options = [];
-        draft.options.push({name: "", order: draft.options.length, localId: crypto.randomUUID()});
+      setState(produce((state) => {
+        if (!state.options) state.options = [];
+        state.options.push({name: "", order: state.options.length, localId: crypto.randomUUID()});
       }))
     },
     change: (e:React.ChangeEvent<HTMLInputElement>, localId:string) => {
-      setState(produce(state, (draft) => {
-        const option = draft.options?.find((option) => option.localId === localId);
+      setState(produce((state) => {
+        const option = state.options?.find((option) => option.localId === localId);
         if (option) option.name = e.target.value;
       }))
     },
     delete: (localId:string) => {
-      setState(produce(state, (draft) => {
-        draft.options = draft.options?.filter((option) => option.localId !== localId);
+      setState(produce((state) => {
+        state.options = state.options?.filter((option) => option.localId !== localId);
       }));
     }
   }

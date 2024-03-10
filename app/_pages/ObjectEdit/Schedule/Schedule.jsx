@@ -17,14 +17,14 @@ export default function Schedule(props) {
 
   const handleSchedule = {
     changeIsWork: (e) => {
-      setState(produce(state, (draft) => {
-        draft.schedule[e.target.name].isWork = e.target.checked;
-        if (!e.target.checked) draft.schedule[e.target.name].time = "";
+      setState(produce((state) => {
+        state.schedule[e.target.name].isWork = e.target.checked;
+        if (!e.target.checked) state.schedule[e.target.name].time = "";
       }));
     },
     changeTime: (e) => {
-      setState(produce(state, (draft) => {
-        draft.schedule[e.target.name].time = e.target.value;
+      setState(produce((state) => {
+        state.schedule[e.target.name].time = e.target.value;
       }));
     },
     formatTime: (e) => {
@@ -39,27 +39,27 @@ export default function Schedule(props) {
         }
       });
       if (!from || !to) return;
-      setState(produce(state, (draft) => {
-        draft.schedule[e.target.name].time = [from.string, to.string].join(" - ");
-        draft.schedule[e.target.name].from = from.min;
-        draft.schedule[e.target.name].to = to.min;
+      setState(produce((state) => {
+        state.schedule[e.target.name].time = [from.string, to.string].join(" - ");
+        state.schedule[e.target.name].from = from.min;
+        state.schedule[e.target.name].to = to.min;
       }));
     },
     copyToAll: (isWork, time, from, to) => {
-      setState(produce(state, (draft) => {
-        draft.schedule = draft.schedule.map((day) => ({...day, isWork, time, from, to}));
+      setState(produce((state) => {
+        state.schedule = state.schedule.map((day) => ({...day, isWork, time, from, to}));
       }));
     },
     change247: (e) => {
-      setState(produce(state, (draft) => {
-        draft.schedule_247 = e.target.checked;
+      setState(produce((state) => {
+        state.schedule_247 = e.target.checked;
         if (e.target.checked) {
-          draft.schedule = draft.schedule.map((day) => ({...day, isWork: true, time: "0:00 - 24:00", from: 0, to: 1440}));
+          state.schedule = state.schedule.map((day) => ({...day, isWork: true, time: "0:00 - 24:00", from: 0, to: 1440}));
         }
       }));
     },
     setDate: (date) => {
-      setState(produce(state, (produce) => {
+      setState(produce((produce) => {
         if (date === "") {
           produce.schedule_date = "";
         } else {
@@ -68,13 +68,13 @@ export default function Schedule(props) {
       }));
     },
     cleanAll: () => {
-      setState(produce(state, (draft) => {
-        draft.schedule_inherit = false;
-        draft.schedule_247 = false;
-        draft.schedule = Array(7).fill().map((_,i) => ({day_num: i}));
-        draft.schedule_date = "";
-        draft.schedule_source = "";
-        draft.schedule_comment = "";
+      setState(produce((state) => {
+        state.schedule_inherit = false;
+        state.schedule_247 = false;
+        state.schedule = Array(7).fill().map((_,i) => ({day_num: i}));
+        state.schedule_date = "";
+        state.schedule_source = "";
+        state.schedule_comment = "";
       }));
     }
   }

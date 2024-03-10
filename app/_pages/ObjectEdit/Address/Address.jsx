@@ -32,9 +32,9 @@ export default function Address(props) {
         street: state.address
       });
       if (!result) return;
-      setState(produce(state, (draft) => {
-        draft.coord_lat = result.lat;
-        draft.coord_lon = result.lon;
+      setState(produce((state) => {
+        state.coord_lat = result.lat;
+        state.coord_lon = result.lon;
       }));
       mapInstance.setView([result.lat, result.lon]);
       mapInstance.setZoom(17);
@@ -48,32 +48,32 @@ export default function Address(props) {
       if (!result) return;
       const road = result.address.road;
       const house = result.address.house_number;
-      setState(produce(state, (draft) => {
-        draft.address = `${road}${house ? `, ${house}` : ""}`;
+      setState(produce((state) => {
+        state.address = `${road}${house ? `, ${house}` : ""}`;
       }));
     },
     markerDragEnd: (e) => {
       const { lat, lng } = e.target._latlng;
-      setState(produce(state, (draft) => {
-        draft.coord_lat = lat;
-        draft.coord_lon = lng;
+      setState(produce((state) => {
+        state.coord_lat = lat;
+        state.coord_lon = lng;
       }));
     },
     rightClick: (e) => {
       const { lat, lng } = e.latlng;
-      setState(produce(state, (draft) => {
-        if (draft.coord_inherit) return;
-        draft.coord_lat = lat;
-        draft.coord_lon = lng;
+      setState(produce((state) => {
+        if (state.coord_inherit) return;
+        state.coord_lat = lat;
+        state.coord_lon = lng;
       }));
     }
   }
 
   useEffect(() => {
     if (!state.coord_inherit) return;
-    setState(produce(state, (draft) => {
-      draft.coord_lat = draft.parent?.coord_lat;
-      draft.coord_lon = draft.parent?.coord_lon;
+    setState(produce((state) => {
+      state.coord_lat = state.parent?.coord_lat;
+      state.coord_lon = state.parent?.coord_lon;
     }))
   }, [state.coord_inherit])
 
@@ -90,7 +90,7 @@ export default function Address(props) {
             value={state.city_id}
             text={state?.city?.name}
             onChange={handleStateChange.value}
-            onChangeData={(data) => setState(produce(state, (draft) => {draft.city = data}))}
+            onChangeData={(data) => setState(produce((state) => {state.city = data}))}
             isAutocomplete={true}
             disabled={state.parent_id}
             placeholder="Введите название"
@@ -107,7 +107,7 @@ export default function Address(props) {
               name="parent_id"
               value={state?.parent_id}
               text={state?.parent?.name_full}
-              onChange={(e) => setInheritedData(e.target.data, setState)}
+              onChangeData={(data) => setInheritedData(data, setState)}
               isAutocomplete
               placeholder="Введите название"
               disabled={!state.city_id}

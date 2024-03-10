@@ -27,23 +27,23 @@ export default function SectionEdit(props: {init: ISection}) {
 
   const handleStateChange = {
     value: (e:React.ChangeEvent<HTMLInputElement>) => {
-      setState(produce(state, (draft) => {
-        draft[e.target.name] = e.target.value;
+      setState(produce((state) => {
+        state[e.target.name] = e.target.value;
       }))
     }
   }
 
   const handleSpecs = {
-    add: (e:React.ChangeEvent<HTMLInputElement & {data: spec}>) => {
-      if (!e.target.value || state.specs?.some((stateSpec) => String(stateSpec.id) === e.target.value)) return;
-      setState(produce(state, (draft) => {
-        if (!draft.specs) draft.specs = [];
-        draft.specs.push(e.target.data);
+    add: (data: spec) => {
+      if (!data.id || state.specs?.some((stateSpec) => stateSpec.id === data.id)) return;
+      setState(produce((state) => {
+        if (!state.specs) state.specs = [];
+        state.specs.push(data);
       }))
     },
     delete: (id:number) => {
-      setState(produce(state, (draft) => {
-        draft.specs = draft.specs?.filter((spec) => spec.id !== id);
+      setState(produce((state) => {
+        state.specs = state.specs?.filter((spec) => spec.id !== id);
       }))
     },
   }
@@ -106,7 +106,7 @@ export default function SectionEdit(props: {init: ISection}) {
         <Card.Section>
           <Select
             isAutocomplete
-            onChange={handleSpecs.add}
+            onChangeData={handleSpecs.add}
             placeholder="Добавить характеристику"
             requestItemsOnFirstTouch={async () =>
               (await getSpecsByFilters({objectType: state.object_type}))

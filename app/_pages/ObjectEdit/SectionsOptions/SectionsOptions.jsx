@@ -21,36 +21,36 @@ export default function Sections(props) {
   const handleSections = {
     add: (e) => {
       if (!e.target.value || state.sections?.some((section) => section.id === e.target.value)) return;
-      setState(produce(state, (draft) => {
-        if (!draft.sections) draft.sections = [];
-        draft.sections.push(e.target.data);
+      setState(produce((state) => {
+        if (!state.sections) state.sections = [];
+        state.sections.push(e.target.data);
       }));
     },
     delete: (section) => {
-      setState(produce(state, (draft) => {
-        draft.sections = draft.sections.filter(({id}) => id !== section.id);
-        const optionsOfRemainingSections = draft.sections.flatMap(({specs}) => specs.flatMap(({spec}) => spec.options.flatMap(({id}) => id)));
-        draft.options = draft.options?.filter(({id}) => optionsOfRemainingSections.includes(id));
+      setState(produce((state) => {
+        state.sections = state.sections.filter(({id}) => id !== section.id);
+        const optionsOfRemainingSections = state.sections.flatMap(({specs}) => specs.flatMap(({spec}) => spec.options.flatMap(({id}) => id)));
+        state.options = state.options?.filter(({id}) => optionsOfRemainingSections.includes(id));
       }));
     },
   };
 
   const handleOptions = {
     changeCheckbox: (e, opt) => {
-      setState(produce(state, (draft) => {
-        if (!draft.options) draft.options = [];
+      setState(produce((state) => {
+        if (!state.options) state.options = [];
         if (e.target.checked) {
-          draft.options = draft.options.concat(opt);
+          state.options = state.options.concat(opt);
         } else {
-          draft.options = draft.options.filter(({id}) => id !== opt.id);
+          state.options = state.options.filter(({id}) => id !== opt.id);
         }
       }))
     },
     changeRadio: (spec, opt) => {
-      setState(produce(state, (draft) => {
-        if (!draft.options) draft.options = [];
-        draft.options = draft.options?.filter((draftOpt) => !spec.options.map((opt) => opt.id).includes(draftOpt.id));
-        draft.options = draft.options?.concat(opt);
+      setState(produce((state) => {
+        if (!state.options) state.options = [];
+        state.options = state.options?.filter((stateOpt) => !spec.options.map((opt) => opt.id).includes(stateOpt.id));
+        state.options = state.options?.concat(opt);
       }));
     },
   }

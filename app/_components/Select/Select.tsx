@@ -22,6 +22,7 @@ export default function Select(props:IProps) {
   const [ isShowMenu, setIsShowMenu ] = useState(false);
   const debounce = useDebounce();
   const inputRef = useRef<HTMLInputElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
   useEffect(() => {isAutocomplete ? null : setSelectedItem(localItems?.find((item) => item.id === value))}, [value]);
   useEffect(() => {isAutocomplete ? setInputValue(text) : null}, [text]);
   useEffect(() => {isAutocomplete ? null : setInputValue(selectedItem?.text)}, [selectedItem]);
@@ -59,7 +60,7 @@ export default function Select(props:IProps) {
   }
 
   const handleDocumentMousedown = (e:MouseEvent) => {
-    if (e.target?.closest("." + styles["select"])) return;
+    if (e.target?.closest("." + styles["select"]) === divRef.current) return;
     setIsShowMenu(false);
     setSuggestions(localItems ?? []);
     isAutocomplete ? setInputValue(text) : setInputValue(selectedItem?.text);
@@ -75,7 +76,7 @@ export default function Select(props:IProps) {
   const handleMenuSelect = (index:number) => {
     const item = suggestions?.[index];
     // !isAutocomplete ?? setSelectedItem(item);
-    onChange({target: {name, value: item?.id, data: item?.data}});
+    onChange({target: {name, value: item?.id}});
     onChangeData(item?.data);
     setSuggestions(localItems ?? []);
     setIsShowMenu(false);
@@ -102,7 +103,7 @@ export default function Select(props:IProps) {
         if (localItems?.length === 0 || !selectedItem || selectedItem?.index === 0) return;
         const item = localItems?.[selectedItem?.index - 1];
         setSelectedItem(item);
-        onChange({target: {name, value: item?.id, data: item?.data}});
+        onChange({target: {name, value: item?.id}});
         onChangeData(item?.data);
         break;
       }
@@ -113,7 +114,7 @@ export default function Select(props:IProps) {
         if (localItems?.length === 0 || !selectedItem || selectedItem?.index === localItems?.length - 1) return;
         const item = localItems?.[selectedItem?.index + 1];
         setSelectedItem(item);
-        onChange({target: {name, value: item?.id, data: item?.data}});
+        onChange({target: {name, value: item?.id}});
         onChangeData(item?.data);
         break;
       }
@@ -132,7 +133,7 @@ export default function Select(props:IProps) {
   }
 
   return (
-    <div className={clsx(styles["select"], disabled && styles["select--disabled"])}>
+    <div className={clsx(styles["select"], disabled && styles["select--disabled"])} ref={divRef}>
       <p className={styles["select__inputWrapper"]}>
         <Input
           className={clsx(styles["select__input"], isAutocomplete && styles["select__input--isAutocomplete"])}

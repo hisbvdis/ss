@@ -19,15 +19,15 @@ export default function Photos(props) {
       const newIndexes = Array(10).fill().map((_, i) => i).filter((i) => !existingIndexes.includes(i)).toSorted((a,b) => a-b);
       const addedPhotos = Array.from(e.target.files).slice(0, 10 - statePhotos.length).map((file) => ({localId: crypto.randomUUID(), name: `object_${state.id ?? "ID"}_${newIndexes.shift()}.webp`, file, blob: URL.createObjectURL(file)}));
       const allPhotos = statePhotos.concat(addedPhotos).map((photo, i) => ({...photo, order: i}));
-      setState(produce(state, (draft) => {draft.photos = allPhotos}));
+      setState(produce((state) => {state.photos = allPhotos}));
     },
 
     delete: (localId) => {
-      setState(produce(state, (draft) => {draft.photos = draft.photos.filter((photo) => photo.localId !== localId)}));
+      setState(produce((state) => {state.photos = state.photos.filter((photo) => photo.localId !== localId)}));
     },
 
     deleteAll: () => {
-      setState(produce(state, (draft) => {draft.photos = []}));
+      setState(produce((state) => {state.photos = []}));
     },
 
     drag: (e) => {
@@ -37,14 +37,14 @@ export default function Photos(props) {
       const dropzoneIndex = Number(dropzoneNode.dataset.i);
       const dragoState = state.photos.find((photo) => photo.localId === dragoNode.dataset.localid);
       if (e.clientX < dropzoneCenterX) {
-        setState(produce(state, (draft) => {
-          draft.photos = draft.photos.filter(({localId}) => localId !== dragoNode.dataset.localid).toSpliced(dropzoneIndex, 0, dragodraft);
-          draft.photos = draft.photos.map((photo, i) => ({...photo, order: i}))
+        setState(produce((state) => {
+          state.photos = state.photos.filter(({localId}) => localId !== dragoNode.dataset.localid).toSpliced(dropzoneIndex, 0, dragostate);
+          state.photos = state.photos.map((photo, i) => ({...photo, order: i}))
         }))
       } else if (e.clientX > dropzoneCenterX) {
-        setState(produce(state, (draft) => {
-          draft.photos = draft.photos.filter(({localId}) => localId !== dragoNode.dataset.localid).toSpliced(dropzoneIndex + 1, 0, dragodraft);
-          draft.photos = draft.photos.map((photo, i) => ({...photo, order: i}))
+        setState(produce((state) => {
+          state.photos = state.photos.filter(({localId}) => localId !== dragoNode.dataset.localid).toSpliced(dropzoneIndex + 1, 0, dragostate);
+          state.photos = state.photos.map((photo, i) => ({...photo, order: i}))
         }));
       }
     }

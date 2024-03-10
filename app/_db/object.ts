@@ -3,12 +3,13 @@ import { prisma } from "@/prisma/client.prisma";
 import { unstable_cache } from "next/cache";
 import { objectReadProcessing } from "./object.processing";
 import { IObject } from "../_types/types";
+import { format } from "date-fns";
 
 
 export const getObjectsByFilters = unstable_cache(
   async (filters:IFilters={}) => {
     const query = filters.query ?? undefined;
-    const cityId = filters.city ? Number(filters.city) : undefined;
+    const cityId = filters.cityId ? Number(filters.cityId) : undefined;
     const type = filters.type ?? undefined;
     const sectionId = filters.section ? Number(filters.section) : undefined;
     const options = filters.options ?? undefined;
@@ -51,7 +52,7 @@ export const getObjectsByFilters = unstable_cache(
 
 interface IFilters {
   query?: string;
-  city?: string;
+  cityId?: number;
   type?: string;
   section?: string;
   options?: string;

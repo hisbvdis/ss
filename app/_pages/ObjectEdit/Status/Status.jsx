@@ -18,15 +18,15 @@ export default function Status(props) {
   const { className, style } = props;
 
   const handleStatusChange = (e) => {
-    setState(produce(state, (draft) => {
-      draft.status = e.target.value;
+    setState(produce((state) => {
+      state.status = e.target.value;
       if (e.target.value === "works") {
-        draft.status_comment = null;
-        draft.status_confirm = null;
+        state.status_comment = null;
+        state.status_confirm = null;
       }
       if (e.target.value !== "closed_forever") {
-        draft.status_instead_id = null;
-        draft.statusInstead = null;
+        state.status_instead_id = null;
+        state.statusInstead = null;
       }
     }))
   }
@@ -86,7 +86,7 @@ export default function Status(props) {
           value={state?.status_instead_id}
           text={state.statusInstead?.name_full}
           onChange={handleStateChange.value}
-          onChangeData={(data) => setState(produce(state, (draft) => {draft.statusInstead = data}))}
+          onChangeData={(data) => setState(produce((state) => {state.statusInstead = data}))}
           isAutocomplete
           placeholder="Введите название"
           disabled={state.status_inherit || state.status !== "closed_forever"}

@@ -17,30 +17,30 @@ export default function Contacts(props) {
 
   const handleContacts = {
     add: (type) => {
-      setState(produce(state, (draft) => {
-        if (!draft[type]) draft[type] = [];
-        draft[type] = draft[type].concat({
-          order: draft[type].length,
+      setState(produce((state) => {
+        if (!state[type]) state[type] = [];
+        state[type] = state[type].concat({
+          order: state[type].length,
           value: "", localId: crypto.randomUUID(),
         });
       }))
     },
 
     delete: (type, localId) => {
-      setState(produce(state, (draft) => {
-        draft[type] = draft[type].filter((item) => item.localId !== localId);
+      setState(produce((state) => {
+        state[type] = state[type].filter((item) => item.localId !== localId);
       }));
     },
 
     changeValue: (type, e, localId) => {
-      setState(produce(state, (draft) => {
-        draft[type].find((item) => item.localId === localId).value = e.target.value;
+      setState(produce((state) => {
+        state[type].find((item) => item.localId === localId).value = e.target.value;
       }));
     },
 
     changeComment: (type, e, id) => {
-      setState(produce(state, (draft) => {
-        draft[type].find(({localId}) => localId === id).comment = e.target.value;
+      setState(produce((state) => {
+        state[type].find(({localId}) => localId === id).comment = e.target.value;
       }));
     },
   }

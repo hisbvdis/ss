@@ -19,10 +19,10 @@ export default function ObjectEdit(props: {init: IObject, parent?: IObject}) {
 
   const handleStateChange = {
     value: (e:ChangeEvent<HTMLInputElement>) => {
-      setState(produce(state, (draft) => {draft[e.target.name] = e.target.value}));
+      setState(produce((state) => {state[e.target.name] = e.target.value}));
     },
     checked: (e:ChangeEvent<HTMLInputElement>) => {
-      setState(produce(state, (draft) => {draft[e.target.name] = e.target.checked}))
+      setState(produce((state) => {state[e.target.name] = e.target.checked}))
     }
   }
 
