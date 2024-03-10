@@ -91,7 +91,8 @@ export default function Address(props) {
             text={state?.city?.name}
             onChange={handleStateChange.value}
             onChangeData={(data) => setState(produce(state, (draft) => {draft.city = data}))}
-            isAutocomplete disabled={state.parent_id}
+            isAutocomplete={true}
+            disabled={state.parent_id}
             placeholder="Введите название"
             requestItemsOnInputChange={async (name) => (
               await getCitiesByFilters({name})).map((city) => ({

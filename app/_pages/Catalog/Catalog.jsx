@@ -9,9 +9,9 @@ import { Control } from "@/app/_components/Control";
 import { Map, Marker } from "@/app/_components/Map";
 import { Filters, Results, Categories } from "@/app/_pages/Catalog";
 // -----------------------------------------------------------------------------
+import { getCitiesByFilters } from "@/app/_db/city";
 import { useManageSearchParams } from "@/app/_utils/useManageSearchParams";
 import "./styles.css";
-import { getCitiesByFilters } from "@/app/_db/city";
 
 
 export default function Catalog(props) {

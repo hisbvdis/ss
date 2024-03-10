@@ -1,5 +1,5 @@
+import { objectReadProcessing } from "@/app/_db/object.processing";
 import { produce } from "immer";
-import { objectReadProcessing } from "@/app/(router)/api/objects/processing";
 
 export const setInheritedData = (parent, setState) => {
   if (parent) {

@@ -21,7 +21,7 @@ export default function Select(props:IProps) {
   const [ inputValue, setInputValue ] = useState(isAutocomplete ? text : selectedItem?.text);
   const [ isShowMenu, setIsShowMenu ] = useState(false);
   const debounce = useDebounce();
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {isAutocomplete ? null : setSelectedItem(localItems?.find((item) => item.id === value))}, [value]);
   useEffect(() => {isAutocomplete ? setInputValue(text) : null}, [text]);
   useEffect(() => {isAutocomplete ? null : setInputValue(selectedItem?.text)}, [selectedItem]);
@@ -149,7 +149,7 @@ export default function Select(props:IProps) {
         {isAutocomplete ? null :
           <Button className={clsx(styles["select__btn"], styles["select__btn--arrow"])} disabled={disabled} tabIndex={-1}>
             <ArrowDownIcon
-              style={{fill: disabled && "var(--disabled-fontColor)"}}
+              style={{fill: disabled ? "var(--disabled-fontColor)" : "black"}}
             />
           </Button>
         }
@@ -158,7 +158,7 @@ export default function Select(props:IProps) {
             <CloseIcon
               width="15"
               height="15"
-              style={{fill: disabled && "var(--disabled-fontColor)"}}
+              style={{fill: disabled ? "var(--disabled-fontColor)" : "black"}}
             />
           </Button>
         : null}
