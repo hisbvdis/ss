@@ -5,7 +5,7 @@ import { getEmptySpec, getSpecById } from "@/app/_db/spec";
 
 
 export default async function SpecEditPage({params}:{params: {id: string}}) {
-  const spec = (params.id === "add") ? await getEmptySpec() : await getSpecById(params.id);
+  const spec = (params.id === "add") ? await getEmptySpec() : await getSpecById(Number(params.id));
 
   return (
     <div className="container  page">

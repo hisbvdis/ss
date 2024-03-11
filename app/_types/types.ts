@@ -1,20 +1,16 @@
-import { object, object_link, object_on_option, object_on_section, object_phone, object_photo, object_schedule, option, section } from "@prisma/client";
+import { Prisma, object, object_link, object_on_option, object_on_section, object_phone, object_photo, object_schedule, option, section, spec } from "@prisma/client";
 
-export interface ISpec {
+export type SpecWithOptions = Prisma.specGetPayload<{include: {options: true}}>;
+
+export interface UISpec extends Omit<spec, "id"> {
   id?: number;
-  name_service: string;
-  name_filter: string;
-  object_type: string;
-  control_type: string;
-  options?: IOption[];
+  options?: UIOption[];
   [key: string]: any;
 }
 
-export interface IOption {
+export interface UIOption extends Omit<option, "id" | "spec_id"> {
   id?: number;
-  name: string;
-  order: number;
-  spec_id?: number | null;
+  spec_id?: number;
   localId: string;
 }
 
@@ -23,7 +19,7 @@ export interface ISection {
   name_singular: string;
   name_plural: string;
   object_type: string;
-  specs?: ISpec[];
+  specs?: UISpec[];
   [key: string]: any;
 }
 

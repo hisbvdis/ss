@@ -1,5 +1,5 @@
 "use server";
-import { prisma } from "@/prisma/client.prisma";
+import prisma from "@/prisma/client.prisma";
 import { unstable_cache } from "next/cache";
 import { objectReadProcessing } from "./object.processing";
 import { IObject } from "../_types/types";

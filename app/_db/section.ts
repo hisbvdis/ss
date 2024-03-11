@@ -1,5 +1,5 @@
 "use server"
-import { prisma } from "@/prisma/client.prisma";
+import prisma from "@/prisma/client.prisma";
 import { section } from "@prisma/client";
 import { revalidateTag, unstable_cache } from "next/cache"
 import { ISection } from "../_types/types";

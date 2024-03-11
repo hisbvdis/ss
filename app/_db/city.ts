@@ -1,5 +1,5 @@
 "use server";
-import { prisma } from "@/prisma/client.prisma";
+import prisma from "@/prisma/client.prisma";
 import { city } from "@prisma/client";
 import { unstable_cache } from "next/cache";
 

@@ -12,11 +12,11 @@ import { Control } from "@/app/_components/Control";
 import { InputAddon } from "@/app/_components/InputAddon";
 import { Radio, RadioGroup } from "@/app/_components/Choice";
 // -----------------------------------------------------------------------------
+import { UISpec } from "@/app/_types/types";
 import { deleteSpecById, upsertSpec } from "@/app/_db/spec";
-import { ISpec } from "@/app/_types/types";
 
 
-export default function SpecEdit(props:{init: ISpec}) {
+export default function SpecEdit(props:{init: UISpec}) {
   const [ state, setState ] = useState(props.init);
   useEffect(() => setState(props.init), [props.init]);
   const router = useRouter();

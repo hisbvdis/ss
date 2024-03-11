@@ -1,10 +1,9 @@
-import { ISpec } from "@/app/_types/types";
-import { option, spec } from "@prisma/client";
+import { SpecWithOptions, UISpec } from "@/app/_types/types";
 
-export const specReadProcessing = (dbData:spec & {options?: option[]}):ISpec => {
-  const processed = {
+export const specReadProcessing = (dbData:SpecWithOptions) => {
+  const processed:UISpec = {
     ...dbData,
-    options: dbData.options?.map((opt) => ({...opt,localId: crypto.randomUUID()})),
+    options: dbData?.options?.map((opt) => ({...opt, localId: crypto.randomUUID()})),
   }
   return processed;
 }
